@@ -1,128 +1,34 @@
 {
-  "name": "sb-addon-permutation",
-  "version": "0.0.4",
-  "description": "",
-  "keywords": [
-    "storybook-addons",
-    "storybook-addons",
-    "style",
-    "appearance"
-  ],
-  "repository": "https://github.com/daimresearch/sb-addon-permutation.git",
-  "author": "daim-FE",
+  "name": "gh-page_sb-addon-permutation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com-work:daimresearch/sb-addon-permutation.git",
+  "author": "dongyunLee <dongyun.lee@daimreasearch.com>",
   "license": "MIT",
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./manager": {
-      "require": "./dist/manager.js",
-      "import": "./dist/manager.mjs",
-      "types": "./dist/manager.d.ts"
-    },
-    "./preview": {
-      "require": "./dist/preview.js",
-      "import": "./dist/preview.mjs",
-      "types": "./dist/preview.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "README.md",
-    "*.js",
-    "*.d.ts"
-  ],
-  "scripts": {
-    "clean": "rimraf ./dist",
-    "prebuild": "yarn clean",
-    "build": "tsup",
-    "build:watch": "yarn build --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "run-p build:watch 'storybook --quiet'",
-    "prerelease": "zx scripts/prepublish-checks.mjs",
-    "release": "yarn build && auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.mjs",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "vite": "vite build --watch --config vite.watch.config.ts"
-  },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.11",
-    "@storybook/addon-interactions": "^7.0.11",
-    "@storybook/addon-links": "^7.0.11",
-    "@storybook/addon-mdx-gfm": "^7.0.11",
-    "@storybook/react": "^7.0.11",
-    "@storybook/react-vite": "^7.0.11",
-    "@storybook/testing-library": "^0.1.0",
-    "@types/node": "^18.15.0",
-    "@types/ramda": "^0.29.0",
-    "@types/react": "^18.0.34",
-    "@types/react-dom": "^18.2.1",
-    "@vitejs/plugin-react": "^3.1.0",
-    "auto": "^10.3.0",
-    "boxen": "^5.0.1",
-    "dedent": "^0.7.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.1",
-    "prompts": "^2.4.2",
+    "@storybook/addon-essentials": "^7.0.12",
+    "@storybook/addon-interactions": "^7.0.12",
+    "@storybook/addon-links": "^7.0.12",
+    "@storybook/blocks": "^7.0.12",
+    "@storybook/react": "^7.0.12",
+    "@storybook/react-vite": "^7.0.12",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "prop-types": "^15.8.1",
-    "react": "^18.0.0",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rimraf": "^3.0.2",
-    "storybook": "^7.0.11",
-    "tsup": "^6.6.3",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4",
-    "zx": "^1.14.1"
+    "storybook": "^7.0.12",
+    "typescript": "^5.0.4"
   },
-  "peerDependencies": {
-    "@storybook/blocks": "^7.0.0",
-    "@storybook/components": "^7.0.0",
-    "@storybook/core-events": "^7.0.0",
-    "@storybook/manager-api": "^7.0.0",
-    "@storybook/preview-api": "^7.0.0",
-    "@storybook/theming": "^7.0.0",
-    "@storybook/types": "^7.0.0",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
-      "optional": true
-    }
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "storybook": {
-    "displayName": "Permutation",
-    "supportedFrameworks": [
-      "react",
-      "vue",
-      "angular",
-      "web-components",
-      "ember",
-      "html",
-      "svelte",
-      "preact",
-      "react-native"
-    ],
-    "icon": "https://github.com/daimresearch/sb-addon-permutation/assets/107913240/15b3e7a3-26a1-4262-8f62-a0728d73a23c"
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-dist": "storybook build -o ./dist"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.24.1",
-    "ramda": "^0.29.0",
-    "react-live": "^4.0.0",
-    "react-live-runner": "^1.0.5",
-    "react-runner": "^1.0.3"
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.1",
+    "vite": "^4.3.8"
   }
 }
