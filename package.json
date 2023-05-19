@@ -21,7 +21,8 @@
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-page": "storybook build -o ./docs"
+    "storybook:build": "storybook build -o ./docs",
+    "storybook:publish": "yarn run storybook:build && touch ./docs/.nojekyll"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
