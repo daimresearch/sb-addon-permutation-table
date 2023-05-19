@@ -21,7 +21,7 @@
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-dist": "storybook build -o ./dist"
+    "build-page": "storybook build -o ./docs"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
