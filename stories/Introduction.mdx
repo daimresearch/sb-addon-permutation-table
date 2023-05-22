@@ -1,13 +1,3 @@
-import { Meta } from "@storybook/blocks";
-import Code from "./assets/code-brackets.svg";
-import Colors from "./assets/colors.svg";
-import Comments from "./assets/comments.svg";
-import Direction from "./assets/direction.svg";
-import Flow from "./assets/flow.svg";
-import Plugin from "./assets/plugin.svg";
-import Repo from "./assets/repo.svg";
-import StackAlt from "./assets/stackalt.svg";
-
 <Meta title="Introduction" />
 
 <style>
@@ -116,106 +106,50 @@ import StackAlt from "./assets/stackalt.svg";
   `}
 </style>
 
-# Welcome to Storybook
+# SB Addon Permutation-Table
 
-Storybook helps you build UI components in isolation from your app's business logic, data, and context.
-That makes it easy to develop hard-to-reach states. Save these UI states as **stories** to revisit during development, testing, or QA.
+Permutation Addon은 컴포넌트의 다양한 모습을 손쉽게 확인할 수 있는 Addon입니다.
+이 데모 페이지에서, Permutation Addon을 사용하는 방법을 확인할 수 있습니다.
+유명 프론트엔드 컴포넌트 라이브러리와도 완전히 호환되며, 직접 설계한 컴포넌트에도 적용할 수 있습니다.
 
-Browse example stories now by navigating to them in the sidebar.
-View their code in the `stories` directory to learn how they work.
-We recommend building UIs with a [**component-driven**](https://componentdriven.org) process starting with atomic components and ending with pages.
+사이드바에 있는 스토리들을 살펴보면서, Permutation Addon을 사용하는 방법을 익혀보세요.
+애드온이 어떻게 동작하는지는 `stories` 디렉토리에 있는 코드를 확인해보세요.
+[**컴포넌트 기반**](https://componentdriven.org) 방식으로 UI를 구축하는 것을 권장합니다.
 
-<div className="subheading">Configure</div>
+[Github](https://github.com/daimresearch/sb-addon-permutation-table)
 
-<div className="link-list">
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/addons/addon-types"
-    target="_blank"
-  >
-    <img src={Plugin} alt="plugin" />
-    <span>
-      <strong>Presets for popular tools</strong>
-      Easy setup for TypeScript, SCSS and more.
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/configure/webpack"
-    target="_blank"
-  >
-    <img src={StackAlt} alt="Build" />
-    <span>
-      <strong>Build configuration</strong>
-      How to customize webpack and Babel
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/configure/styling-and-css"
-    target="_blank"
-  >
-    <img src={Colors} alt="colors" />
-    <span>
-      <strong>Styling</strong>
-      How to load and configure CSS libraries
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/get-started/setup#configure-storybook-for-your-stack"
-    target="_blank"
-  >
-    <img src={Flow} alt="flow" />
-    <span>
-      <strong>Data</strong>
-      Providers and mocking for data libraries
-    </span>
-  </a>
-</div>
+# Get started
 
-<div className="subheading">Learn</div>
+이 라이브러리는 React로 작성되었으며, Storybook 7.X >= 에서 정상적으로 동작함을 확인하였습니다.
+이외의 환경에서는 정상적으로 동작하지 않을 수 있습니다.
 
-<div className="link-list">
-  <a className="link-item" href="https://storybook.js.org/docs" target="_blank">
-    <img src={Repo} alt="repo" />
-    <span>
-      <strong>Storybook documentation</strong>
-      Configure, customize, and extend
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/tutorials/"
-    target="_blank"
-  >
-    <img src={Direction} alt="direction" />
-    <span>
-      <strong>In-depth guides</strong>
-      Best practices from leading teams
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://github.com/storybookjs/storybook"
-    target="_blank"
-  >
-    <img src={Code} alt="code" />
-    <span>
-      <strong>GitHub project</strong>
-      View the source and add issues
-    </span>
-  </a>
-  <a className="link-item" href="https://discord.gg/storybook" target="_blank">
-    <img src={Comments} alt="comments" />
-    <span>
-      <strong>Discord chat</strong>
-      Chat with maintainers and the community
-    </span>
-  </a>
-</div>
+0. Perequisites
 
-<div className="tip-wrapper">
-  <span className="tip">Tip</span>Edit the Markdown in{" "}
-  <code>stories/Introduction.stories.mdx</code>
-</div>
+- `node>=16`
+- `yarn` or `npm`
+- a working project with:
+  - react >= 16.8
+
+1. Installation
+
+`npm install --save-dev sb-addon-permutation-table`
+`yarn add -D sb-addon-permutation-table`
+
+2. Resister the addon in main.transform
+
+```tyepscript
+
+const config = {
+  // ...
+  addons: ['sb-addon-permutation-table']
+}
+
+```
+
+3. Add it to story!
+
+see details in [here](https://github.com/daimresearch/sb-addon-permutation-table#usage)
+
+## Contribution guidelines
+
+TODO

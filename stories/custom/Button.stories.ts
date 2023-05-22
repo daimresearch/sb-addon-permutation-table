@@ -1,28 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "./Button";
 import { PermutationMeta } from "sb-addon-permutation-table";
 
-import { Button } from "./Button";
-
-// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
-const meta = {
+const meta: PermutationMeta<typeof Button> = {
   title: "Example/Button",
   component: Button,
-  tags: ["autodocs"],
   argTypes: {
     backgroundColor: { control: "color" },
   },
   parameters: {
-    storySource: {
-      source: "<Button />",
-      importPath: 'import { Button } from "@daim/component-library"',
-    },
     permutation: {
       scope: {
         Button,
       },
     },
   },
-} satisfies PermutationMeta<typeof Button>;
+  args: {
+    label: "Hello World",
+  },
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -31,33 +27,30 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     primary: true,
-    label: "Button",
+  },
+  parameters: {
+    storySource: {
+      source: '<Button label="Hello World" />',
+      importPath: "import { Button } from 'antd",
+    },
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    label: "Button",
-  },
-};
-
-export const Large: Story = {
+export const NoStorySource: Story = {
   args: {
     size: "large",
-    label: "Button",
   },
 };
 
 export const PermutationDisabled: Story = {
-  args: {
-    label: "Button",
-  },
+  args: {},
   parameters: {
+    storySource: {
+      source: '<Button label="Hello World" />',
+      importPath: "import { Button } from '@daim/component-library'",
+    },
     permutation: {
-      scope: {
-        Button,
-      },
-      deactivate: ["size", "primary"],
+      deactivate: ["primary", "size"],
     },
   },
 };

@@ -1,10 +1,21 @@
 import React from "react";
 import { EuiButton } from "@elastic/eui";
 
-export const Button = ({ label: string, ...props }: any) => {
-  return (
-    <EuiButton size="m" fill={true}>
-      Button
-    </EuiButton>
-  );
+type ButtonProps = {
+  label: string;
+  color?:
+    | "text"
+    | "accent"
+    | "primary"
+    | "success"
+    | "warning"
+    | "danger"
+    | "ghost";
+  fullWidth?: boolean;
+  isDisabled?: boolean;
+  size?: "s" | "m";
+};
+
+export const Button = ({ label, ...props }: ButtonProps) => {
+  return <EuiButton {...props}>{label}</EuiButton>;
 };

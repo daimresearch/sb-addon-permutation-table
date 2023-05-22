@@ -2,3 +2,4 @@ node_modules/
 build-storybook.log
 .DS_Store
 .env
+dist

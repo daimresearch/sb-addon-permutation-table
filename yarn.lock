@@ -2699,14 +2699,14 @@
     form-data "^3.0.0"
 
 "@types/node@*":
-  version "20.2.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.3.tgz#b31eb300610c3835ac008d690de6f87e28f9b878"
-  integrity sha512-pg9d0yC4rVNWQzX8U7xb4olIOFuuVL9za3bzMT2pu2SU0SNEi66i2qrvhE2qt0HvkhuCaWJu7pLNOt/Pj8BIrw==
+  version "20.2.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.1.tgz#de559d4b33be9a808fd43372ccee822c70f39704"
+  integrity sha512-DqJociPbZP1lbZ5SQPk4oag6W7AyaGMO6gSfRwq3PWl4PXTwJpRQJhDq4W0kzrg3w6tJ1SwlvGZ5uKFHY13LIg==
 
 "@types/node@^16.0.0":
-  version "16.18.32"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.32.tgz#5b5becc5da76fc055b2a601c8a3adbf13891227e"
-  integrity sha512-zpnXe4dEz6PrWz9u7dqyRoq9VxwCvoXRPy/ewhmMa1CgEyVmtL1NJPQ2MX+4pf97vetquVKkpiMx0MwI8pjNOw==
+  version "16.18.31"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.31.tgz#7de39c2b9363f0d95b129cc969fcbf98e870251c"
+  integrity sha512-KPXltf4z4g517OlVJO9XQ2357CYw7fvuJ3ZuBynjXC5Jos9i+K7LvFb7bUIwtJXSZj0vTp9Q6NJBSQpkwwO8Zw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -7219,10 +7219,10 @@ safe-buffer@5.2.1, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sb-addon-permutation-table@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/sb-addon-permutation-table/-/sb-addon-permutation-table-0.0.5.tgz#92fa43208bdefcf243573042e383832a6a02ef8b"
-  integrity sha512-/8quL7AfyDDudShZvmI4qUCOK97ex8HJRFahjiFGZpXG1I8SsNH7XF/WJPwu84hIWCe6o2JrtevzsDM5wFy6ag==
+sb-addon-permutation-table@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/sb-addon-permutation-table/-/sb-addon-permutation-table-0.0.4.tgz#803e7bfc2ce3e491b0e85998ac5c425e9e10070a"
+  integrity sha512-3gYokQZJm448v8uiDgj4EJklv/SXiNuqSN41MUd5YHgLUCiO6fIlXNM/ybolI97Kis3n3sOaZkYzJRUnR2X4tw==
   dependencies:
     "@floating-ui/react" "^0.24.1"
     ramda "^0.29.0"
