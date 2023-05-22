@@ -44,7 +44,9 @@ export const NoSource = () => {
   const currentStory = index[storyId];
   //@ts-ignore
   const importPath = (currentStory.importPath as string) ?? undefined;
-  const componentName = importPath
+
+  // XXX: below code have a expection for mdx, md file. find component name from path. only for components
+  const componentName = !importPath.includes(".md")
     ? importPath.match(componentNameFromPathRegex)[0]
     : "Foo";
 

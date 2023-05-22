@@ -96,7 +96,7 @@ export type Options = {
 };
 
 export type PermutationMeta<T> = Meta<T> & {
-  parameters: {
+  parameters?: {
     [key: string]: any;
     storySource?: StorySource;
     permutation?: {

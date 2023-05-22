@@ -17,8 +17,8 @@ export function getPreviewCode(
 ) {
   if (permutations.length <= 1)
     return `<div>${mapJoin(
-      (e) => `
-    <div data-target='${extractAttributeFromTag(e)}' ${
+      (e, i) => `
+    <div data-target='${extractAttributeFromTag(e)}' key="${i}" ${
         permutations.length !== 0 ? 'role="component"' : ""
       }>
     ${e}
@@ -61,10 +61,13 @@ const TableBody = (
   );
 
   const tcontents = verticalCombinationList
-    .map((elem) => {
+    .map((elem, index) => {
       const values = mapJoin(
         (e, i) =>
-          `<td className="${isLastElement(i, R.values(elem))}">${e}</td>`,
+          `<td className="${isLastElement(
+            i,
+            R.values(elem)
+          )}" key="${i}">${e}</td>`,
         R.values(elem)
       );
 
@@ -88,14 +91,15 @@ const TableBody = (
       });
 
       const options = mapJoin(
-        (e) => `<td role='component'
+        (e, i) => `<td role='component'
+        key="${i}"
         data-target='${extractAttributeFromTag(e)}'
         >${e}</td>`,
         R.flatten(matched)
       );
 
       return `
-    <tr>
+    <tr key="${index}">
         ${values}
         ${options}
     </tr>
@@ -118,7 +122,10 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
       <tr role="row">
                 ${mapJoin(
                   (e, i) =>
-                    `<th className="${isLastElement(i, verticals)}"></th>`,
+                    `<th className="${isLastElement(
+                      i,
+                      verticals
+                    )}" key="${i}"></th>`,
                   verticals
                 )}
             <th colSpan="${horizen.values.length}">${horizen.prop}</th>
@@ -126,10 +133,12 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
         <tr role='row' style={{boxShadow:'0px 1px #bbb'}}>
             ${mapJoin(
               (e, i) =>
-                `<th className="${isLastElement(i, verticals)}">${e.prop}</th>`,
+                `<th className="${isLastElement(i, verticals)}" key="${i}">${
+                  e.prop
+                }</th>`,
               verticals
             )}
-            ${mapJoin((e) => `<th>${e}</th>`, horizen.values)}
+            ${mapJoin((e, i) => `<th key="${i}">${e}</th>`, horizen.values)}
         </tr>
     </thead>
     `;
