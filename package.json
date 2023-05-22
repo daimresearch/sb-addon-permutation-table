@@ -25,11 +25,16 @@
     "storybook:publish": "yarn run storybook:build && touch ./docs/.nojekyll"
   },
   "dependencies": {
+    "@elastic/datemath": "^5.0.3",
+    "@elastic/eui": "^80.0.0",
+    "@emotion/css": "^11.11.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.1",
+    "antd": "^5.5.0",
+    "moment": "^2.29.4",
     "vite": "^4.3.8"
   }
 }

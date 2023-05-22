@@ -7,8 +7,8 @@ import {
 type ButtonProps = Pick<
   MuiButtonProps,
   "variant" | "size" | "disabled" | "color"
->;
+> & { label: string };
 
-export function Button({ ...props }: ButtonProps) {
-  return <MuiButton {...props}>Hello World</MuiButton>;
+export function Button({ label, ...props }: ButtonProps) {
+  return <MuiButton {...props}>{label}</MuiButton>;
 }
