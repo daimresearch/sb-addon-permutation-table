@@ -1,8 +1,8 @@
-# Storybook Addon sb-addon-permutation
+# sb-addon-permutation-table
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)]()
 
-**Note: English version is workon progress**
+**Note: English ver Readme is workon progress**
 
 ![demo](./docs/demo.gif)
 
@@ -28,7 +28,7 @@ Datadog의 디자인 시스템인 [DRUID](https://druids.datadoghq.com/)에 크�
 
 ### Installation
 
-`yarn add sb-addon-permutation`
+`yarn add sb-addon-permutation-table`
 
 ### Why should I use it?
 
@@ -42,7 +42,7 @@ sb-addon-permutation를 사용하면 복잡하고 많은 속성을 가진 컴포
 import type { StorybookConfig } from "@storybook/react-vite";
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  addons: ["sb-addon-permutation"],
+  addons: ["sb-addon-permutation-table"],
   framework: {
     name: "@storybook/react-vite",
     options: {}
@@ -63,7 +63,7 @@ export default config;
 // stories/Component.stories.(ts|tsx|js|jsx)
 
 import React from 'react';
-import { PermutationMeta } from 'sb-addon-permutation';
+import { PermutationMeta } from 'sb-addon-permutation-table';
 import YourComponent from 'YourComponent';
 
 const meta:PermutationMeta<typeof YourComponent> ={

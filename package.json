@@ -1,5 +1,5 @@
 {
-  "name": "sb-addon-permutation",
+  "name": "sb-addon-permutation-table",
   "version": "0.0.4",
   "description": "",
   "keywords": [
@@ -8,7 +8,7 @@
     "style",
     "appearance"
   ],
-  "repository": "https://github.com/daimresearch/sb-addon-permutation.git",
+  "repository": "https://github.com/daimresearch/sb-addon-permutation-table.git",
   "author": "daim-FE",
   "license": "MIT",
   "exports": {
