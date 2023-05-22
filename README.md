@@ -2,8 +2,8 @@
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)]()
 
-**Note: English ver Readme is workon progress**
-**Typescript only Project. we don't have a plan support for Javascript**
+- **Note: English ver Readme is workon progress**
+- **Typescript only Project. we don't have a plan support for Javascript**
 
 ![demo](./docs/demo.gif)
 
@@ -92,7 +92,7 @@ const meta:PermutationMeta<typeof YourComponent> ={
 
 ### Demos
 
-**on Progress**
+[Demo Page](https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs)
 
 ### License
 
