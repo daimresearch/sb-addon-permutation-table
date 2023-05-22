@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "sb-addon-permutation-table",
   ],
   framework: {
     name: "@storybook/react-vite",
