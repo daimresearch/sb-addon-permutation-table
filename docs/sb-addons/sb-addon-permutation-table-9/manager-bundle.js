@@ -248,7 +248,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   min-width: 100%;
   background-color: #5555554a !important;
   border-radius: 5px;
-`,cK=()=>{let e=No(),{storyId:t,index:r}=e,o=r[t].importPath??void 0,a=o?o.match(WV)[0]:"Foo",i=`
+`,cK=()=>{let e=No(),{storyId:t,index:r}=e,o=r[t].importPath??void 0,a=o.includes(".md")?"Foo":o.match(WV)[0],i=`
 // ${o}
 
 import React from 'react';
