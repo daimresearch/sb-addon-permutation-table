@@ -3,6 +3,7 @@
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)]()
 
 **Note: English ver Readme is workon progress**
+**Typescript only Project. we don't have a plan support for Javascript**
 
 ![demo](./docs/demo.gif)
 
@@ -29,6 +30,8 @@ Datadog의 디자인 시스템인 [DRUID](https://druids.datadoghq.com/)에 크�
 ### Installation
 
 `yarn add sb-addon-permutation-table`
+
+**Recommendation : SB 7.x >=**
 
 ### Why should I use it?
 
@@ -60,7 +63,7 @@ export default config;
 편의를 위해 `PermutationMeta` 타입을 스토리에 적용할 수 있습니다.
 
 ```
-// stories/Component.stories.(ts|tsx|js|jsx)
+// stories/Component.stories.(ts|tsx)
 
 import React from 'react';
 import { PermutationMeta } from 'sb-addon-permutation-table';
