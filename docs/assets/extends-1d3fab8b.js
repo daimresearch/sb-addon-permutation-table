@@ -1,0 +1,2 @@
+function s(t,n){return s=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(e,o){return e.__proto__=o,e},s(t,n)}function a(t){if(t===void 0)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}function i(){return i=Object.assign?Object.assign.bind():function(t){for(var n=1;n<arguments.length;n++){var r=arguments[n];for(var e in r)Object.prototype.hasOwnProperty.call(r,e)&&(t[e]=r[e])}return t},i.apply(this,arguments)}export{s as _,i as a,a as b};
+//# sourceMappingURL=extends-1d3fab8b.js.map
