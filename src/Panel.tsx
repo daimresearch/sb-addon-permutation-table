@@ -133,7 +133,7 @@ export const Panel: React.FC<PanelProps> = (props) => {
   const storyId = useStorybookState().storyId;
   const data = api.getData(storyId);
 
-  if (!states.selectedPanel.includes(ADDON_ID)) return undefined;
+  if (!states?.selectedPanel?.includes(ADDON_ID)) return undefined;
 
   if (!isStoryReady(data)) return <Placeholder>Initializing..</Placeholder>;
 
