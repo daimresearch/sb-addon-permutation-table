@@ -9,7 +9,7 @@ import {
   useStorybookState,
 } from "@storybook/manager-api";
 import { AddonPanel, Placeholder } from "@storybook/components";
-import { EVENTS } from "./constants";
+import { ADDON_ID, EVENTS } from "./constants";
 import { CodeEditor } from "./components/CodeEditor";
 import { styled } from "@storybook/theming";
 
@@ -20,6 +20,8 @@ import { ArgTable } from "./components/ArgTable";
 import { Showcase } from "./components/Showcase";
 import { CopyButton, Tray } from "./components/actionTray";
 import { NoSource } from "./components/NoSource";
+import { API_LeafEntry } from "@storybook/types";
+import { isStoryReady } from "./utils/storybook";
 
 const stopPropagation = (event: SyntheticEvent) => {
   event.stopPropagation();
@@ -131,8 +133,11 @@ export const Panel: React.FC<PanelProps> = (props) => {
   const storyId = useStorybookState().storyId;
   const data = api.getData(storyId);
 
-  if (data && !data.prepared) return <Placeholder>Initializing..</Placeholder>;
-  if (data && data.prepared && !source)
+  if (!states.selectedPanel.includes(ADDON_ID)) return undefined;
+
+  if (!isStoryReady(data)) return <Placeholder>Initializing..</Placeholder>;
+
+  if (!source)
     return (
       <Container>
         <NoSource />
