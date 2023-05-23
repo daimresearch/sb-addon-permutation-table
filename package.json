@@ -35,7 +35,7 @@
     "@mui/material": "^5.13.1",
     "antd": "^5.5.0",
     "moment": "^2.29.4",
-    "sb-addon-permutation-table": "@latest",
+    "sb-addon-permutation-table": "0.0.7-a",
     "vite": "^4.3.8"
   }
 }
