@@ -9,3 +9,5 @@ export const componentNameFromPathRegex = new RegExp(
   /\w*(?=.stories.(ts|js|tsx|jsx))/,
   "g"
 );
+
+export const attrSplitRegex = new RegExp(/[^ ]+="[^"]+"|\w*/, "g");

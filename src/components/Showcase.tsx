@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import * as R from "ramda";
 import { styled } from "@storybook/theming";
 import { addons, useArgs } from "@storybook/manager-api";
-import { extractAttributeFromTag } from "../tools";
+import { extractAttributeFromTag, getQuotelessAtt } from "../tools";
 import { EVENTS } from "../constants";
 import { CodeEditor } from "./CodeEditor";
 import { IconButton, Icons } from "@storybook/components";
@@ -28,7 +28,7 @@ export const Showcase = ({ sourceCode }: ShowcaseProps) => {
   return (
     <Wrapper>
       {sourceCode.map((item, index) => {
-        const data = extractAttributeFromTag(item);
+        const data = getQuotelessAtt(item);
         return (
           <Source data-value={data} key={index}>
             <CodeEditor
