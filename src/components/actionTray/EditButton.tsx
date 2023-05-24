@@ -21,6 +21,7 @@ import {
 import { BaseButton, Tooltip, Arrow } from "./BaseButton";
 import { EVENTS } from "../../constants";
 import { extractAttributeFromTag } from "../../tools";
+import { Args } from "@storybook/types";
 
 interface Props {
   hoverTitle?: string;
@@ -41,9 +42,18 @@ const getUpdatedArgs = (code: string) =>
     }, {})
   )([code]);
 
-const defaultOnClick = (code: string, updateArgs: Function) => {
+const defaultOnClick = (
+  code: string,
+  updateArgs: Function,
+  defaultArgs: Args
+) => {
   addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, "", "clear");
-  const args = getUpdatedArgs(code);
+  const updatedArgs = getUpdatedArgs(code);
+  const clearArgs = R.mapObjIndexed((value, key) => {
+    if (typeof value === "boolean") return false;
+    return value;
+  }, defaultArgs);
+  const args = R.mergeRight(clearArgs, updatedArgs);
   updateArgs(args);
 };
 
@@ -54,7 +64,7 @@ export const EditButton = ({
   clickTitle = "",
   icon = "edit",
   code,
-  onClick = defaultOnClick,
+  onClick,
 }: Props) => {
   const [args, updateArgs, resetArgs] = useArgs();
 
@@ -89,7 +99,7 @@ export const EditButton = ({
 
   // handler
   const handleClick = (e: any) =>
-    onClick ? onClick(e) : defaultOnClick(code, updateArgs);
+    onClick ? onClick(e) : defaultOnClick(code, updateArgs, args);
 
   return (
     <div
