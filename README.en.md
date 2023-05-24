@@ -13,12 +13,11 @@
 
 [release]: https://github.com/ryanoasis/nerd-fonts/releases/latest "Latest Release (external link) ➶"
 
-- **Typescript only Project. We don't have a plan support for Javascript**
+- **Typescript only Project. We don't have a plan to support Javascript**
 
 ![demo](./docs/demo.gif)
 
-This project is an addon to provide additional functionality to Storybook.
-In a separate panel, you can see the various aspects of the component as a table
+This project is an addon that provides additional functionality to Storybook. In a separate panel, you can see the various aspects of the component as a table.
 
 This project was highly inspired by Datadog's design system, [DRUID](https://druids.datadoghq.com/), and we wanted to use the Component Permutation feature from DRUID in Storybook.
 
@@ -35,9 +34,9 @@ This project was highly inspired by Datadog's design system, [DRUID](https://dru
 
 ### Feature
 
-- `Argument Control` : Manipulate the properties of the component directly. You can see what the components looks like in context.
+- `Argument Control` : Manipulate the properties of your component directly. You can see what your component looks like in context.
 
-- `Permutation` : Provides a table of different view with combinations of properties. Compare and analyze the results of combinations at a glance.
+- `Permutation` : Provide a table of different views with combinations of properties. Compare and analyze the results of combinations at a glance.
 
 ### Installation
 
@@ -50,7 +49,7 @@ This project was highly inspired by Datadog's design system, [DRUID](https://dru
 
 ### Why should I use it?
 
-`sb-addon-permutation` provides a quick glance of complex, many-porperty components views. Developers will be able to debug and test components efficiently through the showcase provided by this.
+`sb-addon-permutation` provides a quick glance of complex, multi-property component views. Developers will be able to debug and test components efficiently through the showcase provided.
 
 ### Usage
 
@@ -73,8 +72,9 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-After that, you'll need to pass arguments to each story to use the add-on's features.
-For convenience, you can use the `PermutationMeta` type to your stories.
+After that, you'll need to pass arguments to each story to use the addon's features.
+
+For convenience, you can use the `PermutationMeta` type in your stories.
 
 ```typescript
 // stories/Component.stories.(ts|tsx)
@@ -99,7 +99,8 @@ const meta: PermutationMeta<typeof YourComponent> = {
 };
 ```
 
-The addon will automatically use the component's type and make it available in the Permutation Panel.
+The addon will automatically use your component's type and make it available in the Permutation Panel.
+
 If you have a property that you don't want to use Permutation for, you can pass the name of that property to deactivate.
 
 ```typescript
@@ -120,7 +121,7 @@ const meta: PermutationMeta<typeof YourComponent> = {
 };
 ```
 
-You can also apply them individually on a per-story basis.
+You can also apply them individually on a story by story basis.
 
 ```typescript
 export const Primary: Story = {
