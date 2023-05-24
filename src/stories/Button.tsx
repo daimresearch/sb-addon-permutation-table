@@ -22,8 +22,6 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: () => void;
-  fake?: boolean;
-  foo?: boolean;
 }
 
 /**
