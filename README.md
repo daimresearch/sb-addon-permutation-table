@@ -13,7 +13,7 @@
 
 [release]: https://github.com/ryanoasis/nerd-fonts/releases/latest "Latest Release (external link) ➶"
 
-- **Typescript only Project. We don't have a plan support for Javascript**
+- **Typescript only Project. We don't have a plan to support Javascript**
 
 ![demo](./docs/demo.gif)
 
