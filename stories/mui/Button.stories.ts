@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     color: "primary",
-    label: "Hello World",
+    label: "Button",
     variant: "outlined",
   },
   parameters: {
@@ -53,7 +53,7 @@ export const PermutationDisabled: Story = {
   },
   parameters: {
     storySource: {
-      source: '<Button label="Hello World" />',
+      source: "<Button />",
       importPath: 'import { Button } from "@mui/material"',
     },
     permutation: {

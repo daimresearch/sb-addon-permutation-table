@@ -16,7 +16,7 @@ const meta: PermutationMeta<typeof Button> = {
     },
   },
   args: {
-    label: "Hello World",
+    label: "Button",
   },
 };
 
@@ -30,7 +30,7 @@ export const Primary: Story = {
   },
   parameters: {
     storySource: {
-      source: '<Button label="Hello World" />',
+      source: "<Button />",
       importPath: "import { Button } from 'antd",
     },
   },
@@ -46,7 +46,7 @@ export const PermutationDisabled: Story = {
   args: {},
   parameters: {
     storySource: {
-      source: '<Button label="Hello World" />',
+      source: "<Button />",
       importPath: "import { Button } from '@daim/component-library'",
     },
     permutation: {

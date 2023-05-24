@@ -20,12 +20,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    label: "Hello World",
+    label: "Button",
     type: "primary",
   },
   parameters: {
     storySource: {
-      source: '<Button label="Hello World" />',
+      source: "<Button />",
       importPath: "import { Button } from 'antd",
     },
   },
@@ -44,7 +44,7 @@ export const PermutationDisabled: Story = {
   },
   parameters: {
     storySource: {
-      source: '<Button label="Hello World" />',
+      source: "<Button />",
       importPath: "import { Button } from '@daim/component-library'",
     },
     permutation: {

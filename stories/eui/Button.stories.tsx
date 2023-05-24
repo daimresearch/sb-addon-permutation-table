@@ -50,7 +50,7 @@ export const Primary: Story = {
     },
   },
   args: {
-    label: "Hello World",
+    label: "Button",
   },
 };
 export const NoStorySource: Story = {
@@ -70,6 +70,6 @@ export const PermutationDisabled: Story = {
     },
   },
   args: {
-    label: "Hello World",
+    label: "Button",
   },
 };
