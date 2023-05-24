@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import { cartesianProduct, getConvertedList, Property } from "./permutations";
-import { extractAttributeFromTag } from "./common";
+import { extractAttributeFromTag, getQuotelessAtt } from "./common";
 import { Args, ArgTypes } from "@storybook/types";
 
 const indexMap = R.curry(R.addIndex(R.map));
@@ -18,7 +18,7 @@ export function getPreviewCode(
   if (permutations.length <= 1)
     return `<div>${mapJoin(
       (e, i) => `
-    <div data-target='${extractAttributeFromTag(e)}' key="${i}" ${
+    <div data-target='${getQuotelessAtt(e)}' key="${i}" ${
         permutations.length !== 0 ? 'role="component"' : ""
       }>
     ${e}
@@ -93,8 +93,8 @@ const TableBody = (
 
       const options = mapJoin(
         (e, i) => `<td role='component'
-        data-target='${extractAttributeFromTag(e)}'
-        key="${extractAttributeFromTag(e)}"
+        data-target='${getQuotelessAtt(e)}'
+        key="${getQuotelessAtt(e)}"
         >${e}</td>`,
         R.flatten(matched)
       );

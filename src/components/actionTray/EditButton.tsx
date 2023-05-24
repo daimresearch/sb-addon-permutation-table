@@ -20,8 +20,9 @@ import {
 
 import { BaseButton, Tooltip, Arrow } from "./BaseButton";
 import { EVENTS } from "../../constants";
-import { extractAttributeFromTag } from "../../tools";
+import { extractAttributeFromTag, getQuotelessAtt } from "../../tools";
 import { Args } from "@storybook/types";
+import { attrSplitRegex } from "src/utils/regex";
 
 interface Props {
   hoverTitle?: string;
@@ -31,16 +32,18 @@ interface Props {
   code: string;
 }
 
-const getUpdatedArgs = (code: string) =>
-  R.pipe(
+const getUpdatedArgs = (code: string) => {
+  return R.pipe(
     R.apply(extractAttributeFromTag),
-    R.split(" "),
+    R.match(attrSplitRegex),
+    R.reject(R.isEmpty),
     R.reduce((pre, cur) => {
       const [key, value] = cur.split("=");
       if (!value) return { ...pre, [key]: true };
-      return { ...pre, [key]: value };
+      return { ...pre, [key]: value.replace(/"/g, "") };
     }, {})
   )([code]);
+};
 
 const defaultOnClick = (
   code: string,
