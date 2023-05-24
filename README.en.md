@@ -2,7 +2,7 @@
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/107913240/239455269-15b3e7a3-26a1-4262-8f62-a0728d73a23c.png" alt="logo" width="150px"/>
   <h1>sb-addon-permutation-table</h1>
   <span><img src="https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg"/></span>
-  <span><img src="https://img.shields.io/badge/version-0.0.8-stable.svg"/></span>
+  <span><img src="https://img.shields.io/badge/version-0.0.9-stable.svg"/></span>
   <span><img src="https://badgen.net/badge/Built%20With/TypeScript/blue"/></span>
   <div>
   <strong><a href="./README.md" target="_blank">Korean</a></strong> |
@@ -10,8 +10,6 @@
   </div>
 </div>
 <hr/>
-
-[release]: https://github.com/ryanoasis/nerd-fonts/releases/latest "Latest Release (external link) ➶"
 
 - **Typescript only Project. We don't have a plan to support Javascript**
 
