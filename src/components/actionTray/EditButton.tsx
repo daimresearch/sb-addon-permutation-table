@@ -41,9 +41,14 @@ const getUpdatedArgs = (code: string) =>
     }, {})
   )([code]);
 
-const defaultOnClick = (code: string, updateArgs: Function) => {
+const defaultOnClick = (
+  code: string,
+  updateArgs: Function,
+  resetArgs: Function
+) => {
   addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, "", "clear");
   const args = getUpdatedArgs(code);
+  resetArgs();
   updateArgs(args);
 };
 
@@ -54,7 +59,7 @@ export const EditButton = ({
   clickTitle = "",
   icon = "edit",
   code,
-  onClick = defaultOnClick,
+  onClick,
 }: Props) => {
   const [args, updateArgs, resetArgs] = useArgs();
 
@@ -89,7 +94,7 @@ export const EditButton = ({
 
   // handler
   const handleClick = (e: any) =>
-    onClick ? onClick(e) : defaultOnClick(code, updateArgs);
+    onClick ? onClick(e) : defaultOnClick(code, updateArgs, resetArgs);
 
   return (
     <div
@@ -97,7 +102,16 @@ export const EditButton = ({
       {...getReferenceProps}
       onMouseLeave={() => setText(hoverTitle)}
     >
-      <BaseButton title={hoverTitle} onClick={handleClick} icon={icon} />
+      <BaseButton
+        title={hoverTitle}
+        // FIX:handleClick 삭제하던가... 아니면 event가 안내려오도록 잘 하던가
+        // onClick={(e) => {
+        //   resetArgs();
+        //   defaultOnClick(code, updateArgs);
+        // }}
+        onClick={handleClick}
+        icon={icon}
+      />
       <FloatingPortal>
         {isOpen && text && (
           <Tooltip

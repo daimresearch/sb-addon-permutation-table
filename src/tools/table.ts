@@ -8,7 +8,7 @@ const mapJoin = (fn: (...args: any) => any, list: any[], token = "") =>
   R.pipe(indexMap(fn), R.join(token))(list);
 
 const isLastElement = (i: number, list: any[]) =>
-  i + 1 === list.length ? "--last" : undefined;
+  i + 1 === list.length ? "--last" : "";
 
 export function getPreviewCode(
   sourceList: string[],
@@ -63,12 +63,13 @@ const TableBody = (
   const tcontents = verticalCombinationList
     .map((elem, index) => {
       const values = mapJoin(
-        (e, i) =>
-          `<td className="${isLastElement(
-            i,
-            R.values(elem)
-          )}" key="${i}">${e}</td>`,
-        R.values(elem)
+        ([key, value], i) => `<td className="${isLastElement(
+          i,
+          R.toPairs(elem)
+        )}"
+        key="${key}-${i}"
+        >${value}</td>`,
+        R.toPairs(elem)
       );
 
       const horizenFinderList = R.map((e: { [x: string]: any }) =>
@@ -92,13 +93,13 @@ const TableBody = (
 
       const options = mapJoin(
         (e, i) => `<td role='component'
-        key="${i}"
         data-target='${extractAttributeFromTag(e)}'
+        key="${extractAttributeFromTag(e)}"
         >${e}</td>`,
         R.flatten(matched)
       );
 
-      return `
+      return ` 
     <tr key="${index}">
         ${values}
         ${options}
@@ -122,10 +123,7 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
       <tr role="row">
                 ${mapJoin(
                   (e, i) =>
-                    `<th className="${isLastElement(
-                      i,
-                      verticals
-                    )}" key="${i}"></th>`,
+                    `<th className="${isLastElement(i, verticals)}"></th>`,
                   verticals
                 )}
             <th colSpan="${horizen.values.length}">${horizen.prop}</th>
@@ -133,12 +131,12 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
         <tr role='row' style={{boxShadow:'0px 1px #bbb'}}>
             ${mapJoin(
               (e, i) =>
-                `<th className="${isLastElement(i, verticals)}" key="${i}">${
+                `<th className="${isLastElement(i, verticals)}" key="${
                   e.prop
-                }</th>`,
+                }">${e.prop}</th>`,
               verticals
             )}
-            ${mapJoin((e, i) => `<th key="${i}">${e}</th>`, horizen.values)}
+            ${mapJoin((e, i) => `<th key="${e}">${e}</th>`, horizen.values)}
         </tr>
     </thead>
     `;
