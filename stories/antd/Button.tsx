@@ -11,7 +11,6 @@ interface ButtonProps {
   block?: boolean;
   danger?: boolean;
   disabled?: boolean;
-  ghost?: boolean;
   loading?: boolean;
   shape?: "circle" | "round" | "default";
   size?: "large" | "middle" | "small";
@@ -23,14 +22,13 @@ export const Button = ({
   block = false,
   danger = false,
   disabled = false,
-  ghost = false,
   loading = false,
   shape = "default",
   size = "middle",
   type = "default",
   ...rest
 }: ButtonProps) => {
-  const props = { block, danger, disabled, ghost, loading, shape, size, type };
+  const props = { block, danger, disabled, loading, shape, size, type };
   return (
     <AntdButton {...rest} {...props}>
       {label}

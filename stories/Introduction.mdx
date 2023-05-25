@@ -1,23 +1,32 @@
 import { Meta } from "@storybook/blocks";
 
 <Meta title="Introduction" />
+<div align="center">
+  <img
+    src="https://github-production-user-asset-6210df.s3.amazonaws.com/107913240/239455269-15b3e7a3-26a1-4262-8f62-a0728d73a23c.png"
+    alt="logo"
+    width="150px"
+  />
+  <h1>sb-addon-permutation-table</h1>
+</div>
+<hr />
 
-# SB Addon Permutation-Table
+Permutation-Table is a storybook addon that makes it easy to see different looks for your components.
+On this demo page, you can see how to use the Permutation-Table Addon.
+It's fully compatible with popular front-end component libraries and can be applied to components of your own design.
 
-Permutation Addon은 컴포넌트의 다양한 모습을 손쉽게 확인할 수 있는 Addon입니다.
-이 데모 페이지에서, Permutation Addon을 사용하는 방법을 확인할 수 있습니다.
-유명 프론트엔드 컴포넌트 라이브러리와도 완전히 호환되며, 직접 설계한 컴포넌트에도 적용할 수 있습니다.
+Explore the stories in the sidebar to learn how to use the Permutation Addon.
+Check out the code in the `stories` directory to see how the addon works.
+We recommend make a UI with [**Component Driven**](https://componentdriven.org) approach.
 
-사이드바에 있는 스토리들을 살펴보면서, Permutation Addon을 사용하는 방법을 익혀보세요.
-애드온이 어떻게 동작하는지는 `stories` 디렉토리에 있는 코드를 확인해보세요.
-[**컴포넌트 기반**](https://componentdriven.org) 방식으로 UI를 구축하는 것을 권장합니다.
+[![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/sb-addon-permutation-table)
+[![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)][github-repo]
 
-[Github](https://github.com/daimresearch/sb-addon-permutation-table)
+---
 
-# Get started
+## Get started
 
-이 라이브러리는 React로 작성되었으며, Storybook 7.X >= 에서 정상적으로 동작함을 확인하였습니다.
-이외의 환경에서는 정상적으로 동작하지 않을 수 있습니다.
+_Disclaimer: This addon only supports Typescript projects and is designed for Storybook 7. It may not work properly in other environments._
 
 0. Perequisites
 
@@ -28,24 +37,84 @@ Permutation Addon은 컴포넌트의 다양한 모습을 손쉽게 확인할 수
 
 1. Installation
 
-`npm install --save-dev sb-addon-permutation-table`
-`yarn add -D sb-addon-permutation-table`
-
-2. Resister the addon in main.transform
-
-```tyepscript
-
-const config = {
-  // ...
-  addons: ['sb-addon-permutation-table']
-}
+```
+npm install --save-dev sb-addon-permutation-table
 
 ```
 
-3. Add it to story!
+```
+yarn add -D sb-addon-permutation-table
+```
 
-see details in [here](https://github.com/daimresearch/sb-addon-permutation-table#usage)
+2. Resister the addon in `.stories/main.ts`
 
-## Contribution guidelines
+```typescript
+const config = {
+  // ...
+  addons: ["sb-addon-permutation-table"],
+};
+```
 
-TODO
+3. Define config for your component in `.stories/your-component.stories.tsx`. Following by type `PermutationMeta` will make this step easy
+
+```typescript
+// stories/Component.stories.(ts|tsx)
+
+import React from "react";
+import { PermutationMeta } from "sb-addon-permutation-table";
+import YourComponent from "YourComponent";
+
+const meta: PermutationMeta<typeof YourComponent> = {
+  //...
+  parameters: {
+    storySource: {
+      source: <YourComponent />, // type what your component looks like
+      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
+    },
+    permutation: {
+      scope: {
+        YourComponent, // add component here
+      },
+    },
+  },
+};
+```
+
+3.1. If you don't want to see specific props in the table, you can use `deactivate` option
+
+```typescript
+const meta: PermutationMeta<typeof YourComponent> = {
+  //...
+  parameters: {
+    storySource: {
+      source: <YourComponent />, // type what your component looks like
+      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
+    },
+    permutation: {
+      scope: {
+        YourComponent, // add component here
+      },
+      deactivate: ["foo", "bar"], // now property "foo" and "bar" disabled.
+    },
+  },
+};
+```
+
+4. That's it! Now you can see the permutation table in your storybook.
+
+## Advanced Usage
+
+Check our [github repository][github-repo] for more information.
+
+## Troubleshooting & FAQ
+
+If you have an issue to submit, please visit ["Issues"][issues].
+If you're using the addon and have questions or suggestions, please use ["Discussions"][discussions].
+
+## License
+
+MIT
+
+[github-repo]: https://github.com/daimresearch/sb-addon-permutation-table
+[issues]: https://github.com/daimresearch/sb-addon-permutation-table/issues
+[discussions]: https://github.com/daimresearch/sb-addon-permutation-table/discussions
