@@ -40,6 +40,9 @@ When submitting a pull request, please provide the following information:
 - Details about the problem your pull request solves or the feature it adds.
 - Any relevant information or context that may help with the review process.
 
+If your pull request contains changes of code, make PR to `dev` branch.
+otherwise, make PR to `maintenance` branch.
+
 ## Contact
 
 If you have any questions or need further assistance, you can use our [Disscusions](https://github.com/daimresearch/sb-addon-permutation-table/discussions)
