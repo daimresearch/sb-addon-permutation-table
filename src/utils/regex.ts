@@ -1,4 +1,4 @@
-export const attrExtractRegex = new RegExp(/(?<=<\w*\s).*(?=\s\/?>)/, "g");
+export const attrExtractRegex = new RegExp(/(?<=<\w*\s)[^>/]*/, "g");
 
 export const attrMatchingRegex = (attr: string) =>
   new RegExp(`${attr}(=".*")?(?=\\s?)`, "g");

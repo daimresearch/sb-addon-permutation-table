@@ -60,7 +60,13 @@ export function injectArgPermToCode(code: string, args: Combination) {
 
     //remove matched props
     const regx = attrMatchingRegex(key);
-    const attReplaced = pre.replace(regx, ``);
+
+    const addTempSpace = (match: string) => " " + match;
+
+    const attReplaced = R.pipe(
+      R.replace(regx, ``),
+      R.replace(/\/?>/, addTempSpace)
+    )(pre);
 
     // 전부 싹 지웠으니까.. 전부 덮어써도 될거 같은데.
     switch (typeof value) {
@@ -71,7 +77,12 @@ export function injectArgPermToCode(code: string, args: Combination) {
         return attReplaced.replace(" ", ` ${key}="${value}" `);
     }
   }, code);
-  return injected.replace(overOneSpaceRegex, " ");
+
+  const removeTempSpace = (match: string) => match.trim();
+  return R.pipe(
+    R.replace(overOneSpaceRegex, " "),
+    R.replace(/\s\/?>/, removeTempSpace)
+  )(injected);
 }
 
 export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
