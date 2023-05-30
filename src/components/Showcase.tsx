@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import * as R from "ramda";
 import { styled } from "@storybook/theming";
 import { addons, useArgs } from "@storybook/manager-api";
-import { extractAttributeFromTag, getQuotelessAtt } from "../tools";
+import { getQuotelessAtt } from "../tools";
 import { EVENTS } from "../constants";
 import { CodeEditor } from "./CodeEditor";
 import { IconButton, Icons } from "@storybook/components";

@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import { cartesianProduct, getConvertedList, Property } from "./permutations";
-import { extractAttributeFromTag, getQuotelessAtt } from "./common";
+import { getQuotelessAtt } from "./common";
 import { Args, ArgTypes } from "@storybook/types";
 
 const indexMap = R.curry(R.addIndex(R.map));

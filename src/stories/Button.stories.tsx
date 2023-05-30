@@ -15,7 +15,6 @@ const meta: PermutationMeta<typeof Button> = {
   tags: ["autodocs"],
   parameters: {
     storySource: {
-      // source: `<Button label="Button"/>`,
       source: "<Button/>",
       importPath: 'import { Button } from "@daim/component/Button"', // component naming convertion이 결정되지 않는 한, 그냥 string을 유지하는 것이 최선
     },

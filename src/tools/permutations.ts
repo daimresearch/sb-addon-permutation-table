@@ -68,13 +68,14 @@ export function injectArgPermToCode(code: string, args: Combination) {
       R.replace(/\/?>/, addTempSpace)
     )(pre);
 
-    // 전부 싹 지웠으니까.. 전부 덮어써도 될거 같은데.
     switch (typeof value) {
       case "boolean":
         return value ? attReplaced.replace(" ", ` ${key} `) : attReplaced;
-      default:
       case "string":
         return attReplaced.replace(" ", ` ${key}="${value}" `);
+      default:
+      case "object":
+        return attReplaced.replace(" ", ` ${key}={${JSON.stringify(value)}} `);
     }
   }, code);
 
@@ -95,8 +96,7 @@ export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
         return { prop: key, values: value.options };
       case "boolean":
         return { prop: key, values: [true, false] };
-
-      //나머지 컬러...등등등은 생략
+      case "object":
       default:
         return;
     }
