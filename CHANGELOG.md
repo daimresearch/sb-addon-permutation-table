@@ -1,3 +1,9 @@
+## v.0.1.1
+
+#### Bug Fixes
+
+- [#8](https://github.com/daimresearch/sb-addon-permutation-table/issues/8) - parsing error on object args, errors if storySource don't includes whitespace
+
 ## v.0.1.0
 
 🎉 **Offical Release!**
