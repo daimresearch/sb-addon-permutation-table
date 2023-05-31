@@ -7285,10 +7285,10 @@ safe-buffer@5.2.1, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sb-addon-permutation-table@0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/sb-addon-permutation-table/-/sb-addon-permutation-table-0.0.11.tgz#35ba64794cae269978ebb403ee9f4162b93462ea"
-  integrity sha512-upN00pymDE9zGU64zlakGmoJ97Et+U4Mj+VNrcFyBnuep2gEau3CqoOWsTDlm7BSb/4wC18fCK0qmGFAgK9aVQ==
+sb-addon-permutation-table@0.0.12:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/sb-addon-permutation-table/-/sb-addon-permutation-table-0.1.11.tgz#453d367bbade27444c3691031c3d772d66b4a6cf"
+  integrity sha512-nPZVwJWSHuH5UAkBGeX/0bJrr1GfkYrMKjpQU2PdBmVJYvlg5IdicXualNnGs8WbWG5V4/REk8+d0XCxz7DdaQ==
   dependencies:
     "@floating-ui/react" "^0.24.1"
     ramda "^0.29.0"
