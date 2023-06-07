@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useRunner, UseRunnerProps } from "react-runner";
 import { styled } from "@storybook/theming";
 import { addons } from "@storybook/preview-api";
-import { EVENTS } from "../constants";
+import { EVENTS, PER_STATE } from "../constants";
 import { getPreviewCode } from "../tools";
+import { useAddonState } from "@storybook/manager-api";
 
 interface Props extends Omit<UseRunnerProps, "code"> {
   sourceList: string[];

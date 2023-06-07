@@ -29,7 +29,7 @@ interface ControlsParameters {
   hideNoControlsWarning?: boolean;
 }
 
-const PermutationCell = styled.span`
+const PermutationCell = styled.span<any>`
   & {
     display: flex;
     align-items: center;
@@ -145,8 +145,11 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       return <div />;
   }
 };
+interface Props {
+  permutations: string[];
+}
 
-export const ArgTable: FC = () => {
+export const ArgTable: FC<Props> = ({ permutations }: Props) => {
   const [args, updateArgs, resetArgs] = useArgs();
   const [globals] = useGlobals();
   const rows = useArgTypes();
@@ -154,26 +157,19 @@ export const ArgTable: FC = () => {
   const { presetColors, sort } = useParameter<ControlsParameters>(
     PARAM_KEY,
     {}
-  ); // 생략
-  // permutation State를 가져와볼까?
-  const [permutations, setPermutations] = useAddonState<string[]>(
-    PER_STATE,
-    []
   );
+
+  // permutation button color change
   const rowKeys = R.keys(rows);
 
-  React.useEffect(() => {
-    // remove all permutation activa
-    rowKeys.forEach((e) => {
-      const row = ref.current.querySelector(`[data-permutation="${e}"]`);
-      if (row) row.classList.remove("--selected");
-    });
-    // add all --selected by permutation state
-    permutations.forEach((e) => {
-      const row = ref.current.querySelector(`[data-permutation="${e}"]`);
-      if (row) row.classList.add("--selected");
-    });
-  }, [permutations]);
+  rowKeys.forEach((e) => {
+    const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
+    if (row) row.classList.remove("--selected");
+  });
+  permutations.forEach((e) => {
+    const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
+    if (row) row.classList.add("--selected");
+  });
 
   const theme = useTheme();
 

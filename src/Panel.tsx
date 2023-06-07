@@ -1,5 +1,6 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import {
+  addons,
   useAddonState,
   useArgs,
   useArgTypes,
@@ -15,13 +16,14 @@ import { styled } from "@storybook/theming";
 
 import { LiveProps, StorySource, Options } from "./types";
 import { PARAM_KEY, SOURCE_KEY, PER_STATE } from "./constants";
-import { sourceCodeWithArgPermutations } from "./tools";
+import { convertArgTypeToArg, sourceCodeWithArgPermutations } from "./tools";
 import { ArgTable } from "./components/ArgTable";
 import { Showcase } from "./components/Showcase";
 import { CopyButton, Tray } from "./components/actionTray";
 import { NoSource } from "./components/NoSource";
 import { API_LeafEntry } from "@storybook/types";
 import { isStoryReady } from "./utils/storybook";
+import * as R from "ramda";
 
 const stopPropagation = (event: SyntheticEvent) => {
   event.stopPropagation();
@@ -76,15 +78,22 @@ export const Panel: React.FC<PanelProps> = (props) => {
     SOURCE_KEY
   )?.importPath;
 
-  const [permutations, setPermutations] = useAddonState<string[]>(
-    PER_STATE,
-    []
-  );
+  // const [permutations, setPermutations] = useAddonState<string[]>(
+  //   PER_STATE,
+  //   []
+  // );
+  const [permutations, setPermutations] = useState<string[]>([]);
+
+  const parameter = useParameter<any>(PARAM_KEY);
 
   const [args, updateArgs, resetArgs] = useArgs();
   const states = useStorybookState();
   const api = useStorybookApi();
   const argTypes = useArgTypes();
+
+  const autoload = parameter?.autoload ?? [];
+  const deactivate = parameter?.deactivate ?? [];
+  const argKeys = convertArgTypeToArg(argTypes);
 
   const sourceCode = sourceCodeWithArgPermutations(
     source,
@@ -123,11 +132,22 @@ export const Panel: React.FC<PanelProps> = (props) => {
   });
 
   useEffect(() => {
+    if (permutations.length === 0 && autoload) {
+      const autoPermutation =
+        autoload === "all" ? argKeys.map((key) => key.prop) : autoload;
+      const filteredAutoPermutation = R.without(
+        deactivate,
+        autoPermutation
+      ) satisfies string[];
+      setPermutations(filteredAutoPermutation);
+    }
+
     if (source && args) {
       resetArgs();
     }
-    setPermutations(() => []);
-  }, [states.path]);
+    return () => setPermutations(() => []);
+    // }, [autoload, states.path]);
+  }, [parameter, states.path]);
 
   const options = useParameter<Options | undefined>(PARAM_KEY);
   const storyId = useStorybookState().storyId;
@@ -185,7 +205,7 @@ export const Panel: React.FC<PanelProps> = (props) => {
             <Showcase sourceCode={sourceCode} />
           )}
         </Display>
-        <ArgTable />
+        <ArgTable permutations={permutations} />
       </Container>
     </AddonPanel>
   );
