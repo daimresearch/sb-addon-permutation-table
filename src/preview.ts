@@ -9,7 +9,7 @@
  * https://storybook.js.org/docs/react/writing-stories/decorators
  */
 import type { Renderer, ProjectAnnotations } from "@storybook/types";
-import { PARAM_KEY } from "./constants";
+import { PERMUT_KEY } from "./constants";
 import { withRunner } from "./withRunner";
 
 /**
@@ -18,10 +18,9 @@ import { withRunner } from "./withRunner";
  */
 
 const preview: ProjectAnnotations<Renderer> = {
-  // decorators: [withGlobals, withRoundTrip],
   decorators: [withRunner], // 여기에 withRunner 씌운 순간.iframe에서 로드가 된다
   globals: {
-    [PARAM_KEY]: false,
+    [PERMUT_KEY]: false,
   },
 };
 

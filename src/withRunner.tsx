@@ -1,35 +1,27 @@
 import React, { ReactNode, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-//useChannel까지는 필요 없을수 있다
 import {
   makeDecorator,
   useChannel,
   useState,
   useMemo,
-  useArgs,
 } from "@storybook/preview-api";
 
 import { Preview } from "./components/Preview";
-import { EVENTS, PARAM_KEY, PER_STATE, SOURCE_KEY } from "./constants";
+import { EVENTS, PERMUT_KEY, SOURCE_KEY } from "./constants";
 import { StorySource, Options, LiveProps } from "./types";
 import { Args } from "@storybook/types";
 import { sourceCodeWithArgPermutations } from "./tools";
-import {
-  useArgTypes,
-  useStorybookApi,
-  useStorybookState,
-  useAddonState,
-  addons,
-} from "@storybook/manager-api";
+
 import * as R from "ramda";
 import { convertArgTypeToArg } from "./tools";
 
 export const withRunner = makeDecorator({
   name: "withRunner",
-  parameterName: PARAM_KEY,
+  parameterName: PERMUT_KEY,
   wrapper: (storyFn, context) => {
     const storySource: StorySource = context.parameters[SOURCE_KEY];
-    const options: Options = context.parameters[PARAM_KEY] || {};
+    const options: Options = context.parameters[PERMUT_KEY] || {};
     const ref = React.useRef<HTMLDivElement>(null);
     // context conditions
     if (context.viewMode === "docs") {

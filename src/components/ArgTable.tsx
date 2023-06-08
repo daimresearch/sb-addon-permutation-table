@@ -17,7 +17,7 @@ import {
   type SortType,
 } from "@storybook/blocks";
 import type { ArgTypes } from "@storybook/types";
-import { EVENTS, PARAM_KEY, PER_STATE } from "../constants";
+import { EVENTS, PERMUT_KEY } from "../constants";
 import { styled, useTheme } from "@storybook/theming";
 import { Icons, IconButton } from "@storybook/components";
 import { StorySource } from "src/types";
@@ -155,7 +155,7 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
   const rows = useArgTypes();
   const ref = React.useRef(null);
   const { presetColors, sort } = useParameter<ControlsParameters>(
-    PARAM_KEY,
+    PERMUT_KEY,
     {}
   );
 
@@ -174,7 +174,7 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
   const theme = useTheme();
 
   const { path } = useStorybookState();
-  const param = useParameter(PARAM_KEY);
+  const param = useParameter(PERMUT_KEY);
 
   const withPresetColors = Object.entries(rows).reduce((acc, [key, arg]) => {
     if (arg?.control?.type !== "color" || arg?.control?.presetColors)
