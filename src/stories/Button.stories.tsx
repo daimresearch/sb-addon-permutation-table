@@ -22,6 +22,7 @@ const meta: PermutationMeta<typeof Button> = {
       scope: {
         Button,
       },
+      autoload: "all", // all | string[]
     },
   },
 };
@@ -47,7 +48,8 @@ export const Secondary: Story = {
       scope: {
         Button,
       },
-      deactivate: ["primary"],
+      autoload: ["foo", "bar", "size"],
+      deactivate: ["foo"],
     },
   },
 };
@@ -56,6 +58,16 @@ export const Large: Story = {
   args: {
     size: "large",
     label: "Button",
+  },
+  parameters: {
+    permutation: {
+      scope: {
+        Button,
+      },
+      // autoload: ["primary"],
+      autoload: ["foo", "bar"],
+      deactivate: ["foo"],
+    },
   },
 };
 

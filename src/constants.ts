@@ -1,8 +1,7 @@
 export const ADDON_ID = "storybook/permutation-viewer";
 export const PANEL_ID = `${ADDON_ID}/panel`;
-export const PARAM_KEY = `permutation`;
+export const PERMUT_KEY = `permutation`;
 export const SOURCE_KEY = "storySource";
-export const PER_STATE = "permutation-state";
 
 export const PACKAGE_NAME = "sb-addon-permutation-table";
 
