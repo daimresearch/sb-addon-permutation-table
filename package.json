@@ -1,6 +1,6 @@
 {
   "name": "sb-addon-permutation-table",
-  "version": "0.1.11",
+  "version": "0.1.2",
   "description": "Storybook addon presenting component with table",
   "keywords": [
     "storybook-addons",

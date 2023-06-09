@@ -2,7 +2,7 @@
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/107913240/239455269-15b3e7a3-26a1-4262-8f62-a0728d73a23c.png" alt="logo" width="150px"/>
   <h1>sb-addon-permutation-table</h1>
   <span><img src="https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg"/></span>
-  <span><img src="https://img.shields.io/badge/version-0.1.1-stable.svg"/></span>
+  <span><img src="https://img.shields.io/badge/version-0.1.2-stable.svg"/></span>
   <span><img src="https://badgen.net/badge/Built%20With/TypeScript/blue"/></span>
   <div>
   <strong><a href="./README.ko.md" target="_blank">Korean</a></strong> |
@@ -17,7 +17,7 @@
 
 This project is an addon that provides additional functionality to Storybook. In a separate panel, you can see the various aspects of the component as a table.
 
-This project was highly inspired by Datadog's design system, [DRUID](https://druids.datadoghq.com/), and we wanted to use the Component Permutation feature from DRUID in Storybook.
+This project was highly inspired by Datadog's design system, [DRUIDS](https://druids.datadoghq.com/), and we wanted to use the Component Permutation feature from DRUIDS in Storybook.
 
 ## Table of contents
 
@@ -26,6 +26,7 @@ This project was highly inspired by Datadog's design system, [DRUID](https://dru
   - [Requirements](#requirements)
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
+  - [Advance](#advance)
 - [Third-party libs](#third-party-libs)
 - [Demos](#demos)
 - [License](#license)
@@ -136,6 +137,105 @@ export const PermutationDisabled: Story = {
   parameters: {
     permutation: {
       deactivate: ["primary", "size"],
+    },
+  },
+};
+```
+
+### Advance
+
+#### Apply different settings to individual stories
+
+permuation parameters can applied separately. If you want to use permutation table on not a entire story but one story, you can set config like below
+
+```tsx
+
+const meta:PermutationMeta<type of Foo>= {
+  title:'Example/Foo',
+  component: Foo,
+  parameters: {
+    // This scope parameter can also be applied to individual stories
+    // but we don't recommend this causeof inconvenient
+    permutation: {
+      scope: {
+        Foo
+      }
+    }
+  }
+}
+
+export default meta
+export type Story = StoryObj<typeof Foo>
+
+
+// case that want to see Primary story without Permutation but not to Secondary story
+
+export const Primary:Story = () => {
+  return(
+    <Wrapper>
+      <Foo/>
+    </Wrapper>
+  )
+}
+
+export const Secondary: Story = {
+  parameters:{
+    storySource:{
+      source : "<Foo/>",
+      importPath: "import { Foo } from '@daim/component/Foo'"
+    }
+  }
+}
+
+
+```
+
+#### Activate autoload
+
+when autoload is enabled, permutation table is automatically be activated when the story is loaded.
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+  parameters: {
+    permutation: {
+      // Now all element that can be permuted are now active when story is loaded
+      autoload: "all",
+    },
+  },
+};
+```
+
+You can also enable only some attribute
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+  parameters: {
+    permuations: {
+      // only 'foo' and 'bar' attribute will be activated
+      autoload: ["foo", "bar"],
+    },
+  },
+};
+```
+
+If both autoload and deactivate are allowed, deactivate takes precedence.
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+  parameters: {
+    permuations: {
+      // only 'bar' attribute is permuted
+      autoload: ["foo", "bar"],
+      deactivate: ["foo"],
     },
   },
 };

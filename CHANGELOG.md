@@ -1,3 +1,9 @@
+## v.0.1.2
+
+### New Feature
+
+-[#13](https://github.com/daimresearch/sb-addon-permutation-table/issues/13) - add autoload feature. this feature enable every permutation at loadtime.
+
 ## v.0.1.1
 
 #### Bug Fixes

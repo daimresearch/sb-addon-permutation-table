@@ -2,7 +2,7 @@
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/107913240/239455269-15b3e7a3-26a1-4262-8f62-a0728d73a23c.png" alt="logo" width="150px"/>
   <h1>sb-addon-permutation-table</h1>
   <span><img src="https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg"/></span>
-  <span><img src="https://img.shields.io/badge/version-0.1.1-stable.svg"/></span>
+  <span><img src="https://img.shields.io/badge/version-0.1.2-stable.svg"/></span>
   <span><img src="https://badgen.net/badge/Built%20With/TypeScript/blue"/></span>
   <div>
   <strong><a href="./README.md" target="_blank">English</a></strong> |
@@ -18,7 +18,7 @@
 이 프로젝트는 Storybook에 추가 기능을 제공하기 위한 애드온입니다.
 별도의 패널 창을 통하여 컴포넌트의 다양한 모습을 테이블로서 확인할 수 있습니다.
 
-Datadog의 디자인 시스템인 [DRUID](https://druids.datadoghq.com/)에 크게 영감을 받은 프로젝트로, DRUID에서 보여주는 Component Permutation 기능을 Storybook에서도 사용하고자 제작하게 되었습니다.
+Datadog의 디자인 시스템인 [DRUIDS](https://druids.datadoghq.com/)에 크게 영감을 받은 프로젝트로, DRUIDS에서 보여주는 Component Permutation 기능을 Storybook에서도 사용하고자 제작하게 되었습니다.
 
 ## Table of contents
 
@@ -27,6 +27,7 @@ Datadog의 디자인 시스템인 [DRUID](https://druids.datadoghq.com/)에 크�
   - [Requirements](#requirements)
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
+  - [Advance](#advance)
 - [Third-party libs](#third-party-libs)
 - [Demos](#demos)
 - [License](#license)
@@ -134,6 +135,103 @@ export const PermutationDisabled: Story = {
   parameters: {
     permutation: {
       deactivate: ["primary", "size"],
+    },
+  },
+};
+```
+
+### Advance
+
+#### 각 스토리에 다른 설정 적용하기
+
+permutation parmeter는 개별적으로 적용이 가능합니다. 만약, Permutation table을 스토리 전체가 아니라, 단독 스토리에만 적용하고 싶다면, 아래와 같이 설정해주세요
+
+```tsx
+const meta:PermutationMeta<type of Foo> = {
+  title: 'Example/Foo',
+  component: Foo,
+  parameters:{
+    // scope 역시 개별 스토리에 따로 적용될 수 있으나, 불편하기 때문에  추천하지 않습니다
+    permutation :{
+      scope: {
+        Foo
+      }
+    }
+  }
+}
+
+export default meta
+export type Story = StoryObj<typeof Foo>
+
+// Primary story에서는 Permutation을 보고 싶지 않지만, Secondary story에서는 보고 싶은 경우
+
+export const Primary:Story = ()=>{
+  return (
+    <Wrapper>
+      <Foo/>
+    </Wrapper>
+  )
+}
+
+export const Secondary: Story = {
+  parameters: {
+    storySource:{
+      source: "<Foo/>",
+      importPath: "import { Foo } from '@daim/component/Foo'"
+    }
+  }
+}
+
+
+
+```
+
+### Activate autoload
+
+autoload가 활성화 되면, permutation table은 각 story가 로드 될 때 자동으로 활성화 됩니다.
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+  parameters: {
+    permutation: {
+      //이제 permutation 될 수 있는 모든 요소가 story 로드시 활성화 상태가 됩니다.
+      autoload: "all",
+    },
+  },
+};
+```
+
+일부 속성에 대해서만 활성화 역시 가능합니다
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+  parameters: {
+    permuations: {
+      // 'foo','bar' attribute만 활성화 됩니다.
+      autoload: ["foo", "bar"],
+    },
+  },
+};
+```
+
+만약, autoload와 deactivate 모두 활성화 되어있다면, deactivate가 우선권을 가집니다.
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: true,
+  },
+  parameters: {
+    permuations: {
+      // bar attribute만 활성화 됩니다.
+      autoload: ["foo", "bar"],
+      deactivate: ["foo"],
     },
   },
 };
