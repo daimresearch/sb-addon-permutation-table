@@ -50,12 +50,12 @@
     "storybook:build": "storybook build -o ./docs && touch ./docs/.nojekyll"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.11",
-    "@storybook/addon-interactions": "^7.0.11",
-    "@storybook/addon-links": "^7.0.11",
-    "@storybook/addon-mdx-gfm": "^7.0.11",
-    "@storybook/react": "^7.0.11",
-    "@storybook/react-vite": "^7.0.11",
+    "@storybook/addon-essentials": "^7.0.18",
+    "@storybook/addon-interactions": "^7.0.18",
+    "@storybook/addon-links": "^7.0.18",
+    "@storybook/addon-mdx-gfm": "^7.0.18",
+    "@storybook/react": "^7.0.18",
+    "@storybook/react-vite": "^7.0.18",
     "@storybook/testing-library": "^0.1.0",
     "@types/node": "^18.15.0",
     "@types/ramda": "^0.29.0",
@@ -68,7 +68,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
-    "storybook": "^7.0.11",
+    "storybook": "^7.0.18",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5",
     "vite": "^4.1.4"
