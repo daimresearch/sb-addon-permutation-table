@@ -3,3 +3,4 @@ build-storybook.log
 .DS_Store
 .env
 dist
+coverage/
