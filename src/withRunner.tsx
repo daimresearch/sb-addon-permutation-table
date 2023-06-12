@@ -7,7 +7,9 @@ import {
   useState,
   useMemo,
   useArgs,
+  useGlobals,
 } from "@storybook/preview-api";
+import { ThemeProvider } from "@storybook/theming";
 
 import { Preview } from "./components/Preview";
 import { EVENTS, PARAM_KEY, SOURCE_KEY } from "./constants";
@@ -20,6 +22,7 @@ import {
   useStorybookState,
   useAddonState,
 } from "@storybook/manager-api";
+import { makeTheme } from "./tools/theme";
 
 export const withRunner = makeDecorator({
   name: "withRunner",
@@ -83,6 +86,9 @@ export const withRunner = makeDecorator({
       },
     });
 
+    const [global] = useGlobals();
+    const theme = makeTheme(global.backgrounds?.value);
+
     const preview = (
       <div ref={ref}>
         <Preview
@@ -90,6 +96,7 @@ export const withRunner = makeDecorator({
           sourceList={sourceList}
           permutations={permutations}
           argTypes={context.argTypes}
+          theme={theme}
         />
       </div>
     );

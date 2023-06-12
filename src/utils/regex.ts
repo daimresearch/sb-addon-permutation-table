@@ -1,7 +1,9 @@
 export const attrExtractRegex = new RegExp(/(?<=<\w*\s)[^>/]*/, "g");
 
 export const attrMatchingRegex = (attr: string) =>
-  new RegExp(`${attr}(=({{)?("|').*("|')(}})?)?`, "g");
+  // new RegExp(`${attr}(=({{)?("|').*("|')(}})?)?`, "g");
+  // regex fix -> add word boundary,
+  new RegExp(`${attr}\b(=({{)?("|').*("|')(}})?)?`, "g");
 
 export const overOneSpaceRegex = new RegExp(/\s+/, "g");
 
