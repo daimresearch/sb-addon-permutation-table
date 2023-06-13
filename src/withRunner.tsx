@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-//useChannel까지는 필요 없을수 있다
 import {
   makeDecorator,
   useChannel,
@@ -10,51 +9,61 @@ import {
   useGlobals,
 } from "@storybook/preview-api";
 import { ThemeProvider } from "@storybook/theming";
-
 import { Preview } from "./components/Preview";
-import { EVENTS, PARAM_KEY, SOURCE_KEY } from "./constants";
+import { EVENTS, PERMUT_KEY, SOURCE_KEY } from "./constants";
 import { StorySource, Options, LiveProps } from "./types";
 import { Args } from "@storybook/types";
 import { sourceCodeWithArgPermutations } from "./tools";
-import {
-  useArgTypes,
-  useStorybookApi,
-  useStorybookState,
-  useAddonState,
-} from "@storybook/manager-api";
 import { makeTheme } from "./tools/theme";
+import * as R from "ramda";
+import { convertArgTypeToArg } from "./tools";
+
 
 export const withRunner = makeDecorator({
   name: "withRunner",
-  parameterName: PARAM_KEY,
+  parameterName: PERMUT_KEY,
   wrapper: (storyFn, context) => {
     const storySource: StorySource = context.parameters[SOURCE_KEY];
-    const options: Options = context.parameters[PARAM_KEY] || {};
+    const options: Options = context.parameters[PERMUT_KEY] || {};
     const ref = React.useRef<HTMLDivElement>(null);
+    // context conditions
+    if (context.viewMode === "docs") {
+      return storyFn(context);
+    }
+
+    // story conditions
+    if (options.disable || !storySource) {
+      return storyFn(context);
+    }
+
+    const autoload = context.parameters.permutation.autoload ?? [];
+    const deactivate = context.parameters.permutation.deactivate ?? [];
+    const argKeys = convertArgTypeToArg(context.argTypes);
+
+    const autoPermutation =
+      autoload === "all" ? argKeys.map((e: any) => e.prop) : autoload;
+
+    const filteredAutoPermutation = R.without(
+      deactivate,
+      autoPermutation
+    ) as string[];
 
     const scope = useMemo(() => {
       return { ...options.scope, args: context.args };
     }, [options.scope, context.args]);
 
-    if (options.disable || !storySource) {
-      return storyFn(context);
-    }
-
-    // context.component.name으로 이름 뽑을 수 있다.
-
-    // sourceListState를 arg 따라가게 하면 되지 않나?
-
     const [permutations, setPermutations] = useState<string[]>([]);
 
-    // control.color의 경우 렉이 생긴다.
+    useEffect(() => {
+      setPermutations(filteredAutoPermutation);
+    }, []);
+
     const sourceList = sourceCodeWithArgPermutations(
       storySource.source,
       context.argTypes,
       context.args,
       permutations
     );
-
-    // 여기서는 코드가 통으로 박히니까 setCode가 있긴 해야한다.
 
     useChannel({
       [EVENTS.SET_CODE]: (newValue: string) => {

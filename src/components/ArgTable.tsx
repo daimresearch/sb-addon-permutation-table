@@ -17,7 +17,7 @@ import {
   type SortType,
 } from "@storybook/blocks";
 import type { ArgTypes } from "@storybook/types";
-import { EVENTS, PARAM_KEY, PER_STATE } from "../constants";
+import { EVENTS, PERMUT_KEY } from "../constants";
 import { styled, useTheme } from "@storybook/theming";
 import { Icons, IconButton } from "@storybook/components";
 import { StorySource } from "src/types";
@@ -29,7 +29,7 @@ interface ControlsParameters {
   hideNoControlsWarning?: boolean;
 }
 
-const PermutationCell = styled.span`
+const PermutationCell = styled.span<any>`
   & {
     display: flex;
     align-items: center;
@@ -145,40 +145,36 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       return <div />;
   }
 };
+interface Props {
+  permutations: string[];
+}
 
-export const ArgTable: FC = () => {
+export const ArgTable: FC<Props> = ({ permutations }: Props) => {
   const [args, updateArgs, resetArgs] = useArgs();
   const [globals] = useGlobals();
   const rows = useArgTypes();
   const ref = React.useRef(null);
   const { presetColors, sort } = useParameter<ControlsParameters>(
-    PARAM_KEY,
+    PERMUT_KEY,
     {}
-  ); // 생략
-  // permutation State를 가져와볼까?
-  const [permutations, setPermutations] = useAddonState<string[]>(
-    PER_STATE,
-    []
   );
+
+  // permutation button color change
   const rowKeys = R.keys(rows);
 
-  React.useEffect(() => {
-    // remove all permutation activa
-    rowKeys.forEach((e) => {
-      const row = ref.current.querySelector(`[data-permutation="${e}"]`);
-      if (row) row.classList.remove("--selected");
-    });
-    // add all --selected by permutation state
-    permutations.forEach((e) => {
-      const row = ref.current.querySelector(`[data-permutation="${e}"]`);
-      if (row) row.classList.add("--selected");
-    });
-  }, [permutations]);
+  rowKeys.forEach((e) => {
+    const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
+    if (row) row.classList.remove("--selected");
+  });
+  permutations.forEach((e) => {
+    const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
+    if (row) row.classList.add("--selected");
+  });
 
   const theme = useTheme();
 
   const { path } = useStorybookState();
-  const param = useParameter(PARAM_KEY);
+  const param = useParameter(PERMUT_KEY);
 
   const withPresetColors = Object.entries(rows).reduce((acc, [key, arg]) => {
     if (arg?.control?.type !== "color" || arg?.control?.presetColors)

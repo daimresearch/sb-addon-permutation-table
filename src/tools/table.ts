@@ -12,7 +12,8 @@ export function getPreviewCode(
   permutations: string[],
   argTypes: ArgTypes<any>[] = []
 ) {
-  if (permutations.length <= 1)
+  const convertedList = getConvertedList(permutations, argTypes);
+  if (convertedList.length <= 1)
     return `<div>${mapJoin(
       (e, i) => `
     <div data-target='${getQuotelessAtt(e)}' key="${i}" ${
@@ -23,8 +24,6 @@ export function getPreviewCode(
     `,
       sourceList
     )}</div>`;
-
-  const convertedList = getConvertedList(permutations, argTypes);
 
   const [horizen, ...verticals] = convertedList;
 
