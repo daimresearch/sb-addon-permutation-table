@@ -64,6 +64,7 @@
     "@types/ramda": "^0.29.0",
     "@types/react": "^18.0.34",
     "@types/react-dom": "^18.2.1",
+    "@types/tinycolor2": "^1.4.3",
     "@vitejs/plugin-react": "^3.1.0",
     "auto": "^10.3.0",
     "boxen": "^5.0.1",
@@ -115,6 +116,7 @@
     "ramda": "^0.29.0",
     "react-live": "^4.0.0",
     "react-live-runner": "^1.0.5",
-    "react-runner": "^1.0.3"
+    "react-runner": "^1.0.3",
+    "tinycolor2": "^1.6.0"
   }
 }
