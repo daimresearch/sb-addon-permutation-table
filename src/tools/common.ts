@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { attrExtractRegex } from "src/utils/regex";
+import { attrExtractRegex } from "../utils/regex";
 
 export const extractAttributeFromTag = (tag: string) =>
   R.pipe(R.match(attrExtractRegex), R.head, R.defaultTo(""))(tag);

@@ -5,7 +5,7 @@
   <span><img src="https://img.shields.io/badge/version-0.1.2-stable.svg"/></span>
   <span><img src="https://badgen.net/badge/Built%20With/TypeScript/blue"/></span>
   <div>
-  <strong><a href="./README.ko.md" target="_blank">Korean</a></strong> |
+  <strong><a href="./README.md" target="_blank">English</a></strong> |
   <strong><a href="https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs" target="_blank">Demos</a></strong>
   </div>
 </div>
@@ -15,9 +15,10 @@
 
 ![demo](./static/demo.gif)
 
-This project is an addon that provides additional functionality to Storybook. In a separate panel, you can see the various aspects of the component as a table.
+이 프로젝트는 Storybook에 추가 기능을 제공하기 위한 애드온입니다.
+별도의 패널 창을 통하여 컴포넌트의 다양한 모습을 테이블로서 확인할 수 있습니다.
 
-This project was highly inspired by Datadog's design system, [DRUIDS](https://druids.datadoghq.com/), and we wanted to use the Component Permutation feature from DRUIDS in Storybook.
+Datadog의 디자인 시스템인 [DRUIDS](https://druids.datadoghq.com/)에 크게 영감을 받은 프로젝트로, DRUIDS에서 보여주는 Component Permutation 기능을 Storybook에서도 사용하고자 제작하게 되었습니다.
 
 ## Table of contents
 
@@ -33,9 +34,8 @@ This project was highly inspired by Datadog's design system, [DRUIDS](https://dr
 
 ### Feature
 
-- `Argument Control` : Manipulate the properties of your component directly. You can see what your component looks like in context.
-
-- `Permutation` : Provide a table of different views with combinations of properties. Compare and analyze the results of combinations at a glance.
+- `Argument Control`: 컴포넌트의 속성을 직접 조작할 수 있습니다. 상황에 맞는 컴포넌트의 모습을 확인할 수 있습니다.
+- `Permutation` : 여러 속성 조합에 대한 모습을 테이블로 제공합니다. 조합의 결과를 한 눈에 비교하고 분석할 수 있습니다
 
 ### Installation
 
@@ -48,11 +48,11 @@ This project was highly inspired by Datadog's design system, [DRUIDS](https://dr
 
 ### Why should I use it?
 
-`sb-addon-permutation` provides a quick glance of complex, multi-property component views. Developers will be able to debug and test components efficiently through the showcase provided.
+`sb-addon-permutation`를 사용하면 복잡하고 많은 속성을 가진 컴포넌트의 모습을 한 눈에 확인할 수 있습니다. 개발자는 애드온이 제공하는 쇼케이스를 통하여 효율적으로 컴포넌트를 디버깅하고, 테스트 할 수 있게 됩니다.
 
 ### Usage
 
-Add addon code in `.stories/main.ts` like below.
+`.stories/main.ts`에 아래와 같이 애드온을 추가합니다.
 
 ```typescript
 import type { StorybookConfig } from "@storybook/react-vite";
@@ -71,9 +71,8 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-After that, you'll need to pass arguments to each story to use the addon's features.
-
-For convenience, you can use the `PermutationMeta` type in your stories.
+이후, 애드온의 기능을 사용하려면 각 스토리에 인자를 전달해줘야합니다.
+편의를 위해 `PermutationMeta` 타입을 스토리에 적용할 수 있습니다.
 
 ```typescript
 // stories/Component.stories.(ts|tsx)
@@ -98,9 +97,8 @@ const meta: PermutationMeta<typeof YourComponent> = {
 };
 ```
 
-The addon will automatically use your component's type and make it available in the Permutation Panel.
-
-If you have a property that you don't want to use Permutation for, you can pass the name of that property to deactivate.
+애드온은 자동으로 컴포넌트의 타입을 사용하여, Permutation Panel에서 사용할 수 있도록 합니다.
+만약, Permutation을 사용하기 싫은 속성이 있다면, deactivate에 해당 속성의 이름을 전달하면 됩니다.
 
 ```typescript
 const meta: PermutationMeta<typeof YourComponent> = {
@@ -120,7 +118,7 @@ const meta: PermutationMeta<typeof YourComponent> = {
 };
 ```
 
-You can also apply them individually on a story by story basis.
+Story 단위로 개별 적용도 가능합니다.
 
 ```typescript
 export const Primary: Story = {
@@ -144,19 +142,17 @@ export const PermutationDisabled: Story = {
 
 ### Advance
 
-#### Apply different settings to individual stories
+#### 각 스토리에 다른 설정 적용하기
 
-permuation parameters can applied separately. If you want to use permutation table on not a entire story but one story, you can set config like below
+permutation parmeter는 개별적으로 적용이 가능합니다. 만약, Permutation table을 스토리 전체가 아니라, 단독 스토리에만 적용하고 싶다면, 아래와 같이 설정해주세요
 
 ```tsx
-
-const meta:PermutationMeta<type of Foo>= {
-  title:'Example/Foo',
+const meta:PermutationMeta<type of Foo> = {
+  title: 'Example/Foo',
   component: Foo,
-  parameters: {
-    // This scope parameter can also be applied to individual stories
-    // but we don't recommend this causeof inconvenient
-    permutation: {
+  parameters:{
+    // scope 역시 개별 스토리에 따로 적용될 수 있으나, 불편하기 때문에  추천하지 않습니다
+    permutation :{
       scope: {
         Foo
       }
@@ -167,11 +163,10 @@ const meta:PermutationMeta<type of Foo>= {
 export default meta
 export type Story = StoryObj<typeof Foo>
 
+// Primary story에서는 Permutation을 보고 싶지 않지만, Secondary story에서는 보고 싶은 경우
 
-// case that want to see Primary story without Permutation but not to Secondary story
-
-export const Primary:Story = () => {
-  return(
+export const Primary:Story = ()=>{
+  return (
     <Wrapper>
       <Foo/>
     </Wrapper>
@@ -179,20 +174,21 @@ export const Primary:Story = () => {
 }
 
 export const Secondary: Story = {
-  parameters:{
+  parameters: {
     storySource:{
-      source : "<Foo/>",
+      source: "<Foo/>",
       importPath: "import { Foo } from '@daim/component/Foo'"
     }
   }
 }
 
 
+
 ```
 
-#### Activate autoload
+### Activate autoload
 
-when autoload is enabled, permutation table is automatically be activated when the story is loaded.
+autoload가 활성화 되면, permutation table은 각 story가 로드 될 때 자동으로 활성화 됩니다.
 
 ```tsx
 export const Primary: Story = {
@@ -201,14 +197,14 @@ export const Primary: Story = {
   },
   parameters: {
     permutation: {
-      // Now all element that can be permuted are now active when story is loaded
+      //이제 permutation 될 수 있는 모든 요소가 story 로드시 활성화 상태가 됩니다.
       autoload: "all",
     },
   },
 };
 ```
 
-You can also enable only some attribute
+일부 속성에 대해서만 활성화 역시 가능합니다
 
 ```tsx
 export const Primary: Story = {
@@ -217,14 +213,14 @@ export const Primary: Story = {
   },
   parameters: {
     permuations: {
-      // only 'foo' and 'bar' attribute will be activated
+      // 'foo','bar' attribute만 활성화 됩니다.
       autoload: ["foo", "bar"],
     },
   },
 };
 ```
 
-If both autoload and deactivate are allowed, deactivate takes precedence.
+만약, autoload와 deactivate 모두 활성화 되어있다면, deactivate가 우선권을 가집니다.
 
 ```tsx
 export const Primary: Story = {
@@ -233,7 +229,7 @@ export const Primary: Story = {
   },
   parameters: {
     permuations: {
-      // only 'bar' attribute is permuted
+      // bar attribute만 활성화 됩니다.
       autoload: ["foo", "bar"],
       deactivate: ["foo"],
     },
@@ -243,7 +239,7 @@ export const Primary: Story = {
 
 ## Third-party libs
 
-[react-runner](https://github.com/nihgwu/react-runner) : Runs React code, used for Editor View
+[react-runner](https://github.com/nihgwu/react-runner) : React 코드를 실행시키고, Editor View를 위해 사용됨
 
 ### Demos
 

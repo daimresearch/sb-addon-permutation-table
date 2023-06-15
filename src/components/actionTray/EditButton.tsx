@@ -22,7 +22,7 @@ import { BaseButton, Tooltip, Arrow } from "./BaseButton";
 import { EVENTS } from "../../constants";
 import { extractAttributeFromTag, getQuotelessAtt } from "../../tools";
 import { Args } from "@storybook/types";
-import { attrSplitRegex } from "src/utils/regex";
+import { attrSplitRegex } from "../../utils/regex";
 
 interface Props {
   hoverTitle?: string;
