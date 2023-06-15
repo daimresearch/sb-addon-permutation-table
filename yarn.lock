@@ -7285,16 +7285,17 @@ safe-buffer@5.2.1, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sb-addon-permutation-table@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/sb-addon-permutation-table/-/sb-addon-permutation-table-0.1.2.tgz#3bfecd9df12057738d58cf360cf477683810392b"
-  integrity sha512-KST1JEpFp9mTkuTliyTQEdfNwr8p15Pxspz6GCRzBT56Xga1AijVyHpnROuoyG00y1cDZ6kI2VB1qDiCGQvLuA==
+sb-addon-permutation-table@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/sb-addon-permutation-table/-/sb-addon-permutation-table-0.1.3.tgz#f261a3f27cacc8ed325ae9b9638f180c0da8ef6e"
+  integrity sha512-2J62LW0RgHdJtdP518+W2B9FtvC8oxdwsJxr1E4u5pEZSRFZVWf8pv8cs7ZzMSfSGfFa3W3SB8orZfZWWWrsuQ==
   dependencies:
     "@floating-ui/react" "^0.24.1"
     ramda "^0.29.0"
     react-live "^4.0.0"
     react-live-runner "^1.0.5"
     react-runner "^1.0.3"
+    tinycolor2 "^1.6.0"
 
 scheduler@^0.23.0:
   version "0.23.0"
@@ -7769,6 +7770,11 @@ tiny-invariant@^1.0.6:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.1.tgz#8560808c916ef02ecfd55e66090df23a4b7aa642"
   integrity sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==
+
+tinycolor2@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.6.0.tgz#f98007460169b0263b97072c5ae92484ce02d09e"
+  integrity sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==
 
 tmpl@1.0.5:
   version "1.0.5"
