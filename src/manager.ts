@@ -1,6 +1,6 @@
 import React from "react";
 import { addons, types } from "@storybook/manager-api";
-import { ADDON_ID, PANEL_ID, PARAM_KEY } from "./constants";
+import { ADDON_ID, PANEL_ID, PERMUT_KEY } from "./constants";
 import { Panel } from "./Panel";
 import { P } from "@storybook/components";
 
@@ -17,6 +17,6 @@ addons.register(ADDON_ID, () => {
     title: "Permutation",
     match: ({ viewMode }) => viewMode === "story",
     render: Panel,
-    paramKey: PARAM_KEY,
+    paramKey: PERMUT_KEY,
   });
 });

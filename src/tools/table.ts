@@ -1,21 +1,19 @@
 import * as R from "ramda";
 import { cartesianProduct, getConvertedList, Property } from "./permutations";
-import { extractAttributeFromTag, getQuotelessAtt } from "./common";
+import { getQuotelessAtt } from "./common";
 import { Args, ArgTypes } from "@storybook/types";
 
 const indexMap = R.curry(R.addIndex(R.map));
 const mapJoin = (fn: (...args: any) => any, list: any[], token = "") =>
   R.pipe(indexMap(fn), R.join(token))(list);
 
-const isLastElement = (i: number, list: any[]) =>
-  i + 1 === list.length ? "--last" : "";
-
 export function getPreviewCode(
   sourceList: string[],
   permutations: string[],
   argTypes: ArgTypes<any>[] = []
 ) {
-  if (permutations.length <= 1)
+  const convertedList = getConvertedList(permutations, argTypes);
+  if (convertedList.length <= 1)
     return `<div>${mapJoin(
       (e, i) => `
     <div data-target='${getQuotelessAtt(e)}' key="${i}" ${
@@ -26,8 +24,6 @@ export function getPreviewCode(
     `,
       sourceList
     )}</div>`;
-
-  const convertedList = getConvertedList(permutations, argTypes);
 
   const [horizen, ...verticals] = convertedList;
 
@@ -63,12 +59,9 @@ const TableBody = (
   const tcontents = verticalCombinationList
     .map((elem, index) => {
       const values = mapJoin(
-        ([key, value], i) => `<td className="${isLastElement(
-          i,
-          R.toPairs(elem)
-        )}"
-        key="${key}-${i}"
-        >${value}</td>`,
+        ([key, value], i) => `
+          <td key="${key}-${i}">${value}</td>
+        `,
         R.toPairs(elem)
       );
 
@@ -98,11 +91,20 @@ const TableBody = (
         >${e}</td>`,
         R.flatten(matched)
       );
-
       return ` 
-    <tr key="${index}">
-        ${values}
-        ${options}
+    <tr key="${index}" className="${index === 0 ? "head" : ""}">
+      <td style={{padding:"0px"}} colSpan="${
+        verticals.length
+      }" className="stickyCol">
+        <table>
+          <tbody>
+            <tr>
+                  ${values}
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      ${options}
     </tr>
     `;
     })
@@ -120,22 +122,37 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
 
   return `
       <thead>
-      <tr role="row">
-                ${mapJoin(
-                  (e, i) =>
-                    `<th className="${isLastElement(i, verticals)}"></th>`,
-                  verticals
-                )}
-            <th colSpan="${horizen.values.length}">${horizen.prop}</th>
+        <tr role="row">
+          <th colSpan="${verticals.length}" className="stickyCol">
+            <table>
+              <thead>
+                <tr>
+                    ${mapJoin(
+                      (e, i) =>
+                        `
+                          <th></th>
+                          `,
+                      verticals
+                    )}
+                </tr>
+              </thead>
+            </table>
+          </th>
+          <th colSpan="${horizen.values.length}">${horizen.prop}</th>
         </tr>
-        <tr role='row' style={{boxShadow:'0px 1px #bbb'}}>
-            ${mapJoin(
-              (e, i) =>
-                `<th className="${isLastElement(i, verticals)}" key="${
-                  e.prop
-                }">${e.prop}</th>`,
-              verticals
-            )}
+        <tr role='row' className="outpost">
+        <td colSpan="${verticals.length}" className="stickyCol">
+        <table>
+          <thead>
+            <tr>
+                  ${mapJoin(
+                    (e, i) => `<th key="${e.prop}">${e.prop}</th>`,
+                    verticals
+                  )}
+            </tr>
+          </thead>
+        </table>
+          </td>
             ${mapJoin((e, i) => `<th key="${e}">${e}</th>`, horizen.values)}
         </tr>
     </thead>

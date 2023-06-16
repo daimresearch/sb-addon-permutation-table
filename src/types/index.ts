@@ -1,6 +1,14 @@
-import { JSXElementConstructor, ReactElement } from "react";
+import { ComponentProps, JSXElementConstructor, ReactElement } from "react";
 import { Scope } from "react-runner";
-import type { Args, ArgTypes, Meta, StoryObj } from "@storybook/react";
+import type {
+  Args,
+  ArgTypes,
+  Meta,
+  ReactRenderer,
+  StoryObj,
+} from "@storybook/react";
+import { ComponentAnnotations } from "@storybook/types";
+import { Button } from "src/stories/Button";
 
 type Language =
   | "markup"
@@ -102,6 +110,7 @@ export type PermutationMeta<T> = Meta<T> & {
     permutation?: {
       scope: Scope;
       deactivate?: ArgTypes<T>[];
+      autoload?: "all" | string[];
     };
   };
 };

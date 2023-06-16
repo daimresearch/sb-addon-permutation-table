@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { PermutationMeta } from "../types";
 
 const meta: PermutationMeta<typeof Button> = {
-  title: "Sample/Button",
+  title: "Sample/OpenButton",
   component: Button,
   // decorators,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
@@ -15,14 +15,13 @@ const meta: PermutationMeta<typeof Button> = {
   tags: ["autodocs"],
   parameters: {
     storySource: {
-      source: "<Button/>",
+      source: "<Button>hello</Button>",
       importPath: 'import { Button } from "@daim/component/Button"', // component naming convertion이 결정되지 않는 한, 그냥 string을 유지하는 것이 최선
     },
     permutation: {
       scope: {
         Button,
       },
-      autoload: "all", // all | string[]
     },
   },
 };
@@ -48,8 +47,7 @@ export const Secondary: Story = {
       scope: {
         Button,
       },
-      autoload: ["foo", "bar", "size"],
-      deactivate: ["foo"],
+      deactivate: ["primary"],
     },
   },
 };
@@ -58,16 +56,6 @@ export const Large: Story = {
   args: {
     size: "large",
     label: "Button",
-  },
-  parameters: {
-    permutation: {
-      scope: {
-        Button,
-      },
-      // autoload: ["primary"],
-      autoload: ["foo", "bar"],
-      deactivate: ["foo"],
-    },
   },
 };
 

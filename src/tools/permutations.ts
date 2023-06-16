@@ -60,18 +60,30 @@ export function injectArgPermToCode(code: string, args: Combination) {
 
     //remove matched props
     const regx = attrMatchingRegex(key);
-    const attReplaced = pre.replace(regx, ``);
 
-    // 전부 싹 지웠으니까.. 전부 덮어써도 될거 같은데.
+    const addTempSpace = (match: string) => " " + match;
+
+    const attReplaced = R.pipe(
+      R.replace(regx, ``),
+      R.replace(/\/?>/, addTempSpace)
+    )(pre);
+
     switch (typeof value) {
       case "boolean":
         return value ? attReplaced.replace(" ", ` ${key} `) : attReplaced;
-      default:
       case "string":
         return attReplaced.replace(" ", ` ${key}="${value}" `);
+      default:
+      case "object":
+        return attReplaced.replace(" ", ` ${key}={${JSON.stringify(value)}} `);
     }
   }, code);
-  return injected.replace(overOneSpaceRegex, " ");
+
+  const removeTempSpace = (match: string) => match.trim();
+  return R.pipe(
+    R.replace(overOneSpaceRegex, " "),
+    R.replace(/\s\/?>/, removeTempSpace)
+  )(injected);
 }
 
 export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
@@ -84,8 +96,7 @@ export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
         return { prop: key, values: value.options };
       case "boolean":
         return { prop: key, values: [true, false] };
-
-      //나머지 컬러...등등등은 생략
+      case "object":
       default:
         return;
     }

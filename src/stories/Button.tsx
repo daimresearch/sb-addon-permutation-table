@@ -13,7 +13,16 @@ interface ButtonProps {
   /**
    * How large should the button be?
    */
-  size?: "small" | "medium" | "large";
+  // size?: "small" | "medium" | "large" ;
+  size?:
+    | "small"
+    | "medium"
+    | "large"
+    | "xlarge"
+    | "xxlarge"
+    | "xxxlarge"
+    | "xxxxlarge"
+    | "mega";
   /**
    * Button contents
    */
@@ -22,6 +31,7 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: () => void;
+  fake?: boolean;
 }
 
 /**

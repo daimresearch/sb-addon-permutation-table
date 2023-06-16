@@ -31,16 +31,17 @@ interface Props {
   onClick?: (...arg: any) => void;
   code: string;
 }
+const emptyandObjProps = (e: string) => R.includes("{", e) || R.isEmpty(e);
 
 const getUpdatedArgs = (code: string) => {
   return R.pipe(
     R.apply(extractAttributeFromTag),
     R.match(attrSplitRegex),
-    R.reject(R.isEmpty),
+    R.reject(emptyandObjProps),
     R.reduce((pre, cur) => {
       const [key, value] = cur.split("=");
       if (!value) return { ...pre, [key]: true };
-      return { ...pre, [key]: value.replace(/"/g, "") };
+      return { ...pre, [key]: value.replace(/"|'/g, "") };
     }, {})
   )([code]);
 };
@@ -56,6 +57,7 @@ const defaultOnClick = (
     if (typeof value === "boolean") return false;
     return value;
   }, defaultArgs);
+
   const args = R.mergeRight(clearArgs, updatedArgs);
   updateArgs(args);
 };

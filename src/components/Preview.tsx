@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useRunner, UseRunnerProps } from "react-runner";
-import { styled } from "@storybook/theming";
-import { addons } from "@storybook/preview-api";
+import { background, styled } from "@storybook/theming";
+import { addons, useGlobals } from "@storybook/preview-api";
 import { EVENTS } from "../constants";
 import { getPreviewCode } from "../tools";
+import { SBTheme } from "src/tools/theme";
 
 interface Props extends Omit<UseRunnerProps, "code"> {
   sourceList: string[];
   permutations?: string[];
   argTypes: any;
+  theme?: SBTheme;
 }
 
 const Error = styled.pre`
@@ -23,7 +25,9 @@ const Error = styled.pre`
   white-space: pre-wrap;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+  sbTheme: SBTheme;
+}>`
   & .--active {
     background-color: rgb(255, 240, 249);
     box-shadow: inset 0px 0px 1px 2px rgb(253, 43, 141);
@@ -39,31 +43,30 @@ const Wrapper = styled.div`
     /* table-layout: auto; */
     table-layout: fixed;
     text-align: center;
+    //xx added
+    border-collapse: collapse;
+    color: ${(props) => props.sbTheme.color};
   }
+
+  //added
+  table .stickyCol {
+    box-shadow: inset -1px 0px 0px ${(props) => props.sbTheme.border};
+    position: sticky;
+    left: 0;
+    background-color: ${(props) => props.sbTheme.background};
+    z-index: 2;
+    transition: background-color 0.3s;
+  }
+
+  table thead tr.outpost {
+    border-bottom: solid 1px ${(props) => props.sbTheme.border};
+  }
+
   table thead tr th {
     position: relative;
   }
   table tbody tr td {
     position: relative;
-  }
-
-  table thead tr th.--last::after {
-    position: absolute;
-    content: "";
-    width: 1px;
-    height: 105%;
-    background-color: #bbbbbb;
-    top: 0;
-    right: 0;
-  }
-  table tbody tr td.--last::after {
-    position: absolute;
-    content: "";
-    width: 1px;
-    height: 105%;
-    background-color: #bbbbbb;
-    top: 0;
-    right: 0;
   }
 `;
 
@@ -73,6 +76,7 @@ export const Preview = ({
   permutations,
   sourceList,
   argTypes,
+  theme,
 }: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -109,7 +113,7 @@ export const Preview = ({
   }, [element]);
 
   return (
-    <Wrapper>
+    <Wrapper sbTheme={theme}>
       <div ref={ref}>
         {element}
         {error && <Error>{error}</Error>}
