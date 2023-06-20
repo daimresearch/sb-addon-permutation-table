@@ -1,0 +1,13 @@
+name: "Auto labeler"
+run-name: "Auto labeler"
+on:
+  issues:
+    types: [opened]
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Assign Labels"
+        uses: jimschubert/labeler-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

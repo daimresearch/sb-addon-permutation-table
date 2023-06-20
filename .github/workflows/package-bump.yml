@@ -1,0 +1,24 @@
+name: package-bum
+run-name: bump version of ${{github.repository}}
+on:
+  push:
+    branches:
+      - main
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR made by human
+        if: github.actor == 'dependabot[bot]'
+        run: echo "This is a dependabot PR, exiting..." && exit 1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Bump version
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          minor-wording: "#Minor, feat"
+          major-wording: "#Major, breaking"
+          patch-wording: "#Patch, fix"
+          target-branch: main
