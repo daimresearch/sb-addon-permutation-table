@@ -11,6 +11,7 @@
 </div>
 <hr/>
 
+- **Disclaimer: This is only guaranteed to work with React-based projects. Other frameworks may introduce unintended errors.**
 - **Typescript only Project. We don't have a plan to support Javascript**
 
 ![demo](./static/demo.gif)
