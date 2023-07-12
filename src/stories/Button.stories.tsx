@@ -14,15 +14,9 @@ const meta: PermutationMeta<typeof Button> = {
   },
   tags: ["autodocs"],
   parameters: {
-    storySource: {
-      source: "<Button/>",
-      importPath: 'import { Button } from "@daim/component/Button"', // component naming convertion이 결정되지 않는 한, 그냥 string을 유지하는 것이 최선
-    },
     permutation: {
-      scope: {
-        Button,
-      },
-      autoload: "all", // all | string[]
+      importPath: 'import { Button } from "@daim/component/Button"', // component naming convertion이 결정되지 않는 한, 그냥 string을 유지하는 것이 최선
+      autoload: "all",
     },
   },
 };
@@ -45,9 +39,6 @@ export const Secondary: Story = {
   },
   parameters: {
     permutation: {
-      scope: {
-        Button,
-      },
       autoload: ["foo", "bar", "size"],
       deactivate: ["foo"],
     },
@@ -61,10 +52,6 @@ export const Large: Story = {
   },
   parameters: {
     permutation: {
-      scope: {
-        Button,
-      },
-      // autoload: ["primary"],
       autoload: ["foo", "bar"],
       deactivate: ["foo"],
     },
