@@ -6,7 +6,9 @@ const meta: PermutationMeta<typeof Header> = {
   title: "Example/Header",
   component: Header,
   tags: ["autodocs"],
-  parameters: {},
+  parameters: {
+    permutation: {},
+  },
 };
 
 export default meta;

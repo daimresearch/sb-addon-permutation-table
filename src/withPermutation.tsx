@@ -8,8 +8,8 @@ import {
   storyCombinationGenerator,
 } from "./tools";
 import { Addon_LegacyStoryFn } from "@storybook/types";
-import { StoryTable } from "./StoryTable";
-import { Options } from "./types";
+import { StoryTable } from "./components/StoryTable";
+import { Permutation } from "./types";
 import { EVENTS, PERMUT_KEY } from "./constants";
 import { makeTheme, SBTheme } from "src/tools/theme";
 import { styled } from "@storybook/theming";
@@ -60,15 +60,16 @@ const Wrapper = styled.div<{
 `;
 
 export const withPermutation = makeDecorator({
-  name: "withTest",
-  parameterName: "test",
+  name: "withPermutation",
+  parameterName: PERMUT_KEY,
   wrapper: (storyFn: Addon_LegacyStoryFn<any>, context, setting) => {
     const { argTypes, args: defaultArgs } = context;
-    const options: Options = context.parameters[PERMUT_KEY] || {};
+    const options: Permutation = context.parameters[PERMUT_KEY] || {};
 
-    if (context.viewMode === "docs" || options.disable) {
+    if (context.viewMode === "docs") {
       return storyFn(context);
     }
+    // if (options.disable) return storyFn(context);
 
     const autoload = context.parameters.permutation?.autoload ?? [];
     const deactivate = context.parameters.permutation?.deactivate ?? [];
@@ -132,8 +133,7 @@ export const withPermutation = makeDecorator({
           />
         </Wrapper>
       );
-    } else {
-      return storyFn(context);
     }
+    return storyFn(context);
   },
 });

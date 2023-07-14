@@ -7,13 +7,13 @@ import {
   getQuotelessAtt,
   getDataTarget,
   Combination,
-} from "./tools";
+} from "../tools";
 import {
   Addon_LegacyStoryFn,
   Addon_StoryContext,
   Renderer,
 } from "@storybook/types";
-import { EVENTS } from "./constants";
+import { EVENTS } from "../constants";
 import { addons, useGlobals } from "@storybook/preview-api";
 interface Props {
   storyCombination: Combination[];

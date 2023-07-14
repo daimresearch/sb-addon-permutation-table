@@ -18,7 +18,7 @@ import { withPermutation } from "./withPermutation";
  */
 
 const preview: ProjectAnnotations<Renderer> = {
-  decorators: [withPermutation], // 여기에 withRunner 씌운 순간.iframe에서 로드가 된다
+  decorators: [withPermutation],
   globals: {
     [PERMUT_KEY]: false,
   },

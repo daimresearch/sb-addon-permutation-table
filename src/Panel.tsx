@@ -13,7 +13,7 @@ import { AddonPanel, Placeholder } from "@storybook/components";
 import { ADDON_ID, EVENTS } from "./constants";
 import { CodeEditor } from "./components/CodeEditor";
 import { styled } from "@storybook/theming";
-import { LiveProps, Options, Permutation } from "./types";
+import { Permutation } from "./types";
 import { PERMUT_KEY } from "./constants";
 import { convertArgTypeToArg, sourceCodeWithArgPermutations } from "./tools";
 import { ArgTable } from "./components/ArgTable";
@@ -74,7 +74,6 @@ export const Panel: React.FC<PanelProps> = (props) => {
   const api = useStorybookApi();
   const storyId = useStorybookState().storyId;
   const data = api.getData(storyId);
-  const title = data?.title.match(new RegExp(/(?<=\/)\w+$/g));
   const componentName = useParameter<Permutation | undefined>(
     PERMUT_KEY
   )?.componentName;
@@ -82,11 +81,6 @@ export const Panel: React.FC<PanelProps> = (props) => {
     useParameter<Permutation | undefined>(PERMUT_KEY)?.children ??
     "{{ children }}";
   const [args, updateArgs, resetArgs] = useArgs();
-  const tagName = componentName || title;
-  const source = args?.children
-    ? `<${tagName}>${children}</${tagName}>`
-    : `<${tagName}/>`;
-
   const importPath = useParameter<Permutation | undefined>(
     PERMUT_KEY
   )?.importPath;
@@ -97,13 +91,17 @@ export const Panel: React.FC<PanelProps> = (props) => {
     deactivate?: string[];
     autoload?: "all" | string[];
   }>(PERMUT_KEY);
-
   const states = useStorybookState();
   const argTypes = useArgTypes();
 
   const autoload = parameter?.autoload; // undefined or string[]
   const deactivate = parameter?.deactivate;
   const argKeys = convertArgTypeToArg(argTypes);
+  const title = data?.title.match(new RegExp(/(?<=\/)\w+$/g));
+  const tagName = componentName || title;
+  const source = args?.children
+    ? `<${tagName}>${children}</${tagName}>`
+    : `<${tagName}/>`;
 
   const sourceCode = sourceCodeWithArgPermutations(
     source,
@@ -155,8 +153,6 @@ export const Panel: React.FC<PanelProps> = (props) => {
     return () => setPermutations(() => []);
   }, [autoload, states.path]);
 
-  const options = useParameter<Options | undefined>(PERMUT_KEY);
-
   if (!data || !isStoryReady(data))
     return (
       <AddonPanel {...props} key={storyId}>
@@ -181,9 +177,6 @@ export const Panel: React.FC<PanelProps> = (props) => {
             <div style={{ position: "relative" }}>
               <CodeEditor
                 key={sourceCode[0]}
-                theme={options?.theme}
-                language={options?.language}
-                readOnly={options?.readOnly}
                 defaultValue={sourceCode[0]}
                 onKeyDown={stopPropagation}
                 disabled={true}

@@ -106,9 +106,7 @@
   "dependencies": {
     "@floating-ui/react": "^0.24.1",
     "ramda": "^0.29.0",
-    "react-live": "^4.0.0",
     "react-live-runner": "^1.0.5",
-    "react-runner": "^1.0.3",
     "tinycolor2": "^1.6.0"
   }
 }
