@@ -7,6 +7,7 @@ import { CodeEditor as Editor } from "react-live-runner";
 import { componentNameFromPathRegex } from "../utils/regex";
 import { CopyButton, Tray } from "./actionTray";
 
+// ** Deprecated Component ** //
 const Wrapper = styled.div`
   color: white;
   background: #2d2d2d;

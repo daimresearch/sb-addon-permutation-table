@@ -7,16 +7,9 @@ import { PermutationMeta } from "../types";
 const meta: PermutationMeta<typeof List> = {
   title: "Sample/List",
   component: List,
-
   parameters: {
-    storySource: {
-      source: "<List/>",
-      importPath: 'import { List } from "@daim/component/List"',
-    },
     permutation: {
-      scope: {
-        List,
-      },
+      importPath: 'import { List } from "@daim/component/List"',
     },
   },
 };
@@ -39,11 +32,5 @@ export const onProps: Story = {
   args: {
     title: { title: "Lorem, ipsum." },
     data: [{ label: "foo", type: "default" }],
-  },
-  parameters: {
-    storySource: {
-      source: `<List title={{'title':'foo'}} />`,
-      importPath: 'import { List } from "@daim/component/List"',
-    },
   },
 };
