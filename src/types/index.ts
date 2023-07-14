@@ -89,13 +89,6 @@ type PrismTheme = {
   }>;
 };
 
-// export type StorySource = {
-//   // source?: string;
-//   componentName?: string;
-//   importPath?: string;
-//   children?: string;
-// };
-
 export type Permutation = {
   componentName?: string;
   importPath?: string;
@@ -116,12 +109,6 @@ export type Options = {
 export type PermutationMeta<T> = Meta<T> & {
   parameters?: {
     [key: string]: any;
-    // storySource?: StorySource;
-    // permutation?: {
-    //   // scope: Scope;
-    //   deactivate?: ArgTypes<T>[];
-    //   autoload?: "all" | string[];
-    // };
     permutation?: Permutation;
   };
 };

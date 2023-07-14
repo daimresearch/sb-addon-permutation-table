@@ -82,12 +82,7 @@ export const Panel: React.FC<PanelProps> = (props) => {
     useParameter<Permutation | undefined>(PERMUT_KEY)?.children ??
     "{{ children }}";
   const [args, updateArgs, resetArgs] = useArgs();
-
   const tagName = componentName || title;
-
-  console.log("children", children);
-  console.log("arg children", args?.children);
-
   const source = args?.children
     ? `<${tagName}>${children}</${tagName}>`
     : `<${tagName}/>`;
