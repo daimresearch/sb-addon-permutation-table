@@ -9,7 +9,7 @@ const meta: PermutationMeta<typeof BreadCrumb> = {
   component: BreadCrumb,
   parameters: {
     permutation: {
-      importPath: "testme",
+      importPath: "import {BreadCrumb} from '@daim/component/BreadCrumb'",
     },
   },
 };

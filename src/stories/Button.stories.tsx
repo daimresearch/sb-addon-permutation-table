@@ -52,8 +52,7 @@ export const Large: Story = {
   },
   parameters: {
     permutation: {
-      autoload: ["foo", "bar"],
-      deactivate: ["foo"],
+      deactivate: ["primary"],
     },
   },
 };

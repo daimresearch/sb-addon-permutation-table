@@ -26,6 +26,11 @@ export const Default: Story = {
     ],
     title: { title: "hello" },
   },
+  parameters: {
+    permutation: {
+      autoload: ["color"],
+    },
+  },
 };
 
 export const onProps: Story = {
