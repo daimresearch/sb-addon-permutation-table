@@ -2,7 +2,7 @@
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/107913240/239455269-15b3e7a3-26a1-4262-8f62-a0728d73a23c.png" alt="logo" width="150px"/>
   <h1>sb-addon-permutation-table</h1>
   <span><img src="https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg"/></span>
-  <span><img src="https://img.shields.io/badge/version-0.1.3-stable.svg"/></span>
+  <span><img src="https://img.shields.io/github/package-json/v/daimresearch/sb-addon-permutation-table?color=brightgreen"/></span>
   <span><img src="https://badgen.net/badge/Built%20With/TypeScript/blue"/></span>
   <div>
   <strong><a href="./README.md" target="_blank">English</a></strong> |
@@ -28,7 +28,6 @@ Datadog의 디자인 시스템인 [DRUIDS](https://druids.datadoghq.com/)에 크
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
   - [Advance](#advance)
-- [Third-party libs](#third-party-libs)
 - [Demos](#demos)
 - [License](#license)
 
@@ -71,12 +70,26 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-이후, 애드온의 기능을 사용하려면 각 스토리에 인자를 전달해줘야합니다.
-편의를 위해 `PermutationMeta` 타입을 스토리에 적용할 수 있습니다.
+0.x 버전과 달리, 1 버전 부터는 애드온을 사용하기 위해 별도의 설정이 필요하지 않습니다.
+애드온은 각 Story의 요소를 자동으로 끌어옵니다. 하지만, parameter를 전달함으로서 좀 더 디테일한 설정이 가능합니다. Parameter로 받는 값들은 아래와 같습니다. parameter로 사용되는 값들은 Preview와는 무관하고, Panel에 사용되기 위해서 지정되는 값입니다.
+
+| 이름          | 설명                                                            | 타입       | 기본 값        |
+| ------------- | --------------------------------------------------------------- | ---------- | -------------- | --- |
+| componentName | Panel에 표시되는 컴포넌트의 이름                                | `string?`  | `Story의 이름` |
+| importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`  | `""`           |
+| children      | Story Component에 들어가는 children                             | `string?`  | `{{children}}` |
+| deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]` | `[]`           |
+| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `all       | string[]`      | []  |
+
+**parameter children에 관한 상세**
+
+children parameter는 Story에 argment로 children을 전달 하였을 때, Panel의 CodeEditor 영역에 표시 될 children의 코드의 형상을 뜻합니다. arg로 children을 전달하면 Preview에서 제대로 표시되지만, Panel에서는 별도의 parameter를 전달하지 않는 이상 children은 `{{children}}`으로 표시됩니다. Panel에 children의 형상을 보여주고 싶을 때, 이 parameter를 사용하십시오.
+
+[참고: Storybook에서 children을 arg로 사용하는 법](https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components#using-children-as-an-ar)
+
+사용 예시
 
 ```typescript
-// stories/Component.stories.(ts|tsx)
-
 import React from "react";
 import { PermutationMeta } from "sb-addon-permutation-table";
 import YourComponent from "YourComponent";
@@ -84,35 +97,12 @@ import YourComponent from "YourComponent";
 const meta: PermutationMeta<typeof YourComponent> = {
   //...
   parameters: {
-    storySource: {
-      source: <YourComponent />, // type what your component looks like
-      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
-    },
     permutation: {
-      scope: {
-        YourComponent, // add component here
-      },
-    },
-  },
-};
-```
-
-애드온은 자동으로 컴포넌트의 타입을 사용하여, Permutation Panel에서 사용할 수 있도록 합니다.
-만약, Permutation을 사용하기 싫은 속성이 있다면, deactivate에 해당 속성의 이름을 전달하면 됩니다.
-
-```typescript
-const meta: PermutationMeta<typeof YourComponent> = {
-  //...
-  parameters: {
-    storySource: {
-      source: <YourComponent />, // type what your component looks like
-      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
-    },
-    permutation: {
-      scope: {
-        YourComponent, // add component here
-      },
-      deactivate: ["foo", "bar"], // now property "foo" and "bar" disabled.
+      componentName: "Takahashi", // Component의 이름과 관계없이 Panel에서 "Takahashi" 로 표기.
+      importPath: "@yourLib/yourComponent", // Copy import path button을 클릭하면 복사 되는 값.
+      children: "<div>Chef of the diamond city</div>", // children으로 전달 될 값.
+      deactivate: ["foo", "bar"], //foo,bar를 비활성화
+      autoload: "all", // deactivate 된 속성을 제외하고 모든 속성을 활성화
     },
   },
 };
@@ -151,11 +141,9 @@ const meta:PermutationMeta<type of Foo> = {
   title: 'Example/Foo',
   component: Foo,
   parameters:{
-    // scope 역시 개별 스토리에 따로 적용될 수 있으나, 불편하기 때문에  추천하지 않습니다
+    // importPath 역시 개별 스토리에 따로 적용될 수 있으나, 불편하기 때문에  추천하지 않습니다
     permutation :{
-      scope: {
-        Foo
-      }
+      importPath : "import Foo from somewhere"
     }
   }
 }
@@ -175,9 +163,8 @@ export const Primary:Story = ()=>{
 
 export const Secondary: Story = {
   parameters: {
-    storySource:{
-      source: "<Foo/>",
-      importPath: "import { Foo } from '@daim/component/Foo'"
+    permutation:{
+      deactivate: ['bar']
     }
   }
 }
@@ -236,10 +223,6 @@ export const Primary: Story = {
   },
 };
 ```
-
-## Third-party libs
-
-[react-runner](https://github.com/nihgwu/react-runner) : React 코드를 실행시키고, Editor View를 위해 사용됨
 
 ### Demos
 
