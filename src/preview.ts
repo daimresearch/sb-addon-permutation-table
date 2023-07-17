@@ -10,7 +10,7 @@
  */
 import type { Renderer, ProjectAnnotations } from "@storybook/types";
 import { PERMUT_KEY } from "./constants";
-import { withRunner } from "./withRunner";
+import { withPermutation } from "./withPermutation";
 
 /**
  * Note: if you want to use JSX in this file, rename it to `preview.tsx`
@@ -18,7 +18,7 @@ import { withRunner } from "./withRunner";
  */
 
 const preview: ProjectAnnotations<Renderer> = {
-  decorators: [withRunner], // 여기에 withRunner 씌운 순간.iframe에서 로드가 된다
+  decorators: [withPermutation],
   globals: {
     [PERMUT_KEY]: false,
   },

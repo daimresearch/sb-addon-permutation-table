@@ -10,10 +10,7 @@ export interface Property {
 export interface Combination {
   [key: string]: any;
 }
-export const getConvertedList = (
-  permutations: string[],
-  argTypes: ArgTypes<any>[]
-) => {
+export const getConvertedList = (permutations: string[], argTypes: any) => {
   const convert = (elem: ArgTypes[0]) => {
     if (!permutations.includes(elem.name)) return;
     switch (elem.control.type) {
@@ -56,7 +53,10 @@ export function injectArgPermToCode(code: string, args: Combination) {
   if (!code || !args) return "";
 
   const injected = R.toPairs(args).reduceRight((pre, [key, value]) => {
+    // ** black list **
     if (key.startsWith("on")) return pre;
+    if (key === "children") return pre;
+    if (typeof value === "object") return pre;
 
     //remove matched props
     const regx = attrMatchingRegex(key);
@@ -135,3 +135,16 @@ export const mergeArgWithPermutions = (
   const argMerge = (elem: Combination) => R.mergeRight(arg, elem);
   return R.map(argMerge)(permuations);
 };
+
+export function getDataTarget(combination: Combination) {
+  const fn = (pre: string, [key, value]: any[]) => {
+    // ** black list **
+    if (key.startsWith("on") || !value) return `${pre}`;
+    if (key === "children") return `${pre}`;
+    if (typeof value === "object") return `${pre}`;
+
+    if (value === true) return `${pre} ${key}`;
+    return `${pre} ${key}=${value}`;
+  };
+  return R.pipe(R.toPairs, R.reduce(fn, ""), R.trim)(combination);
+}

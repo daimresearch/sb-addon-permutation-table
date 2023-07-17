@@ -13,14 +13,13 @@ import { AddonPanel, Placeholder } from "@storybook/components";
 import { ADDON_ID, EVENTS } from "./constants";
 import { CodeEditor } from "./components/CodeEditor";
 import { styled } from "@storybook/theming";
-import { LiveProps, StorySource, Options } from "./types";
-import { PERMUT_KEY, SOURCE_KEY } from "./constants";
+import { Permutation } from "./types";
+import { PERMUT_KEY } from "./constants";
 import { convertArgTypeToArg, sourceCodeWithArgPermutations } from "./tools";
 import { ArgTable } from "./components/ArgTable";
 import { Showcase } from "./components/Showcase";
 import { CopyButton, Tray } from "./components/actionTray";
 import { NoSource } from "./components/NoSource";
-import { API_LeafEntry } from "@storybook/types";
 import { isStoryReady } from "./utils/storybook";
 import * as R from "ramda";
 
@@ -72,9 +71,18 @@ const Display = styled.div`
 `;
 
 export const Panel: React.FC<PanelProps> = (props) => {
-  const source = useParameter<StorySource | undefined>(SOURCE_KEY)?.source;
-  const importPath = useParameter<StorySource | undefined>(
-    SOURCE_KEY
+  const api = useStorybookApi();
+  const storyId = useStorybookState().storyId;
+  const data = api.getData(storyId);
+  const componentName = useParameter<Permutation | undefined>(
+    PERMUT_KEY
+  )?.componentName;
+  const children =
+    useParameter<Permutation | undefined>(PERMUT_KEY)?.children ??
+    "{{ children }}";
+  const [args, updateArgs, resetArgs] = useArgs();
+  const importPath = useParameter<Permutation | undefined>(
+    PERMUT_KEY
   )?.importPath;
 
   const [permutations, setPermutations] = useState<string[]>([]);
@@ -83,16 +91,17 @@ export const Panel: React.FC<PanelProps> = (props) => {
     deactivate?: string[];
     autoload?: "all" | string[];
   }>(PERMUT_KEY);
-
-  const [args, updateArgs, resetArgs] = useArgs();
   const states = useStorybookState();
-  const api = useStorybookApi();
   const argTypes = useArgTypes();
 
-  //FIXME: set a default value during parameter don't exist (especially autoload)
   const autoload = parameter?.autoload; // undefined or string[]
   const deactivate = parameter?.deactivate;
   const argKeys = convertArgTypeToArg(argTypes);
+  const title = data?.title.match(new RegExp(/(?<=\/)\w+$/g));
+  const tagName = componentName || title;
+  const source = args?.children
+    ? `<${tagName}>${children}</${tagName}>`
+    : `<${tagName}/>`;
 
   const sourceCode = sourceCodeWithArgPermutations(
     source,
@@ -141,29 +150,13 @@ export const Panel: React.FC<PanelProps> = (props) => {
       setPermutations(filteredAutoPermutation);
     }
 
-    if (source && args) {
-      resetArgs();
-    }
     return () => setPermutations(() => []);
   }, [autoload, states.path]);
 
-  const options = useParameter<Options | undefined>(PERMUT_KEY);
-  const storyId = useStorybookState().storyId;
-  const data = api.getData(storyId);
-
-  if (!isStoryReady(data))
+  if (!data || !isStoryReady(data))
     return (
       <AddonPanel {...props} key={storyId}>
         <Placeholder>Initializing..</Placeholder>
-      </AddonPanel>
-    );
-
-  if (!source)
-    return (
-      <AddonPanel key={storyId} {...props}>
-        <Container>
-          <NoSource />
-        </Container>
       </AddonPanel>
     );
 
@@ -184,9 +177,6 @@ export const Panel: React.FC<PanelProps> = (props) => {
             <div style={{ position: "relative" }}>
               <CodeEditor
                 key={sourceCode[0]}
-                theme={options?.theme}
-                language={options?.language}
-                readOnly={options?.readOnly}
                 defaultValue={sourceCode[0]}
                 onKeyDown={stopPropagation}
                 disabled={true}
