@@ -20,7 +20,6 @@ import type { ArgTypes } from "@storybook/types";
 import { EVENTS, PERMUT_KEY } from "../constants";
 import { styled, useTheme } from "@storybook/theming";
 import { Icons, IconButton } from "@storybook/components";
-import { StorySource } from "src/types";
 
 interface ControlsParameters {
   sort?: SortType;
@@ -102,7 +101,7 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
     return rows[key].control.type;
   };
 
-  const cellType = getTypeofCell(rows, key, param.deactivate);
+  const cellType = getTypeofCell(rows, key, param?.deactivate);
 
   switch (cellType) {
     case "radio":
