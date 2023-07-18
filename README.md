@@ -20,6 +20,27 @@ This project is an addon that provides additional functionality to Storybook. In
 
 This project was highly inspired by Datadog's design system, [DRUIDS](https://druids.datadoghq.com/), and we wanted to use the Component Permutation feature from DRUIDS in Storybook.
 
+---
+
+🆘 **Help us make `sb-addon-permutation-table` even more awesome!** 🆘
+
+We've got a small favor to ask. After the v1.0.0 release, we tried making `sb-addon-permutation-table` work with Vue and Svelte too, but we hit a tiny roadblock. Our Addon is head over heels for a React hook, and it just can't get enough! As of now, `sb-addon-permutation-table` is still deeply in love with React and hasn't quite opened its heart to other frameworks.
+
+If we can get rid of React hooks in Panel and Preview, this marvalous addon will be shine regardless of what framework you are working on.
+
+Can you lend a helping hand? 🥺
+
+```
+-The Mighty Quest-
+
+1. Take a peek at our GitHub - the code is all there, waiting for your brilliance.
+2. Got any bright ideas? Quirky solutions? Magical spells 🧙‍♂️? Share them with us, and we'll be forever grateful!
+3. Spread the word! Let your fellow developers know about "sb-addon-permutation-table"'s quest for multi-framework love.
+4. Together, we can make "sb-addon-permutation-table" truly awesome for all frameworks out there! 🌟
+```
+
+---
+
 ## Table of contents
 
 - [Feature](#feature)

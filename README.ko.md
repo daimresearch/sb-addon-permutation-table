@@ -18,7 +18,23 @@
 이 프로젝트는 Storybook에 추가 기능을 제공하기 위한 애드온입니다.
 별도의 패널 창을 통하여 컴포넌트의 다양한 모습을 테이블로서 확인할 수 있습니다.
 
-Datadog의 디자인 시스템인 [DRUIDS](https://druids.datadoghq.com/)에 크게 영감을 받은 프로젝트로, DRUIDS에서 보여주는 Component Permutation 기능을 Storybook에서도 사용하고자 제작하게 되었습니다.
+🆘 **`sb-addon-permutation-table`을 더 멋지게 만드는 일을 도와주세요!** 🆘
+
+귀하께 작은 부탁이 있습니다. v.1.0.0 버전을 출시한 이후, 우리 팀은 `sb-addon-permutation-table`을 Vue와 Svelte에서도 사용 할 수 있도록 작업해왔지만, 예상치 못한 문제에 부딪혔습니다. 지금 애드온은 React hook에 너무 단단히 붙잡혀 있습니다! 그래서 지금까지도, `sb-addon-permutation-table`이 React와만 가깝게 지내고 있고, 다른 프레임워크에서 사용하지 못하는 상황입니다.
+
+만약 우리가 Panel과 Preview에서 React hook을 제거할 수만 있다면, 이 끝내주는 애드온은 프레임워크와 무관하게 사용할 수 있을 것입니다.
+
+우릴 도와주실 수 있나요? 🥺
+
+```
+-위대한 퀘스트-
+
+1. 저희 Github를 잠시 살펴보세요 - 우리의 모든 코드가 명석한 당신을 기다리고 있습니다
+2. 끝내주는 아이디어가 있다고요? 기깔난 솔루션이요? 그것도 아니면 마법 주문🧙‍♂️ 인가요? 뭐가 되었든, 저희에게 알려주세요! 정말 감사드릴께요!
+3. 널리 알려주세요! 동료들에게 멀티 프레임워크 지원을 위한 "sb-addon-permutation-table" 퀘스트를 공유해보세요.
+4. 함께한다면, 우리는 "sb-addon-permutation-table"을 모든 프레임워크를 위한 끝내주는 작품이 될 꺼에요! 🌟
+
+```
 
 ## Table of contents
 
