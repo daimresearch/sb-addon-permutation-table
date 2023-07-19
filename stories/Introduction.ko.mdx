@@ -26,7 +26,7 @@ Permutation-Table은 컴포넌트의 다양한 모습을 손쉽게 확인할 수
 
 ## 시작하기
 
-_면책조항: 이 애드온은 Typescript 프로젝트만을 지원하며, Storybook 7만을 위해 설계되었습니다. 타 환경에서는 정상적으로 동작하지 않을 수 있습니다._
+_면책조항: 이 애드온은 React Typescript 프로젝트만을 지원하며, Storybook 7만을 위해 설계되었습니다. 타 환경에서는 정상적으로 동작하지 않을 수 있습니다._
 
 0. 선수조건
 
@@ -55,7 +55,7 @@ const config = {
 };
 ```
 
-3. `.stories/your-component.stories.tsx`에 애드온을 위한 설정을 넣어주세요. `PermutationMeta` 타입을 사용한다면 쉽게 하실 수 있습니다.
+3.(선택사항) `.stories/your-component.stories.tsx`에 애드온을 위한 설정을 넣어주세요. `PermutationMeta` 타입을 사용한다면 쉽게 하실 수 있습니다.
 
 ```typescript
 // stories/Component.stories.(ts|tsx)
@@ -67,34 +67,11 @@ import YourComponent from "YourComponent";
 const meta: PermutationMeta<typeof YourComponent> = {
   //...
   parameters: {
-    storySource: {
-      source: <YourComponent />, // 컴포넌트가 어떤 형상을 갖췄는지
-      importPath: "import YourComponent from 'yourpackage", // package화 된 컴포넌트의 import path
-    },
     permutation: {
-      scope: {
-        YourComponent, // Story에서 보여질 컴포넌트 그 자체를 넣어주세요
-      },
-    },
-  },
-};
-```
-
-3.1. 만약 테이블로 확인하고 싶지 않은 속성이 있다면, `deactivate` 옵션을 사용하세요.
-
-```typescript
-const meta: PermutationMeta<typeof YourComponent> = {
-  //...
-  parameters: {
-    storySource: {
-      source: <YourComponent />, // 컴포넌트가 어떤 형상을 갖췄는지
-      importPath: "import YourComponent from 'yourpackage", // package화 된 컴포넌트의 import path
-    },
-    permutation: {
-      scope: {
-        YourComponent, // Story에서 보여질 컴포넌트 그 자체를 넣어주세요
-      },
-      deactivate: ["foo", "bar"], // 이제 "foo"와 "bar"는 테이블화 할 수 없습니다.
+      componentName: "Takahashi", // 이제 패널에서 컴포넌트의 기본 이름이 아니라, "Takahashi"로 표시됩니다.
+      importPath: "@yourLib/yourComponent", // "Copy import" 버튼을 눌렀을때 복사 되는 값입니다.
+      children: "<div>Chef of the diamond city</div>", // 컴포넌트의 children으로 표시 되는 값입니다.
+      deactivate: ["foo", "bar"], // foo, bar props를 비활성화 합니다.
     },
   },
 };

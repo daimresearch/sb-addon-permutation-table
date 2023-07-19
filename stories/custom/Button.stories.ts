@@ -8,13 +8,6 @@ const meta: PermutationMeta<typeof Button> = {
   argTypes: {
     backgroundColor: { control: "color" },
   },
-  parameters: {
-    permutation: {
-      scope: {
-        Button,
-      },
-    },
-  },
   args: {
     label: "Button",
   },

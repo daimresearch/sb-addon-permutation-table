@@ -20,12 +20,12 @@ const data = [{ title: "Mike" }, { title: "Lauriane" }];
 
 export const Primary: Story = {
   parameters: {
-    storySource: {
-      source: "<List />",
+    permutation: {
       importPath: 'import { List } from "./List"',
     },
   },
   args: {
     data,
+    color: "black",
   },
 };

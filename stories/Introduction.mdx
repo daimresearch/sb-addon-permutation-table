@@ -26,7 +26,7 @@ We recommend make a UI with [**Component Driven**](https://componentdriven.org) 
 
 ## Get started
 
-_Disclaimer: This addon only supports Typescript projects and is designed for Storybook 7. It may not work properly in other environments._
+_Disclaimer: This addon only supports Typescript projects with React and is designed for Storybook 7. It may not work properly in other environments._
 
 0. Perequisites
 
@@ -55,46 +55,23 @@ const config = {
 };
 ```
 
-3. Define config for your component in `.stories/your-component.stories.tsx`. Following by type `PermutationMeta` will make this step easy
+3.(optional) Define config for your component in `.stories/your-component.stories.tsx`. Following by type `PermutationMeta` will make this step easy
 
 ```typescript
 // stories/Component.stories.(ts|tsx)
 
 import React from "react";
-import { PermutationMeta } from "sb-addon-permutation-table";
+import { PermutationMeta } from "sb-addon-permutation-table"; // Not necessary, but it will help you to define the type of meta
 import YourComponent from "YourComponent";
 
 const meta: PermutationMeta<typeof YourComponent> = {
   //...
   parameters: {
-    storySource: {
-      source: <YourComponent />, // type what your component looks like
-      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
-    },
     permutation: {
-      scope: {
-        YourComponent, // add component here
-      },
-    },
-  },
-};
-```
-
-3.1. If you don't want to see specific props in the table, you can use `deactivate` option
-
-```typescript
-const meta: PermutationMeta<typeof YourComponent> = {
-  //...
-  parameters: {
-    storySource: {
-      source: <YourComponent />, // type what your component looks like
-      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
-    },
-    permutation: {
-      scope: {
-        YourComponent, // add component here
-      },
-      deactivate: ["foo", "bar"], // now property "foo" and "bar" disabled.
+      componentName: "Takahashi", // Now "Takahashi" will be shown in the panel, regardless of the component name
+      importPath: "@yourLib/yourComponent", // The value copied when you click the "Copy import" button
+      children: "<div>Chef of the diamond city</div>", // A value passed to children
+      deactivate: ["foo", "bar"], // Deactivate property foo, bar
     },
   },
 };

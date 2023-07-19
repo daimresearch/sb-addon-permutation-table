@@ -24,30 +24,18 @@ export const Primary: Story = {
     type: "primary",
   },
   parameters: {
-    storySource: {
-      source: "<Button />",
+    permutation: {
       importPath: "import { Button } from 'antd",
     },
   },
 };
-
-export const NoStorySource: Story = {
-  args: {
-    label: "No Story Source",
-    type: "primary",
-  },
-};
-
 export const PermutationDisabled: Story = {
   args: {
     label: "Button",
   },
   parameters: {
-    storySource: {
-      source: "<Button />",
-      importPath: "import { Button } from '@daim/component-library'",
-    },
     permutation: {
+      importPath: "import { Button } from '@daim/component-library'",
       deactivate: ["block", "type", "danger"],
     },
   },

@@ -22,13 +22,7 @@ const meta: PermutationMeta<typeof Card> = {
   },
   parameters: {
     permutation: {
-      scope: {
-        Card,
-        Button,
-      },
-    },
-    storySource: {
-      source: "<Card><Button>Nested</Button></Card>",
+      children: "<Card><Button>Nested</Button></Card>",
       importPath: "import { Button,Card } from 'antd'",
     },
   },
@@ -41,5 +35,6 @@ export const Primary: Story = {
   args: {
     size: "default",
     title: "Card Title",
+    children: "nested Component",
   },
 };

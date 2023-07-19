@@ -33,17 +33,9 @@ export const Primary: Story = {
     variant: "outlined",
   },
   parameters: {
-    storySource: {
-      source: "<Button />",
+    permutation: {
       importPath: 'import { Button } from "@mui/material"',
     },
-  },
-};
-
-export const NoStorySource: Story = {
-  args: {
-    label: "No Story Source",
-    color: "primary",
   },
 };
 
@@ -52,11 +44,8 @@ export const PermutationDisabled: Story = {
     label: "Button",
   },
   parameters: {
-    storySource: {
-      source: "<Button />",
-      importPath: 'import { Button } from "@mui/material"',
-    },
     permutation: {
+      importPath: 'import { Button } from "@mui/material"',
       deactivate: ["disabled", "size", "color", "variant"],
     },
   },
