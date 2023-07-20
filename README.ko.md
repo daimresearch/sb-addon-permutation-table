@@ -16,7 +16,7 @@
 ![demo](./static/demo.gif)
 
 이 프로젝트는 Storybook에 추가 기능을 제공하기 위한 애드온입니다.
-별도의 패널 창을 통하여 컴포넌트의 다양한 모습을 테이블로서 확인할 수 있습니다.
+별도의 패널 창을 통하여 component의 다양한 모습을 테이블로서 확인할 수 있습니다.
 
 🆘 **`sb-addon-permutation-table`을 더 멋지게 만드는 일을 도와주세요!** 🆘
 
@@ -45,11 +45,12 @@
 - [Usage](#usage)
   - [Advance](#advance)
 - [Demos](#demos)
+- [FAQ](#faq)
 - [License](#license)
 
 ### Feature
 
-- `Argument Control`: 컴포넌트의 속성을 직접 조작할 수 있습니다. 상황에 맞는 컴포넌트의 모습을 확인할 수 있습니다.
+- `Argument Control`: component의 속성을 직접 조작할 수 있습니다. 상황에 맞는 component의 모습을 확인할 수 있습니다.
 - `Permutation` : 여러 속성 조합에 대한 모습을 테이블로 제공합니다. 조합의 결과를 한 눈에 비교하고 분석할 수 있습니다
 
 ### Installation
@@ -63,7 +64,7 @@
 
 ### Why should I use it?
 
-`sb-addon-permutation`를 사용하면 복잡하고 많은 속성을 가진 컴포넌트의 모습을 한 눈에 확인할 수 있습니다. 개발자는 애드온이 제공하는 쇼케이스를 통하여 효율적으로 컴포넌트를 디버깅하고, 테스트 할 수 있게 됩니다.
+`sb-addon-permutation`를 사용하면 복잡하고 많은 속성을 가진 component의 모습을 한 눈에 확인할 수 있습니다. 개발자는 애드온이 제공하는 쇼케이스를 통하여 효율적으로 component를 디버깅하고, 테스트 할 수 있게 됩니다.
 
 ### Usage
 
@@ -91,7 +92,7 @@ export default config;
 
 | 이름          | 설명                                                            | 타입       | 기본 값        |
 | ------------- | --------------------------------------------------------------- | ---------- | -------------- |
-| componentName | Panel에 표시되는 컴포넌트의 이름                                | `string?`  | `Story의 이름` |
+| componentName | Panel에 표시되는 component의 이름                               | `string?`  | `Story의 이름` |
 | importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`  | `""`           |
 | children      | Story Component에 들어가는 children                             | `string?`  | `{{children}}` |
 | deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]` | `[]`           |
@@ -99,7 +100,7 @@ export default config;
 
 **parameter children에 관한 상세**
 
-children parameter는 Story에 argment로 children을 전달 하였을 때, Panel의 CodeEditor 영역에 표시 될 children의 코드의 형상을 뜻합니다. arg로 children을 전달하면 Preview에서 제대로 표시되지만, Panel에서는 별도의 parameter를 전달하지 않는 이상 children은 `{{children}}`으로 표시됩니다. Panel에 children의 형상을 보여주고 싶을 때, 이 parameter를 사용하십시오.
+children parameter는 Story에 argument로 children을 전달 하였을 때, Panel의 CodeEditor 영역에 표시 될 children의 코드의 형상을 뜻합니다. arg로 children을 전달하면 Preview에서 제대로 표시되지만, Panel에서는 별도의 parameter를 전달하지 않는 이상 children은 `{{children}}`으로 표시됩니다. Panel에 children의 형상을 보여주고 싶을 때, 이 parameter를 사용하십시오.
 
 [참고: Storybook에서 children을 arg로 사용하는 법](https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components#using-children-as-an-ar)
 
@@ -243,6 +244,50 @@ export const Primary: Story = {
 ### Demos
 
 [Demo Page](https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs)
+
+### FAQ
+
+**permutation을 story에서 활성화 시켰는데, 동일한 argument를 가진 component만 보여주고 있어요 🥲**
+
+혹시 decorator를 JSX의 형태로 사용하고 계신가요? 만약 그렇다면, context가 StoryFn에 제공되고 있는지 확인하세요. Permutation table은 context 없이는 동작하지 않습니다.
+
+이것을
+
+```tsx
+// .storybook/decorator.tsx
+
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>
+          <Story />
+        </ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+이렇게 바꾸세요 👍
+
+```tsx
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>{Story(context)}</ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+[어떻게 이게 가능한거지요?](https://storybook.js.org/docs/7.0/react/writing-stories/decorators#context-for-mocking)
+
+---
+
+만약 다른 문제가 있다면, [이슈](https://github.com/daimresearch/sb-addon-permutation-table/issues/new/choose)를 남겨서 저희에게 알려주세요
 
 ### License
 

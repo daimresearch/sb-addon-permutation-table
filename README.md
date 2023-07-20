@@ -24,7 +24,7 @@ This project was highly inspired by Datadog's design system, [DRUIDS](https://dr
 
 🆘 **Help us make `sb-addon-permutation-table` even more awesome!** 🆘
 
-We've got a small favor to ask. After the v1.0.0 release, we tried making `sb-addon-permutation-table` work with Vue and Svelte too, but we hit a tiny roadblock. Our Addon is head over heels for a React hook, and it just can't get enough! As of now, `sb-addon-permutation-table` is still deeply in love with React and hasn't quite opened its heart to other frameworks.
+After the v1.0.0 release, we tried making `sb-addon-permutation-table` work with Vue and Svelte too, but we hit a tiny roadblock. Our Addon is head over heels for a React hook, and it just can't get enough! As of now, it is still deeply in love with React and hasn't quite opened its heart to other frameworks.
 
 If we can get rid of React hooks in Panel and Preview, this marvalous addon will be shine regardless of what framework you are working on.
 
@@ -50,6 +50,7 @@ Can you lend a helping hand? 🥺
 - [Usage](#usage)
   - [Advance](#advance)
 - [Demos](#demos)
+- [FAQ](#faq)
 - [License](#license)
 
 ### Feature
@@ -276,6 +277,50 @@ export const Primary: Story = {
 ### Demos
 
 [Demo Page](https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs)
+
+### FAQ
+
+**I enabled permutation on the story, but it only shows components with the same arguments 🥲**
+
+Are you using a decorator as a form of JSX? If so, make sure that check context is provided to StoryFn properly. Permutation table doesn't work if context isn't provided
+
+Change this
+
+```tsx
+// .storybook/decorator.tsx
+
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>
+          <Story />
+        </ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+to this 👍
+
+```tsx
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>{Story(context)}</ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+[Check why this works](https://storybook.js.org/docs/7.0/react/writing-stories/decorators#context-for-mocking)
+
+---
+
+If you got another problem, make a [issue](https://github.com/daimresearch/sb-addon-permutation-table/issues/new/choose) to let us know
 
 ### License
 
