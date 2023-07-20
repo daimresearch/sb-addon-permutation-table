@@ -139,7 +139,7 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
     case "boolean":
       control.addEventListener("change", (e: ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation();
-        controlHandlerFn(key, e.target.checked);
+        controlHandlerFn(key, e.target.checked ?? e.target.value);
       });
       return (
         <PermutationCell data-permutation={key} className="body">
