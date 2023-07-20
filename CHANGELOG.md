@@ -1,8 +1,19 @@
+## v.0.1.3
+
+#### New Feature
+
+- Theme following table : Now permutation table changes color itself when storybook theme changed.
+- Column Fixed table : Columns representing properties is sticky now, in case the table gets too long horizontally
+
+#### Bug Fixes
+
+- Fixed an issue where changes were not reflected when manipulating the select button in the permutation panel
+
 ## v.0.1.2
 
-### New Feature
+#### New Feature
 
--[#13](https://github.com/daimresearch/sb-addon-permutation-table/issues/13) - add autoload feature. this feature enable every permutation at loadtime.
+- [#13](https://github.com/daimresearch/sb-addon-permutation-table/issues/13) - add autoload feature. this feature enable every permutation at loadtime.
 
 ## v.0.1.1
 

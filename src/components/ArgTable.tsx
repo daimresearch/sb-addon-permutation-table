@@ -122,6 +122,20 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
         </PermutationCell>
       );
     case "select":
+      control.addEventListener("change", (e: ChangeEvent<HTMLInputElement>) => {
+        e.stopPropagation();
+        controlHandlerFn(key, e.target.value);
+      });
+      return (
+        <PermutationCell data-permutation={key} className="body">
+          <IconButton
+            theme={theme}
+            onClick={(e: any) => permutationHandlerFn(e, key)}
+          >
+            <Icons icon="lightning" />
+          </IconButton>
+        </PermutationCell>
+      );
     case "boolean":
       control.addEventListener("change", (e: ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation();
