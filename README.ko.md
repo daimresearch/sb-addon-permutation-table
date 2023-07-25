@@ -91,12 +91,12 @@ export default config;
 애드온은 각 Story의 요소를 자동으로 끌어옵니다. 하지만, parameter를 전달함으로서 좀 더 디테일한 설정이 가능합니다. Parameter로 받는 값들은 아래와 같습니다. parameter로 사용되는 값들은 Preview와는 무관하고, Panel에 사용되기 위해서 지정되는 값입니다.
 
 | 이름          | 설명                                                            | 타입       | 기본 값        |
-| ------------- | --------------------------------------------------------------- | ---------- | -------------- |
+| ------------- | --------------------------------------------------------------- | ---------- | -------------- | ---- |
 | componentName | Panel에 표시되는 component의 이름                               | `string?`  | `Story의 이름` |
 | importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`  | `""`           |
 | children      | Story Component에 들어가는 children                             | `string?`  | `{{children}}` |
 | deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]` | `[]`           |
-| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `all       | string[]`      |
+| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `all       | string[]`      | `[]` |
 
 **parameter children에 관한 상세**
 
@@ -106,7 +106,7 @@ children parameter는 Story에 argument로 children을 전달 하였을 때, Pan
 
 사용 예시
 
-```typescript
+```tsx
 import React from "react";
 import { PermutationMeta } from "sb-addon-permutation-table";
 import YourComponent from "YourComponent";
@@ -127,7 +127,7 @@ const meta: PermutationMeta<typeof YourComponent> = {
 
 Story 단위로 개별 적용도 가능합니다.
 
-```typescript
+```tsx
 export const Primary: Story = {
   args: {
     primary: true,
@@ -283,7 +283,7 @@ export const decorators = [
 ];
 ```
 
-[어떻게 이게 가능한거지요?](https://storybook.js.org/docs/7.0/react/writing-stories/decorators#context-for-mocking)
+[왜 이렇게 써야하는 것이지요?](https://storybook.js.org/docs/7.0/react/writing-stories/decorators#context-for-mocking)
 
 ---
 
