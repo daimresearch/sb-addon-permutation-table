@@ -90,13 +90,13 @@ export default config;
 0.x 버전과 달리, 1 버전 부터는 애드온을 사용하기 위해 별도의 설정이 필요하지 않습니다.
 애드온은 각 Story의 요소를 자동으로 끌어옵니다. 하지만, parameter를 전달함으로서 좀 더 디테일한 설정이 가능합니다. Parameter로 받는 값들은 아래와 같습니다. parameter로 사용되는 값들은 Preview와는 무관하고, Panel에 사용되기 위해서 지정되는 값입니다.
 
-| 이름          | 설명                                                            | 타입       | 기본 값        |
-| ------------- | --------------------------------------------------------------- | ---------- | -------------- | ---- |
-| componentName | Panel에 표시되는 component의 이름                               | `string?`  | `Story의 이름` |
-| importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`  | `""`           |
-| children      | Story Component에 들어가는 children                             | `string?`  | `{{children}}` |
-| deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]` | `[]`           |
-| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `all       | string[]`      | `[]` |
+| 이름          | 설명                                                            | 타입               | 기본 값        |
+| ------------- | --------------------------------------------------------------- | ------------------ | -------------- |
+| componentName | Panel에 표시되는 component의 이름                               | `string?`          | `Story의 이름` |
+| importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`          | `""`           |
+| children      | Story Component에 들어가는 children                             | `string?`          | `{{children}}` |
+| deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]`         | `[]`           |
+| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `"all"` `string[]` | `[]`           |
 
 **parameter children에 관한 상세**
 

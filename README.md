@@ -96,13 +96,13 @@ export default config;
 Unlike version 0.x, starting with version 1, no configuration is required to use the add-on.
 The add-on automatically pulls in the elements from each Story, but you can be more granular by passing in a parameter. The values accepted as parameter are shown below. The values used as parameter are not related to Preview, but are specified for use in the Panel.
 
-| name          | description                                                                                                  | type       | default Value   |
-| ------------- | ------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ---- |
-| componentName | The name of the component that appears in the Panel                                                          | `string?`  | `name of Story` |
-| importPath    | The path of the component that is copied when the `Copy import path` button is clicked.                      | `string?`  | `""`            |
-| children      | children in the Story Component                                                                              | `string?`  | `{{children}}`  |
-| deactivate    | Property Name for which you do not want to use the Permutation feature                                       | `string[]` | `[]`            |
-| autoload      | When the Story is loaded, you can create a property that will be automatically activated without any clicks. | `all       | string[]`       | `[]` |
+| name          | description                                                                                                  | type               | default Value   |
+| ------------- | ------------------------------------------------------------------------------------------------------------ | ------------------ | --------------- |
+| componentName | The name of the component that appears in the Panel                                                          | `string?`          | `name of Story` |
+| importPath    | The path of the component that is copied when the `Copy import path` button is clicked.                      | `string?`          | `""`            |
+| children      | children in the Story Component                                                                              | `string?`          | `{{children}}`  |
+| deactivate    | Property Name for which you do not want to use the Permutation feature                                       | `string[]`         | `[]`            |
+| autoload      | When the Story is loaded, you can create a property that will be automatically activated without any clicks. | `"all"` `string[]` | `[]`            |
 
 **More about the parameter children**
 
