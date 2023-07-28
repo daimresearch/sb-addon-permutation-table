@@ -48,6 +48,7 @@ Can you lend a helping hand? 🥺
   - [Requirements](#requirements)
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
+  - [Example](#example)
   - [Advance](#advance)
 - [Demos](#demos)
 - [FAQ](#faq)
@@ -110,7 +111,9 @@ The children parameter refers to the shape of the children's code that will be d
 
 [See also: How to use children as an arg in Storybook](https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components#using-children-as-an-ar)
 
-Usage
+#### Example
+
+The addon will automatically use your component's type and make it available in the Permutation Panel.
 
 ```tsx
 // stories/Component.stories.(ts|tsx)
@@ -133,29 +136,7 @@ const meta: PermutationMeta<typeof YourComponent> = {
 };
 ```
 
-The addon will automatically use your component's type and make it available in the Permutation Panel.
-
-If you have a property that you don't want to use Permutation for, you can pass the name of that property to deactivate.
-
-```tsx
-const meta: PermutationMeta<typeof YourComponent> = {
-  //...
-  parameters: {
-    storySource: {
-      source: <YourComponent />, // type what your component looks like
-      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
-    },
-    permutation: {
-      scope: {
-        YourComponent, // add component here
-      },
-      deactivate: ["foo", "bar"], // now property "foo" and "bar" disabled.
-    },
-  },
-};
-```
-
-You can also apply them individually on a story by story basis.
+You can also apply parameters individually on a story by story basis.
 
 ```tsx
 export const Primary: Story = {
@@ -165,7 +146,7 @@ export const Primary: Story = {
   },
 };
 
-export const PermutationDisabled: Story = {
+export const PermutationDeactivate: Story = {
   args:{
     label:'Hello World'
   }
@@ -178,51 +159,6 @@ export const PermutationDisabled: Story = {
 ```
 
 ### Advance
-
-#### Apply different settings to individual stories
-
-permuation parameters can applied separately. If you want to use permutation table on not a entire story but one story, you can set config like below
-
-```tsx
-
-const meta:PermutationMeta<type of Foo>= {
-  title:'Example/Foo',
-  component: Foo,
-  parameters: {
-    permutation: {
-    // This importPath parameter can also be applied to individual stories
-    // but we don't recommend this causeof inconvenien다
-    permutation :{
-      importPath : "import Foo from somewhere"
-    }
-    }
-  }
-}
-
-export default meta
-export type Story = StoryObj<typeof Foo>
-
-
-// case that want to see Primary story without Permutation but not to Secondary story
-
-export const Primary:Story = () => {
-  return(
-    <Wrapper>
-      <Foo/>
-    </Wrapper>
-  )
-}
-
-export const Secondary: Story = {
-  parameters:{
-    permutation:{
-      deactivate: ['bar']
-    }
-  }
-}
-
-
-```
 
 #### Activate autoload
 

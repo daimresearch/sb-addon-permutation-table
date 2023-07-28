@@ -43,6 +43,7 @@
   - [Requirements](#requirements)
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
+  - [Example](#example)
   - [Advance](#advance)
 - [Demos](#demos)
 - [FAQ](#faq)
@@ -104,7 +105,7 @@ children parameter는 Story에 argument로 children을 전달 하였을 때, Pan
 
 [참고: Storybook에서 children을 arg로 사용하는 법](https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components#using-children-as-an-ar)
 
-사용 예시
+#### Example
 
 ```tsx
 import React from "react";
@@ -135,7 +136,7 @@ export const Primary: Story = {
   },
 };
 
-export const PermutationDisabled: Story = {
+export const PermutationDeactivate: Story = {
   args:{
     label:'Hello World'
   }
@@ -148,47 +149,6 @@ export const PermutationDisabled: Story = {
 ```
 
 ### Advance
-
-#### 각 스토리에 다른 설정 적용하기
-
-permutation parmeter는 개별적으로 적용이 가능합니다. 만약, Permutation table을 스토리 전체가 아니라, 단독 스토리에만 적용하고 싶다면, 아래와 같이 설정해주세요
-
-```tsx
-const meta:PermutationMeta<type of Foo> = {
-  title: 'Example/Foo',
-  component: Foo,
-  parameters:{
-    // importPath 역시 개별 스토리에 따로 적용될 수 있으나, 불편하기 때문에  추천하지 않습니다
-    permutation :{
-      importPath : "import Foo from somewhere"
-    }
-  }
-}
-
-export default meta
-export type Story = StoryObj<typeof Foo>
-
-// Primary story에서는 Permutation을 보고 싶지 않지만, Secondary story에서는 보고 싶은 경우
-
-export const Primary:Story = ()=>{
-  return (
-    <Wrapper>
-      <Foo/>
-    </Wrapper>
-  )
-}
-
-export const Secondary: Story = {
-  parameters: {
-    permutation:{
-      deactivate: ['bar']
-    }
-  }
-}
-
-
-
-```
 
 ### Activate autoload
 
