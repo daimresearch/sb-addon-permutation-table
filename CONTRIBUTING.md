@@ -41,7 +41,7 @@ When submitting a pull request, please provide the following information:
 - Any relevant information or context that may help with the review process.
 
 If your pull request contains changes of code, make PR to `dev` branch.
-otherwise, make PR to `maintenance` branch.
+otherwise, make PR to `main` branch.
 
 ## Contact
 
