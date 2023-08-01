@@ -22,23 +22,21 @@ const Wrapper = styled.div<{
     box-shadow: inset 0px 0px 1px 2px rgb(253, 43, 141);
   }
 
-  table td,
-  th {
-    width: auto;
-    min-width: 50px;
-    padding: 0.5em;
-  }
-  table {
-    /* table-layout: auto; */
+  //  table#permutation-table td,
+  //  th {
+  //    width: auto;
+  //    min-width: 50px;
+  //    padding: 0.5em;
+  //  }
+  table#permutation-table {
     table-layout: fixed;
     text-align: center;
-    //xx added
     border-collapse: collapse;
     color: ${(props) => props.sbTheme.color};
   }
 
   //added
-  table .stickyCol {
+  table#permutation-table .stickyCol {
     box-shadow: inset -1px 0px 0px ${(props) => props.sbTheme.border};
     position: sticky;
     left: 0;
@@ -47,15 +45,29 @@ const Wrapper = styled.div<{
     transition: background-color 0.3s;
   }
 
-  table thead tr.outpost {
+  table#permutation-table thead tr.outpost {
     border-bottom: solid 1px ${(props) => props.sbTheme.border};
   }
 
-  table thead tr th {
+  table#permutation-table .permutation-inner-table {
     position: relative;
+    width: 100%;
   }
-  table tbody tr td {
-    position: relative;
+  table#permutation-table .permutation-inner-table td,
+  th {
+    width: auto;
+    min-width: 50px;
+    padding: 0.5em;
+  }
+
+  table#permutation-table .permutation-inner-table tr {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
+
+  table#permutation-table [role="component"] {
+    padding: 1em;
   }
 `;
 
