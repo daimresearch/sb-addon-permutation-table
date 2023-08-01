@@ -74,7 +74,7 @@ export function StoryTable({
   }
   return (
     <div ref={ref}>
-      <table>
+      <table id="permutation-table">
         {TableHead(horizen, verticals)}
         {TableBody(horizen, verticals, storyFn, context)}
       </table>
