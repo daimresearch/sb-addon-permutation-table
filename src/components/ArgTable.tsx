@@ -17,7 +17,7 @@ import {
   type SortType,
 } from "@storybook/blocks";
 import type { ArgTypes } from "@storybook/types";
-import { EVENTS, PERMUT_KEY } from "../constants";
+import { EVENTS, PANEL_ID, PERMUT_KEY } from "../constants";
 import { styled, useTheme } from "@storybook/theming";
 import { Icons, IconButton } from "@storybook/components";
 
@@ -164,7 +164,7 @@ interface Props {
 }
 
 export const ArgTable: FC<Props> = ({ permutations }: Props) => {
-  const [args, updateArgs, resetArgs] = useArgs();
+  let [args, updateArgs, resetArgs] = useArgs();
   const [globals] = useGlobals();
   const rows = useArgTypes();
   const ref = React.useRef(null);
@@ -173,33 +173,10 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
     {}
   );
 
-  // permutation button color change
-  const rowKeys = R.keys(rows);
+  const { path, selectedPanel } = useStorybookState();
 
-  rowKeys.forEach((e) => {
-    const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
-    if (row) row.classList.remove("--selected");
-  });
-  permutations.forEach((e) => {
-    const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
-    if (row) row.classList.add("--selected");
-  });
-
-  const theme = useTheme();
-
-  const { path } = useStorybookState();
-  const param = useParameter(PERMUT_KEY);
-
-  const withPresetColors = Object.entries(rows).reduce((acc, [key, arg]) => {
-    if (arg?.control?.type !== "color" || arg?.control?.presetColors)
-      acc[key] = arg;
-    else acc[key] = { ...arg, control: { ...arg.control, presetColors } };
-    return acc;
-  }, {} as ArgTypes);
-
-  // render another column on arg Table
   React.useEffect(() => {
-    if (ref.current) {
+    if (ref.current && selectedPanel === PANEL_ID) {
       const table = ref.current.querySelector("table") as Element;
       if (table) {
         const headtr = table.querySelector("thead tr");
@@ -214,7 +191,7 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
           render(newElem, node);
         }
         if (bodytr) {
-          bodytr.forEach((tr) => {
+          bodytr.forEach(async (tr) => {
             const node = tr.appendChild(document.createElement("td"));
             const newElem = React.createElement(PermTableBody, {
               rows: rows,
@@ -223,13 +200,59 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
               updateArgs,
               param,
             });
-            render(newElem, node);
+
+            render(newElem, node, () => {
+              permutations.forEach((e) => {
+                const row = ref.current?.querySelector(
+                  `[data-permutation="${e}"]`
+                );
+                if (row) row.classList.add("--selected");
+              });
+            });
           });
         }
       }
     }
-  }, [path]);
+  }, [selectedPanel]);
 
+  if (ref.current) {
+    const rowKeys = R.keys(rows);
+    rowKeys.forEach((e) => {
+      const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
+      if (row) row.classList.remove("--selected");
+    });
+    permutations.forEach((e) => {
+      const row = ref.current?.querySelector(`[data-permutation="${e}"]`);
+      if (row) row.classList.add("--selected");
+    });
+  }
+
+  // permutation button color change
+  if (selectedPanel !== PANEL_ID) {
+    // XXX:  don't provide updateArgs and resetArgs when not in addon panel
+    //also, rendering Edited ArgsTable causing Permutation column to be in the middle
+    // need more digging to find out why
+    //  ref: https://github.com/storybookjs/storybook/blob/next/code/ui/blocks/src/blocks/ArgsTable.tsx (line 184)
+    return <ArgsTable {...{ key: path, rows, args, tabs: {} }} />;
+  }
+
+  // if (selectedPanel !== PANEL_ID) {
+  //   // 그냥 상태만 갱신하면 .... Permutation column이 중간으로 끼어들어진다
+  //   updateArgs = null;
+  //   resetArgs = null;
+  //   args = null;
+  // }
+  const theme = useTheme();
+  const param = useParameter(PERMUT_KEY);
+
+  const withPresetColors = Object.entries(rows).reduce((acc, [key, arg]) => {
+    if (arg?.control?.type !== "color" || arg?.control?.presetColors)
+      acc[key] = arg;
+    else acc[key] = { ...arg, control: { ...arg.control, presetColors } };
+    return acc;
+  }, {} as ArgTypes);
+
+  // render another column on arg Table
   return (
     <div ref={ref}>
       <ArgsTable
