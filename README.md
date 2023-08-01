@@ -24,7 +24,7 @@ This project was highly inspired by Datadog's design system, [DRUIDS](https://dr
 
 🆘 **Help us make `sb-addon-permutation-table` even more awesome!** 🆘
 
-We've got a small favor to ask. After the v1.0.0 release, we tried making `sb-addon-permutation-table` work with Vue and Svelte too, but we hit a tiny roadblock. Our Addon is head over heels for a React hook, and it just can't get enough! As of now, `sb-addon-permutation-table` is still deeply in love with React and hasn't quite opened its heart to other frameworks.
+After the v1.0.0 release, we tried making `sb-addon-permutation-table` work with Vue and Svelte too, but we hit a tiny roadblock. Our Addon is head over heels for a React hook, and it just can't get enough! As of now, it is still deeply in love with React and hasn't quite opened its heart to other frameworks.
 
 If we can get rid of React hooks in Panel and Preview, this marvalous addon will be shine regardless of what framework you are working on.
 
@@ -48,8 +48,10 @@ Can you lend a helping hand? 🥺
   - [Requirements](#requirements)
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
+  - [Example](#example)
   - [Advance](#advance)
 - [Demos](#demos)
+- [FAQ](#faq)
 - [License](#license)
 
 ### Feature
@@ -95,13 +97,13 @@ export default config;
 Unlike version 0.x, starting with version 1, no configuration is required to use the add-on.
 The add-on automatically pulls in the elements from each Story, but you can be more granular by passing in a parameter. The values accepted as parameter are shown below. The values used as parameter are not related to Preview, but are specified for use in the Panel.
 
-| name          | description                                                                                                  | type       | default Value  |
-| ------------- | ------------------------------------------------------------------------------------------------------------ | ---------- | -------------- |
-| componentName | The name of the component that appears in the Panel                                                          | `string?`  | `Story의 이름` |
-| importPath    | The path of the component that is copied when the `Copy import path` button is clicked.                      | `string?`  | `""`           |
-| children      | children in the Story Component                                                                              | `string?`  | `{{children}}` |
-| deactivate    | Property Name for which you do not want to use the Permutation feature                                       | `string[]` | `[]`           |
-| autoload      | When the Story is loaded, you can create a property that will be automatically activated without any clicks. | `all       | string[]`      |
+| name          | description                                                                                                  | type               | default Value   |
+| ------------- | ------------------------------------------------------------------------------------------------------------ | ------------------ | --------------- |
+| componentName | The name of the component that appears in the Panel                                                          | `string?`          | `name of Story` |
+| importPath    | The path of the component that is copied when the `Copy import path` button is clicked.                      | `string?`          | `""`            |
+| children      | children in the Story Component                                                                              | `string?`          | `{{children}}`  |
+| deactivate    | Property Name for which you do not want to use the Permutation feature                                       | `string[]`         | `[]`            |
+| autoload      | When the Story is loaded, you can create a property that will be automatically activated without any clicks. | `"all"` `string[]` | `[]`            |
 
 **More about the parameter children**
 
@@ -109,9 +111,11 @@ The children parameter refers to the shape of the children's code that will be d
 
 [See also: How to use children as an arg in Storybook](https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components#using-children-as-an-ar)
 
-Usage
+#### Example
 
-```typescript
+The addon will automatically use your component's type and make it available in the Permutation Panel.
+
+```tsx
 // stories/Component.stories.(ts|tsx)
 
 import React from "react";
@@ -132,30 +136,9 @@ const meta: PermutationMeta<typeof YourComponent> = {
 };
 ```
 
-The addon will automatically use your component's type and make it available in the Permutation Panel.
+You can also apply parameters individually on a story by story basis.
 
-If you have a property that you don't want to use Permutation for, you can pass the name of that property to deactivate.
-
-````typescript
-const meta: PermutationMeta<typeof YourComponent> = {
-  //...
-  parameters: {
-    storySource: {
-      source: <YourComponent />, // type what your component looks like
-      importPath: "import YourComponent from 'yourpackage", // import path of packaged component
-    },
-    permutation: {
-      scope: {
-        YourComponent, // add component here
-      },
-      deactivate: ["foo", "bar"], // now property "foo" and "bar" disabled.
-    },
-  },
-};
-
-You can also apply them individually on a story by story basis.
-
-```typescript
+```tsx
 export const Primary: Story = {
   args: {
     primary: true,
@@ -163,7 +146,7 @@ export const Primary: Story = {
   },
 };
 
-export const PermutationDisabled: Story = {
+export const PermutationDeactivate: Story = {
   args:{
     label:'Hello World'
   }
@@ -173,54 +156,9 @@ export const PermutationDisabled: Story = {
     },
   },
 };
-````
+```
 
 ### Advance
-
-#### Apply different settings to individual stories
-
-permuation parameters can applied separately. If you want to use permutation table on not a entire story but one story, you can set config like below
-
-```tsx
-
-const meta:PermutationMeta<type of Foo>= {
-  title:'Example/Foo',
-  component: Foo,
-  parameters: {
-    permutation: {
-    // This importPath parameter can also be applied to individual stories
-    // but we don't recommend this causeof inconvenien다
-    permutation :{
-      importPath : "import Foo from somewhere"
-    }
-    }
-  }
-}
-
-export default meta
-export type Story = StoryObj<typeof Foo>
-
-
-// case that want to see Primary story without Permutation but not to Secondary story
-
-export const Primary:Story = () => {
-  return(
-    <Wrapper>
-      <Foo/>
-    </Wrapper>
-  )
-}
-
-export const Secondary: Story = {
-  parameters:{
-    permutation:{
-      deactivate: ['bar']
-    }
-  }
-}
-
-
-```
 
 #### Activate autoload
 
@@ -276,6 +214,50 @@ export const Primary: Story = {
 ### Demos
 
 [Demo Page](https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs)
+
+### FAQ
+
+**I enabled permutation on the story, but it only shows components with the same arguments 🥲**
+
+Are you using a decorator as a form of JSX? If so, make sure that check context is provided to StoryFn properly. Permutation table doesn't work if context isn't provided
+
+Change this
+
+```tsx
+// .storybook/decorator.tsx
+
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>
+          <Story />
+        </ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+to this 👍
+
+```tsx
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>{Story(context)}</ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+[Check why this works](https://storybook.js.org/docs/7.0/react/writing-stories/decorators#context-for-mocking)
+
+---
+
+If you got another problem, make a [issue](https://github.com/daimresearch/sb-addon-permutation-table/issues/new/choose) to let us know
 
 ### License
 

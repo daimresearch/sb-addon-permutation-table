@@ -16,7 +16,7 @@
 ![demo](./static/demo.gif)
 
 이 프로젝트는 Storybook에 추가 기능을 제공하기 위한 애드온입니다.
-별도의 패널 창을 통하여 컴포넌트의 다양한 모습을 테이블로서 확인할 수 있습니다.
+별도의 패널 창을 통하여 component의 다양한 모습을 테이블로서 확인할 수 있습니다.
 
 🆘 **`sb-addon-permutation-table`을 더 멋지게 만드는 일을 도와주세요!** 🆘
 
@@ -43,13 +43,15 @@
   - [Requirements](#requirements)
 - [Why should I use it?](#why-should-i-use-it)
 - [Usage](#usage)
+  - [Example](#example)
   - [Advance](#advance)
 - [Demos](#demos)
+- [FAQ](#faq)
 - [License](#license)
 
 ### Feature
 
-- `Argument Control`: 컴포넌트의 속성을 직접 조작할 수 있습니다. 상황에 맞는 컴포넌트의 모습을 확인할 수 있습니다.
+- `Argument Control`: component의 속성을 직접 조작할 수 있습니다. 상황에 맞는 component의 모습을 확인할 수 있습니다.
 - `Permutation` : 여러 속성 조합에 대한 모습을 테이블로 제공합니다. 조합의 결과를 한 눈에 비교하고 분석할 수 있습니다
 
 ### Installation
@@ -63,7 +65,7 @@
 
 ### Why should I use it?
 
-`sb-addon-permutation`를 사용하면 복잡하고 많은 속성을 가진 컴포넌트의 모습을 한 눈에 확인할 수 있습니다. 개발자는 애드온이 제공하는 쇼케이스를 통하여 효율적으로 컴포넌트를 디버깅하고, 테스트 할 수 있게 됩니다.
+`sb-addon-permutation`를 사용하면 복잡하고 많은 속성을 가진 component의 모습을 한 눈에 확인할 수 있습니다. 개발자는 애드온이 제공하는 쇼케이스를 통하여 효율적으로 component를 디버깅하고, 테스트 할 수 있게 됩니다.
 
 ### Usage
 
@@ -89,23 +91,23 @@ export default config;
 0.x 버전과 달리, 1 버전 부터는 애드온을 사용하기 위해 별도의 설정이 필요하지 않습니다.
 애드온은 각 Story의 요소를 자동으로 끌어옵니다. 하지만, parameter를 전달함으로서 좀 더 디테일한 설정이 가능합니다. Parameter로 받는 값들은 아래와 같습니다. parameter로 사용되는 값들은 Preview와는 무관하고, Panel에 사용되기 위해서 지정되는 값입니다.
 
-| 이름          | 설명                                                            | 타입       | 기본 값        |
-| ------------- | --------------------------------------------------------------- | ---------- | -------------- |
-| componentName | Panel에 표시되는 컴포넌트의 이름                                | `string?`  | `Story의 이름` |
-| importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`  | `""`           |
-| children      | Story Component에 들어가는 children                             | `string?`  | `{{children}}` |
-| deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]` | `[]`           |
-| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `all       | string[]`      |
+| 이름          | 설명                                                            | 타입               | 기본 값        |
+| ------------- | --------------------------------------------------------------- | ------------------ | -------------- |
+| componentName | Panel에 표시되는 component의 이름                               | `string?`          | `Story의 이름` |
+| importPath    | `Copy import path`버튼을 클릭했을 때 복사되는 component의 경로  | `string?`          | `""`           |
+| children      | Story Component에 들어가는 children                             | `string?`          | `{{children}}` |
+| deactivate    | Permutation 기능을 사용하지 않을 property Name                  | `string[]`         | `[]`           |
+| autoload      | Story가 로드 되었을 때, 클릭 없이도 자동으로 활성화 될 property | `"all"` `string[]` | `[]`           |
 
 **parameter children에 관한 상세**
 
-children parameter는 Story에 argment로 children을 전달 하였을 때, Panel의 CodeEditor 영역에 표시 될 children의 코드의 형상을 뜻합니다. arg로 children을 전달하면 Preview에서 제대로 표시되지만, Panel에서는 별도의 parameter를 전달하지 않는 이상 children은 `{{children}}`으로 표시됩니다. Panel에 children의 형상을 보여주고 싶을 때, 이 parameter를 사용하십시오.
+children parameter는 Story에 argument로 children을 전달 하였을 때, Panel의 CodeEditor 영역에 표시 될 children의 코드의 형상을 뜻합니다. arg로 children을 전달하면 Preview에서 제대로 표시되지만, Panel에서는 별도의 parameter를 전달하지 않는 이상 children은 `{{children}}`으로 표시됩니다. Panel에 children의 형상을 보여주고 싶을 때, 이 parameter를 사용하십시오.
 
 [참고: Storybook에서 children을 arg로 사용하는 법](https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components#using-children-as-an-ar)
 
-사용 예시
+#### Example
 
-```typescript
+```tsx
 import React from "react";
 import { PermutationMeta } from "sb-addon-permutation-table";
 import YourComponent from "YourComponent";
@@ -126,7 +128,7 @@ const meta: PermutationMeta<typeof YourComponent> = {
 
 Story 단위로 개별 적용도 가능합니다.
 
-```typescript
+```tsx
 export const Primary: Story = {
   args: {
     primary: true,
@@ -134,7 +136,7 @@ export const Primary: Story = {
   },
 };
 
-export const PermutationDisabled: Story = {
+export const PermutationDeactivate: Story = {
   args:{
     label:'Hello World'
   }
@@ -147,47 +149,6 @@ export const PermutationDisabled: Story = {
 ```
 
 ### Advance
-
-#### 각 스토리에 다른 설정 적용하기
-
-permutation parmeter는 개별적으로 적용이 가능합니다. 만약, Permutation table을 스토리 전체가 아니라, 단독 스토리에만 적용하고 싶다면, 아래와 같이 설정해주세요
-
-```tsx
-const meta:PermutationMeta<type of Foo> = {
-  title: 'Example/Foo',
-  component: Foo,
-  parameters:{
-    // importPath 역시 개별 스토리에 따로 적용될 수 있으나, 불편하기 때문에  추천하지 않습니다
-    permutation :{
-      importPath : "import Foo from somewhere"
-    }
-  }
-}
-
-export default meta
-export type Story = StoryObj<typeof Foo>
-
-// Primary story에서는 Permutation을 보고 싶지 않지만, Secondary story에서는 보고 싶은 경우
-
-export const Primary:Story = ()=>{
-  return (
-    <Wrapper>
-      <Foo/>
-    </Wrapper>
-  )
-}
-
-export const Secondary: Story = {
-  parameters: {
-    permutation:{
-      deactivate: ['bar']
-    }
-  }
-}
-
-
-
-```
 
 ### Activate autoload
 
@@ -243,6 +204,50 @@ export const Primary: Story = {
 ### Demos
 
 [Demo Page](https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs)
+
+### FAQ
+
+**permutation을 story에서 활성화 시켰는데, 동일한 argument를 가진 component만 보여주고 있어요 🥲**
+
+혹시 decorator를 JSX의 형태로 사용하고 계신가요? 만약 그렇다면, context가 StoryFn에 제공되고 있는지 확인하세요. Permutation table은 context 없이는 동작하지 않습니다.
+
+이것을
+
+```tsx
+// .storybook/decorator.tsx
+
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>
+          <Story />
+        </ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+이렇게 바꾸세요 👍
+
+```tsx
+export const decorators = [
+  (Story, context) => {
+    return (
+      <RandomWrapper>
+        <ThemeProvider>{Story(context)}</ThemeProvider>
+      </RandomWrapper>
+    );
+  },
+];
+```
+
+[왜 이렇게 써야하는 것이지요?](https://storybook.js.org/docs/7.0/react/writing-stories/decorators#context-for-mocking)
+
+---
+
+만약 다른 문제가 있다면, [이슈](https://github.com/daimresearch/sb-addon-permutation-table/issues/new/choose)를 남겨서 저희에게 알려주세요
 
 ### License
 
