@@ -24,11 +24,7 @@ const meta: PermutationMeta<typeof Button> = {
     },
   },
   decorators: [
-    (Story) => (
-      <EuiProvider>
-        <Story />
-      </EuiProvider>
-    ),
+    (storyFn, context) => <EuiProvider>{storyFn(context)}</EuiProvider>,
   ],
   parameters: {
     permutation: {
@@ -42,25 +38,24 @@ const meta: PermutationMeta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// TODO: fix the error on EUI Button.
-// export const Primary: Story = {
-//   parameters: {
-//     permutation: {
-//       importPath: 'import { Button } from "@elastic/eui"',
-//     },
-//   },
-//   args: {
-//     label: "Button",
-//   },
-// };
-// export const PermutationDisabled: Story = {
-//   parameters: {
-//     permutation: {
-//       importPath: 'import { Button } from "@elastic/eui"',
-//       deactivate: ["color", "fullWidth", "isDisabled", "size"],
-//     },
-//   },
-//   args: {
-//     label: "Button",
-//   },
-// };
+export const Primary: Story = {
+  parameters: {
+    permutation: {
+      importPath: 'import { Button } from "@elastic/eui"',
+    },
+  },
+  args: {
+    label: "Button",
+  },
+};
+export const PermutationDisabled: Story = {
+  parameters: {
+    permutation: {
+      importPath: 'import { Button } from "@elastic/eui"',
+      deactivate: ["color", "fullWidth", "isDisabled", "size"],
+    },
+  },
+  args: {
+    label: "Button",
+  },
+};
