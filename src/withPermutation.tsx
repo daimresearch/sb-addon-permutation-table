@@ -59,6 +59,16 @@ const Wrapper = styled.div<{
     min-width: 50px;
     padding: 0.5em;
   }
+
+  table#permutation-table .permutation-inner-table tr {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
+
+  table#permutation-table [role="component"] {
+    padding: 1em;
+  }
 `;
 
 export const withPermutation = makeDecorator({
