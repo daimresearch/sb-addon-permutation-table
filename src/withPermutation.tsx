@@ -81,7 +81,6 @@ export const withPermutation = makeDecorator({
     if (context.viewMode === "docs") {
       return storyFn(context);
     }
-    // if (options.disable) return storyFn(context);
 
     const autoload = context.parameters.permutation?.autoload ?? [];
     const deactivate = context.parameters.permutation?.deactivate ?? [];
