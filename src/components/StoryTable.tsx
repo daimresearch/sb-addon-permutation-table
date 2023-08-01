@@ -89,7 +89,7 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
     <thead>
       <tr role="row">
         <th colSpan={verticals.length} className="stickyCol">
-          <table>
+          <table className="permutation-inner-table">
             <thead>
               <tr>
                 {verticals.map((e, i) => (
@@ -103,7 +103,7 @@ const TableHead = (horizen: Property, verticals: Property[]) => {
       </tr>
       <tr role="row" className="outpost">
         <td colSpan={verticals.length} className="stickyCol">
-          <table>
+          <table className="permutation-inner-table">
             <thead>
               <tr>
                 {verticals.map((e, i) => (
@@ -153,7 +153,7 @@ const TableBody = (
     return (
       <tr>
         <td colSpan={verticals.length} className="stickyCol">
-          <table>
+          <table className="permutation-inner-table">
             <tbody>
               <tr>{values}</tr>
             </tbody>

@@ -22,12 +22,12 @@ const Wrapper = styled.div<{
     box-shadow: inset 0px 0px 1px 2px rgb(253, 43, 141);
   }
 
-  table#permutation-table td,
-  th {
-    width: auto;
-    min-width: 50px;
-    padding: 0.5em;
-  }
+  //  table#permutation-table td,
+  //  th {
+  //    width: auto;
+  //    min-width: 50px;
+  //    padding: 0.5em;
+  //  }
   table#permutation-table {
     table-layout: fixed;
     text-align: center;
@@ -49,11 +49,15 @@ const Wrapper = styled.div<{
     border-bottom: solid 1px ${(props) => props.sbTheme.border};
   }
 
-  table#permutation-table thead tr th {
+  table#permutation-table .permutation-inner-table {
     position: relative;
+    width: 100%;
   }
-  table#permutation-table tbody tr td {
-    position: relative;
+  table#permutation-table .permutation-inner-table td,
+  th {
+    width: auto;
+    min-width: 50px;
+    padding: 0.5em;
   }
 `;
 
