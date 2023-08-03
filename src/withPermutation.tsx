@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { makeDecorator, useChannel, useGlobals } from "@storybook/preview-api";
+import React from "react";
+import {
+  makeDecorator,
+  useChannel,
+  useGlobals,
+  useEffect,
+  useState,
+} from "@storybook/preview-api";
 import * as R from "ramda";
 import {
   convertArgTypeToArg,
@@ -13,7 +19,6 @@ import { Permutation } from "./types";
 import { EVENTS, PERMUT_KEY } from "./constants";
 import { makeTheme, SBTheme } from "src/tools/theme";
 import { styled } from "@storybook/theming";
-
 const Wrapper = styled.div<{
   sbTheme: SBTheme;
 }>`
@@ -22,12 +27,6 @@ const Wrapper = styled.div<{
     box-shadow: inset 0px 0px 1px 2px rgb(253, 43, 141);
   }
 
-  //  table#permutation-table td,
-  //  th {
-  //    width: auto;
-  //    min-width: 50px;
-  //    padding: 0.5em;
-  //  }
   table#permutation-table {
     table-layout: fixed;
     text-align: center;
@@ -81,7 +80,7 @@ export const withPermutation = makeDecorator({
     if (context.viewMode === "docs") {
       return storyFn(context);
     }
-    // if (options.disable) return storyFn(context);
+    // if (options.disablePanel) return storyFn(context);
 
     const autoload = context.parameters.permutation?.autoload ?? [];
     const deactivate = context.parameters.permutation?.deactivate ?? [];

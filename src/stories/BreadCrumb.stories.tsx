@@ -10,6 +10,7 @@ const meta: PermutationMeta<typeof BreadCrumb> = {
   parameters: {
     permutation: {
       importPath: "import {BreadCrumb} from '@daim/component/BreadCrumb'",
+      disablePanel: true,
     },
   },
 };

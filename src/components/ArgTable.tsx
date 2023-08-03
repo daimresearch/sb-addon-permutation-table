@@ -153,7 +153,7 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       );
 
     case false:
-      return <div>Disabled</div>;
+      return <div>Deactivated</div>;
 
     default:
       return <div />;

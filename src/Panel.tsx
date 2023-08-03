@@ -2,6 +2,7 @@ import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import {
   addons,
   useAddonState,
+  types,
   useArgs,
   useArgTypes,
   useChannel,
@@ -10,7 +11,7 @@ import {
   useStorybookState,
 } from "@storybook/manager-api";
 import { AddonPanel, Placeholder } from "@storybook/components";
-import { ADDON_ID, EVENTS } from "./constants";
+import { ADDON_ID, EVENTS, PANEL_ID } from "./constants";
 import { CodeEditor } from "./components/CodeEditor";
 import { styled } from "@storybook/theming";
 import { Permutation } from "./types";
@@ -70,7 +71,7 @@ const Display = styled.div`
   background: #2d2d2d;
 `;
 
-export const Panel: React.FC<PanelProps> = (props) => {
+export const Panel = (props: PanelProps) => {
   const api = useStorybookApi();
   const storyId = useStorybookState().storyId;
   const data = api.getData(storyId);
@@ -84,6 +85,9 @@ export const Panel: React.FC<PanelProps> = (props) => {
   const importPath = useParameter<Permutation | undefined>(
     PERMUT_KEY
   )?.importPath;
+  const panelDisable = useParameter<Permutation | undefined>(
+    PERMUT_KEY
+  )?.disablePanel;
 
   const [permutations, setPermutations] = useState<string[]>([]);
 
@@ -152,6 +156,14 @@ export const Panel: React.FC<PanelProps> = (props) => {
 
     return () => setPermutations(() => []);
   }, [autoload, states.path]);
+
+  if (panelDisable) {
+    return (
+      <AddonPanel {...props} key={storyId}>
+        <NoSource />
+      </AddonPanel>
+    );
+  }
 
   if (!data || !isStoryReady(data))
     return (

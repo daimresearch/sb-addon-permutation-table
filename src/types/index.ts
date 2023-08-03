@@ -6,6 +6,7 @@ export type Permutation = {
   children?: string;
   deactivate?: ArgTypes<any>[];
   autoload?: "all" | string[];
+  disablePanel?: boolean;
 };
 
 export type PermutationMeta<T> = Meta<T> & {

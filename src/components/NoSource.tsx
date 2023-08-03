@@ -61,14 +61,9 @@ import { ${componentName} } from './${componentName}'; // modify here for your c
 const meta: PermutationMeta<typeof ${componentName}> = {\n\
   //...\n\
   parameters:{\n\
-    storySource: {\n\
-      source: <${componentName}/>, // type what your component looks like\n\
-      importPath : "import ${componentName} from 'your-package/component'" // import path of packaged component\n\
-    },\n\
-  permutation : {\n\
-    scope: {\n\
-      ${componentName}, // add component here\n\
-      }\n\
+    permutation : {\n\
+    importPath : "import ${componentName} from 'your-package/component'" // import path of packaged component\n\
+    disablePanel : true // <== Check this
     }\n\
   }\n\
 }\n\
@@ -80,8 +75,11 @@ const meta: PermutationMeta<typeof ${componentName}> = {\n\
       <div>
         <Icons icon="storybook" width={"100px"} height={"100px"} />
       </div>
-      <h1>No storySource found</h1>
-      <p>Try adding a storysource to your story file.</p>
+      <h1>Permutation feature is not available in this Story.</h1>
+      <p>
+        If this isn't your intention, make sure your story's parameter has
+        panelDisable set to true.
+      </p>
       <div style={{ position: "relative" }}>
         <CodeEditor value={value} disabled={true} />
         <p>Now {PACKAGE_NAME} is ready to go. happy hacking!</p>
