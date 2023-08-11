@@ -1,0 +1,38 @@
+name: Auto version bump and publish
+on:
+  push:
+    branches:
+      - main
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: gh-action-bump-version
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          minor-wording: "MINOR"
+          major-wording: "MAJOR"
+          patch-wording: "PATCH"
+          target-branch: "main"
+
+  npm-publish:
+    needs: version-bump
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{github.ref}}
+      - name: yarn install
+        run: yarn install
+      - name: build and publish
+        run: |
+          yarn build
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+          npm publish
+        # env:
+        #   NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
