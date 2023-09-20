@@ -54,7 +54,7 @@ const Wrapper = styled.div<{
     width: 100%;
   }
   table#permutation-table .permutation-inner-table td,
-  th {
+  table#permutation-table th {
     width: auto;
     min-width: 50px;
     padding: 0.5em;
