@@ -6,3 +6,4 @@ build-storybook.log
 .env
 .vscode/
 coverage/
+.yarn/

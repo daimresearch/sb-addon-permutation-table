@@ -22,12 +22,6 @@ const Wrapper = styled.div<{
     box-shadow: inset 0px 0px 1px 2px rgb(253, 43, 141);
   }
 
-  //  table#permutation-table td,
-  //  th {
-  //    width: auto;
-  //    min-width: 50px;
-  //    padding: 0.5em;
-  //  }
   table#permutation-table {
     table-layout: fixed;
     text-align: center;

@@ -1,3 +1,9 @@
+## v.1.0.21
+
+### Bug Fixes
+
+- global style override for permutation table
+
 ## v.0.1.3
 
 #### New Feature
