@@ -2,20 +2,24 @@ import React, { useRef } from "react";
 import * as R from "ramda";
 import { styled } from "@storybook/theming";
 import { addons, useArgs } from "@storybook/manager-api";
-import { getQuotelessAtt } from "../tools";
-import { EVENTS } from "../constants";
+import { getQuotelessAtt } from "../../../tools";
+import { EVENTS } from "../../../constants";
 import { CodeEditor } from "./CodeEditor";
-import { IconButton, Icons } from "@storybook/components";
-import { CopyButton, EditButton, Tray } from "./actionTray";
+import { Tray } from "./Tray";
+import { EditButton } from "./EditButton";
+import { CopyButton } from "./CopyButton";
 
-interface ShowcaseProps {
+interface ShowCaseProps {
   sourceCode: string[];
 }
 
 const Wrapper = styled.div``;
 const Source = styled.div`
-  overflow: auto;
+  /* overflow: auto; */
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &.--active,
   & .--active {
@@ -24,7 +28,7 @@ const Source = styled.div`
   }
 `;
 
-export const Showcase = ({ sourceCode }: ShowcaseProps) => {
+export const Showcase = ({ sourceCode }: ShowCaseProps) => {
   return (
     <Wrapper>
       {sourceCode.map((item, index) => {
@@ -33,8 +37,8 @@ export const Showcase = ({ sourceCode }: ShowcaseProps) => {
           <Source data-value={data} key={index}>
             <CodeEditor
               key={item}
-              disabled={true}
-              defaultValue={item}
+              value={item}
+              // defaultValue={item}
               onMouseEnter={(e) => {
                 addons.getChannel().emit(EVENTS.SHOWCASE_ENTER, data);
                 e.currentTarget.classList.add("--active");

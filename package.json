@@ -1,6 +1,6 @@
 {
   "name": "sb-addon-permutation-table",
-  "version": "1.0.21",
+  "version": "1.0.21a",
   "description": "Storybook addon presenting component with table",
   "keywords": [
     "storybook-addons",
@@ -9,29 +9,24 @@
     "appearance"
   ],
   "repository": "https://github.com/daimresearch/sb-addon-permutation-table.git",
+  "type": "module",
   "author": "daim-FE",
   "license": "MIT",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./manager": {
-      "require": "./dist/manager.js",
-      "import": "./dist/manager.mjs",
-      "types": "./dist/manager.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./preview": {
-      "require": "./dist/preview.js",
-      "import": "./dist/preview.mjs",
-      "types": "./dist/preview.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/preview.js",
+      "require": "./dist/preview.cjs"
     },
+    "./preset": "./dist/preset.cjs",
+    "./manager": "./dist/manager.js",
     "./package.json": "./package.json"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
@@ -40,61 +35,57 @@
   ],
   "scripts": {
     "clean": "rimraf ./dist",
-    "prebuild": "yarn clean",
     "build": "tsup",
     "build:watch": "yarn build --watch",
-    "start": "run-p build:watch 'storybook --quiet'",
+    "start": "npm run build && npm run storybook",
     "release": "yarn build && npm publish",
     "storybook": "storybook dev -p 6006",
     "vite": "vite build --watch --config vite.watch.config.ts",
     "storybook:build": "storybook build -o ./docs && touch ./docs/.nojekyll"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.18",
-    "@storybook/addon-interactions": "^7.0.18",
-    "@storybook/addon-links": "^7.0.18",
-    "@storybook/addon-mdx-gfm": "^7.0.18",
-    "@storybook/react": "^7.0.18",
-    "@storybook/react-vite": "^7.0.18",
-    "@storybook/testing-library": "^0.1.0",
-    "@types/node": "^18.15.0",
-    "@types/ramda": "^0.29.0",
-    "@types/react": "^18.0.34",
-    "@types/react-dom": "^18.2.1",
-    "@types/tinycolor2": "^1.4.3",
-    "@vitejs/plugin-react": "^3.1.0",
+    "@chromatic-com/storybook": "^1.7.0",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/addon-interactions": "^8.2.9",
+    "@storybook/addon-links": "^8.2.9",
+    "@storybook/addon-mdx-gfm": "^8.2.9",
+    "@storybook/react": "^8.2.9",
+    "@storybook/react-vite": "^8.2.9",
+    "@storybook/test": "^8.2.9",
+    "@types/node": "^22.5.0",
+    "@types/prismjs": "^1.26.4",
+    "@types/ramda": "^0.30.2",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "@types/tinycolor2": "^1.4.6",
+    "@vitejs/plugin-react": "^4.3.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.1",
+    "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.2.0",
-    "rimraf": "^3.0.2",
-    "storybook": "^7.0.18",
-    "tsup": "^6.6.3",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4"
-  },
-  "peerDependencies": {
-    "@storybook/blocks": "^7.0.0",
-    "@storybook/components": "^7.0.0",
-    "@storybook/core-events": "^7.0.0",
-    "@storybook/manager-api": "^7.0.0",
-    "@storybook/preview-api": "^7.0.0",
-    "@storybook/theming": "^7.0.0",
-    "@storybook/types": "^7.0.0",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
-      "optional": true
-    }
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "storybook": "^8.2.9",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "bundler": {
+    "exportEntries": [
+      "src/index.ts"
+    ],
+    "managerEntries": [
+      "src/manager.ts"
+    ],
+    "previewEntries": [
+      "src/preview.tsx"
+    ],
+    "nodeEntries": [
+      "src/preset.ts"
+    ]
   },
   "storybook": {
     "displayName": "Permutation",
@@ -104,9 +95,9 @@
     "icon": "https://github.com/daimresearch/sb-addon-permutation/assets/107913240/15b3e7a3-26a1-4262-8f62-a0728d73a23c"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.24.1",
-    "ramda": "^0.29.0",
-    "react-live-runner": "^1.0.5",
-    "tinycolor2": "^1.6.0"
+    "@floating-ui/react": "^0.26.23",
+    "@storybook/types": "^8.2.9",
+    "prism-react-renderer": "^2.3.1",
+    "ramda": "^0.30.1"
   }
 }

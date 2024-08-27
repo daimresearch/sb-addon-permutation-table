@@ -1,7 +1,5 @@
 import React, { useRef, useState } from "react";
-import { styled } from "@storybook/theming";
 import * as R from "ramda";
-import { Icons, IconButton, icons } from "@storybook/components";
 import { addons, useArgs } from "@storybook/manager-api";
 
 import {
@@ -19,15 +17,14 @@ import {
 } from "@floating-ui/react";
 
 import { BaseButton, Tooltip, Arrow } from "./BaseButton";
-import { EVENTS } from "../../constants";
-import { extractAttributeFromTag, getQuotelessAtt } from "../../tools";
+import { EVENTS } from "../../../constants";
+import { extractAttributeFromTag, getQuotelessAtt } from "../../../tools";
 import { Args } from "@storybook/types";
-import { attrSplitRegex } from "../../utils/regex";
+import { attrSplitRegex } from "../../../utils/regex";
 
 interface Props {
   hoverTitle?: string;
   clickTitle?: string;
-  icon?: keyof typeof icons;
   onClick?: (...arg: any) => void;
   code: string;
 }
@@ -42,14 +39,14 @@ const getUpdatedArgs = (code: string) => {
       const [key, value] = cur.split("=");
       if (!value) return { ...pre, [key]: true };
       return { ...pre, [key]: value.replace(/"|'/g, "") };
-    }, {})
+    }, {}),
   )([code]);
 };
 
 const defaultOnClick = (
   code: string,
   updateArgs: Function,
-  defaultArgs: Args
+  defaultArgs: Args,
 ) => {
   addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, "", "clear");
   const updatedArgs = getUpdatedArgs(code);
@@ -67,7 +64,6 @@ const defaultOnClick = (
 export const EditButton = ({
   hoverTitle = "",
   clickTitle = "",
-  icon = "edit",
   code,
   onClick,
 }: Props) => {
@@ -112,7 +108,7 @@ export const EditButton = ({
       {...getReferenceProps}
       onMouseLeave={() => setText(hoverTitle)}
     >
-      <BaseButton title={hoverTitle} onClick={handleClick} icon={icon} />
+      <BaseButton title={hoverTitle} onClick={handleClick} icon={"edit"} />
       <FloatingPortal>
         {isOpen && text && (
           <Tooltip

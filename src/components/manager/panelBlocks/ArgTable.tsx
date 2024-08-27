@@ -1,6 +1,6 @@
-import { ChangeEvent, FC } from "react";
-import React from "react";
+import React, { ChangeEvent, FC } from "react";
 import { render } from "react-dom";
+import { createRoot } from "react-dom/client"; // 나중에 교체해보자구
 import * as R from "ramda";
 import {
   useArgs,
@@ -17,9 +17,12 @@ import {
   type SortType,
 } from "@storybook/blocks";
 import type { ArgTypes } from "@storybook/types";
-import { EVENTS, PANEL_ID, PERMUT_KEY } from "../constants";
+import { EVENTS, PANEL_ID, PERMUT_KEY } from "../../../constants";
 import { styled, useTheme } from "@storybook/theming";
-import { Icons, IconButton } from "@storybook/components";
+import { Button, IconButton, Icons } from "@storybook/components";
+import { LightningIcon, UndoIcon } from "@storybook/icons";
+import { create } from "domain";
+import { BaseButton } from "./BaseButton";
 
 interface ControlsParameters {
   sort?: SortType;
@@ -27,7 +30,6 @@ interface ControlsParameters {
   presetColors?: Array<PresetColor>;
   hideNoControlsWarning?: boolean;
 }
-
 const PermutationCell = styled.span<any>`
   & {
     display: flex;
@@ -49,32 +51,66 @@ const PermutationCell = styled.span<any>`
     background-color: #4aff4a;
   }
 
-  & button {
+  & button.__permtation-table-button {
+    cursor: pointer;
     margin: -4px -12px -4px 0;
+    color: gray;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    padding: 8px 7px;
+    border-radius: 4px;
+    transition: background 150ms ease-out;
+    &:hover {
+      background: rgba(2, 156, 253, 0.12);
+      color: #029cfd;
+    }
+    &:focus {
+      box-shadow: rgba(2, 156, 253, 1) 0 0 0 1px inset;
+      outline: none;
+    }
   }
   display: flex;
   justify-content: space-between;
   padding-left: 5px;
 `;
 
-const PermTableHead = ({ theme }: any) => {
+const PermTableHead = () => {
   return (
-    <>
+    <div>
       <PermutationCell>
         Permutation
-        <IconButton
-          theme={theme}
+        <button
+          className="__permtation-table-button"
           onClick={() => {
             addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, "", "clear");
           }}
-          title="reset permutations"
         >
-          <Icons icon="undo" />
-        </IconButton>
+          <UndoIcon />
+        </button>
       </PermutationCell>
-    </>
+    </div>
   );
 };
+
+// const PermTableHead = () => {
+//   return (
+//     <>
+//       <PermutationCell>
+//         Permutation
+//         <IconButton
+//           onClick={() => {
+//             addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, "", "clear");
+//           }}
+//           title="reset permutations"
+//         >
+//           <UndoIcon />
+//         </IconButton>
+//       </PermutationCell>
+//     </>
+//   );
+// };
 
 const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
   const [name, control, permutation] = elem.querySelectorAll("td"); // node list
@@ -94,7 +130,7 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
   const getTypeofCell = (
     rows: Record<string, any>,
     key: string,
-    deactivate: string
+    deactivate: string,
   ) => {
     if (!rows[key]?.control) return undefined;
     if ((deactivate && deactivate.includes(key)) || !rows[key]) return false;
@@ -106,19 +142,23 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
   switch (cellType) {
     case "radio":
       control.addEventListener("click", (e: any) =>
-        controlHandlerFn(key, e.target.value)
+        controlHandlerFn(key, e.target.value),
       );
 
       return (
         <PermutationCell data-permutation={key} className="body">
-          <IconButton
-            theme={theme}
+          {/* <IconButton
             onClick={(e: any) => {
               permutationHandlerFn(e, key);
             }}
+          > */}
+          <button
+            onClick={(e: any) => permutationHandlerFn(e, key)}
+            className="__permtation-table-button"
           >
-            <Icons icon="lightning" />
-          </IconButton>
+            <LightningIcon />
+          </button>
+          {/* </IconButton> */}
         </PermutationCell>
       );
     case "select":
@@ -128,12 +168,14 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       });
       return (
         <PermutationCell data-permutation={key} className="body">
-          <IconButton
-            theme={theme}
+          {/* <IconButton onClick={(e: any) => permutationHandlerFn(e, key)}> */}
+          <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
+            className="__permtation-table-button"
           >
-            <Icons icon="lightning" />
-          </IconButton>
+            <LightningIcon />
+          </button>
+          {/* </IconButton> */}
         </PermutationCell>
       );
     case "boolean":
@@ -143,12 +185,14 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       });
       return (
         <PermutationCell data-permutation={key} className="body">
-          <IconButton
-            theme={theme}
+          {/* <IconButton onClick={(e: any) => permutationHandlerFn(e, key)}> */}
+          <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
+            className="__permtation-table-button"
           >
-            <Icons icon="lightning" />
-          </IconButton>
+            <LightningIcon />
+          </button>
+          {/* </IconButton> */}
         </PermutationCell>
       );
 
@@ -156,22 +200,23 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       return <div>Disabled</div>;
 
     default:
-      return <div />;
+      return <div>-</div>;
   }
 };
 interface Props {
   permutations: string[];
 }
 
-export const ArgTable: FC<Props> = ({ permutations }: Props) => {
+export const ArgTable: FC<Props> = ({ permutations }) => {
   let [args, updateArgs, resetArgs] = useArgs();
   const [globals] = useGlobals();
   const rows = useArgTypes();
   const ref = React.useRef(null);
   const { presetColors, sort } = useParameter<ControlsParameters>(
     PERMUT_KEY,
-    {}
+    {},
   );
+  const param = useParameter(PERMUT_KEY);
 
   const { path, selectedPanel } = useStorybookState();
 
@@ -184,11 +229,21 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
 
         if (headtr) {
           const node = headtr.appendChild(document.createElement("th"));
-          const newElem = React.createElement(PermTableHead, {
-            theme,
-            bodytr,
-          });
-          render(newElem, node);
+          // const newElem = React.createElement(PermTableHead, {
+          //   bodytr,
+          // });
+
+          // const newElem = React.createElement(
+          //   "h1",
+          //   { className: "test" },
+          //   "test",
+          // );
+          const newElem = React.createElement(PermTableHead, {});
+
+          // render(newElem, node);
+          const root = createRoot(node);
+          root.render(newElem);
+          // createRoot(node).render(newElem);
         }
         if (bodytr) {
           bodytr.forEach(async (tr) => {
@@ -196,19 +251,28 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
             const newElem = React.createElement(PermTableBody, {
               rows: rows,
               elem: tr,
-              theme,
               updateArgs,
               param,
             });
 
-            render(newElem, node, () => {
-              permutations.forEach((e) => {
-                const row = ref.current?.querySelector(
-                  `[data-permutation="${e}"]`
-                );
-                if (row) row.classList.add("--selected");
-              });
+            const root = createRoot(node);
+            root.render(newElem);
+
+            permutations.forEach((e) => {
+              const row = ref.current?.querySelector(
+                `[data-permutation="${e}"]`,
+              );
+              if (row) row.classList.add("--selected");
             });
+
+            // render(newElem, node, () => {
+            //   permutations.forEach((e) => {
+            //     const row = ref.current?.querySelector(
+            //       `[data-permutation="${e}"]`,
+            //     );
+            //     if (row) row.classList.add("--selected");
+            //   });
+            // });
           });
         }
       }
@@ -226,7 +290,6 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
       if (row) row.classList.add("--selected");
     });
   }
-
   // permutation button color change
   if (selectedPanel !== PANEL_ID) {
     // XXX:  don't provide updateArgs and resetArgs when not in addon panel
@@ -236,15 +299,6 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
     return <ArgsTable {...{ key: path, rows, args, tabs: {} }} />;
   }
 
-  // if (selectedPanel !== PANEL_ID) {
-  //   // 그냥 상태만 갱신하면 .... Permutation column이 중간으로 끼어들어진다
-  //   updateArgs = null;
-  //   resetArgs = null;
-  //   args = null;
-  // }
-  const theme = useTheme();
-  const param = useParameter(PERMUT_KEY);
-
   const withPresetColors = Object.entries(rows).reduce((acc, [key, arg]) => {
     if (arg?.control?.type !== "color" || arg?.control?.presetColors)
       acc[key] = arg;
@@ -252,7 +306,6 @@ export const ArgTable: FC<Props> = ({ permutations }: Props) => {
     return acc;
   }, {} as ArgTypes);
 
-  // render another column on arg Table
   return (
     <div ref={ref}>
       <ArgsTable

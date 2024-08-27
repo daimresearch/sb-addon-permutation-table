@@ -1,23 +1,14 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "./Button";
-import { PermutationMeta } from "../types";
 
-const meta: PermutationMeta<typeof Button> = {
-  title: "Sample/Button",
+// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+const meta: Meta<typeof Button> = {
+  title: "Example/Button",
   component: Button,
-  // decorators,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: "color" },
-  },
-  tags: ["autodocs"],
-  parameters: {
-    permutation: {
-      importPath: 'import { Button } from "@daim/component/Button"', // component naming convertion이 결정되지 않는 한, 그냥 string을 유지하는 것이 최선
-      autoload: "all",
-    },
   },
 };
 
@@ -31,17 +22,12 @@ export const Primary: Story = {
     primary: true,
     label: "Button",
   },
+  parameters: {},
 };
 
 export const Secondary: Story = {
   args: {
     label: "Button",
-  },
-  parameters: {
-    permutation: {
-      autoload: ["foo", "bar", "size"],
-      deactivate: ["foo"],
-    },
   },
 };
 
@@ -49,11 +35,6 @@ export const Large: Story = {
   args: {
     size: "large",
     label: "Button",
-  },
-  parameters: {
-    permutation: {
-      deactivate: ["primary"],
-    },
   },
 };
 
