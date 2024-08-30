@@ -1,5 +1,4 @@
 import React from "react";
-import { styled } from "@storybook/theming";
 import { Highlight, themes } from "prism-react-renderer";
 
 export const CodeEditor = ({
@@ -17,11 +16,7 @@ export const CodeEditor = ({
             className={className}
           >
             {tokens.map((line, i) => (
-              <div
-                key={i}
-                // {...getLineProps({ line })}
-              >
-                {/* <span>{i + 1}</span> */}
+              <div key={i}>
                 {line.map((token, key) => (
                   <span key={key} {...getTokenProps({ token })} />
                 ))}

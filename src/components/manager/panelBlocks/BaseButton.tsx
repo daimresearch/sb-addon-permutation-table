@@ -1,5 +1,6 @@
 import React from "react";
-import { styled } from "@storybook/theming";
+import styled from "@emotion/styled";
+
 import { IconButton, icons } from "@storybook/components";
 import { CopyIcon, EditIcon, UndoIcon } from "@storybook/icons";
 
@@ -20,9 +21,7 @@ const BaseButton = ({ title, onClick, label, style, icon = "copy" }: Props) => {
 };
 interface Props {
   title?: string;
-  // icon?: keyof typeof icons;
   icon?: "copy" | "edit" | "undo";
-  // icon?: Pick<typeof icons, "copy" | "edit">;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   label?: string;
   style?: React.CSSProperties;
