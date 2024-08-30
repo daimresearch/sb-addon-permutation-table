@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
-import * as R from "ramda";
-import { styled } from "@storybook/theming";
+import styled from "@emotion/styled";
 import { addons, useArgs } from "@storybook/manager-api";
 import { getQuotelessAtt } from "../../../tools";
 import { EVENTS } from "../../../constants";
@@ -38,7 +37,6 @@ export const Showcase = ({ sourceCode }: ShowCaseProps) => {
             <CodeEditor
               key={item}
               value={item}
-              // defaultValue={item}
               onMouseEnter={(e) => {
                 addons.getChannel().emit(EVENTS.SHOWCASE_ENTER, data);
                 e.currentTarget.classList.add("--active");

@@ -1,11 +1,7 @@
 import React, { CSSProperties } from "react";
-import { styled } from "@storybook/theming";
+import styled from "@emotion/styled";
 
 const Wrapper = styled.div`
-  /* position: absolute;
-  right: 0px;
-  display: flex;
-  align-items: center; */
   display: flex;
   align-items: center;
   align-self: center;

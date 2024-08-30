@@ -10,7 +10,7 @@ import {
 import { AddonPanel, Placeholder } from "@storybook/components";
 import { ADDON_ID, EVENTS } from "../../constants";
 import { CodeEditor } from "./panelBlocks/CodeEditor";
-import { styled } from "@storybook/theming";
+import styled from "@emotion/styled";
 import { Permutation } from "../../types";
 import { PERMUT_KEY } from "../../constants";
 import { convertArgTypeToArg, sourceCodeWithArgPermutations } from "src/tools";

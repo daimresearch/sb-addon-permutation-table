@@ -22,6 +22,57 @@ import {
   Property,
   getDataTarget,
 } from "./tools";
+import styled from "@emotion/styled";
+
+const Wrapper = styled.div`
+  & .--active {
+    background-color: rgb(255, 240, 249);
+    box-shadow: inset 0px 0px 1px 2px rgb(253, 43, 141);
+  }
+
+  table#permutation-table {
+    table-layout: fixed;
+    text-align: center;
+    border-collapse: collapse;
+    color: black;
+    background-color: rgb(255, 255, 255);
+  }
+
+  //added
+  table#permutation-table .stickyCol {
+    box-shadow: inset -1px 0px 0px black;
+    position: sticky;
+    left: 0;
+    background-color: rgb(255, 255, 255);
+    z-index: 2;
+    transition: background-color 0.3s;
+  }
+
+  table#permutation-table thead tr.outpost {
+    border-bottom: solid 1px black;
+  }
+
+  table#permutation-table .permutation-inner-table {
+    position: relative;
+    width: 100%;
+  }
+  table#permutation-table .permutation-inner-table td,
+  table#permutation-table th {
+    width: auto;
+    min-width: 50px;
+    padding: 0.5em;
+  }
+
+  table#permutation-table .permutation-inner-table tr {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
+
+  table#permutation-table [role="component"] {
+    padding: 1em;
+  }
+`;
 
 export const withPermutation = (
   StoryFn: StoryFunction<Renderer>,
@@ -114,25 +165,29 @@ export const withPermutation = (
 
     if (convertedList.length <= 1) {
       return (
-        <div ref={ref}>
-          {storyCombination.map((e, i) => {
-            return (
-              <div data-target={dataTarget[i]} role="component" key={i}>
-                {StoryFn({ ...context, args: { ...e } })}
-              </div>
-            );
-          })}
-        </div>
+        <Wrapper>
+          <div ref={ref}>
+            {storyCombination.map((e, i) => {
+              return (
+                <div data-target={dataTarget[i]} role="component" key={i}>
+                  {StoryFn({ ...context, args: { ...e } })}
+                </div>
+              );
+            })}
+          </div>
+        </Wrapper>
       );
     }
 
     return (
-      <div ref={ref}>
-        <table id="permutation-table">
-          {TableHead(horizen, verticals)}
-          {TableBody(horizen, verticals, StoryFn, context)}
-        </table>
-      </div>
+      <Wrapper>
+        <div ref={ref}>
+          <table id="permutation-table">
+            {TableHead(horizen, verticals)}
+            {TableBody(horizen, verticals, StoryFn, context)}
+          </table>
+        </div>
+      </Wrapper>
     );
   }
 

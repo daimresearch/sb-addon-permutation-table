@@ -1,5 +1,4 @@
 import React, { ChangeEvent, FC } from "react";
-import { render } from "react-dom";
 import { createRoot } from "react-dom/client"; // 나중에 교체해보자구
 import * as R from "ramda";
 import {
@@ -18,11 +17,9 @@ import {
 } from "@storybook/blocks";
 import type { ArgTypes } from "@storybook/types";
 import { EVENTS, PANEL_ID, PERMUT_KEY } from "../../../constants";
-import { styled, useTheme } from "@storybook/theming";
-import { Button, IconButton, Icons } from "@storybook/components";
+import styled from "@emotion/styled";
+
 import { LightningIcon, UndoIcon } from "@storybook/icons";
-import { create } from "domain";
-import { BaseButton } from "./BaseButton";
 
 interface ControlsParameters {
   sort?: SortType;
@@ -94,24 +91,6 @@ const PermTableHead = () => {
   );
 };
 
-// const PermTableHead = () => {
-//   return (
-//     <>
-//       <PermutationCell>
-//         Permutation
-//         <IconButton
-//           onClick={() => {
-//             addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, "", "clear");
-//           }}
-//           title="reset permutations"
-//         >
-//           <UndoIcon />
-//         </IconButton>
-//       </PermutationCell>
-//     </>
-//   );
-// };
-
 const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
   const [name, control, permutation] = elem.querySelectorAll("td"); // node list
 
@@ -147,18 +126,12 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
 
       return (
         <PermutationCell data-permutation={key} className="body">
-          {/* <IconButton
-            onClick={(e: any) => {
-              permutationHandlerFn(e, key);
-            }}
-          > */}
           <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
             className="__permtation-table-button"
           >
             <LightningIcon />
           </button>
-          {/* </IconButton> */}
         </PermutationCell>
       );
     case "select":
@@ -168,14 +141,12 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       });
       return (
         <PermutationCell data-permutation={key} className="body">
-          {/* <IconButton onClick={(e: any) => permutationHandlerFn(e, key)}> */}
           <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
             className="__permtation-table-button"
           >
             <LightningIcon />
           </button>
-          {/* </IconButton> */}
         </PermutationCell>
       );
     case "boolean":
@@ -185,14 +156,12 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
       });
       return (
         <PermutationCell data-permutation={key} className="body">
-          {/* <IconButton onClick={(e: any) => permutationHandlerFn(e, key)}> */}
           <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
             className="__permtation-table-button"
           >
             <LightningIcon />
           </button>
-          {/* </IconButton> */}
         </PermutationCell>
       );
 
@@ -229,21 +198,10 @@ export const ArgTable: FC<Props> = ({ permutations }) => {
 
         if (headtr) {
           const node = headtr.appendChild(document.createElement("th"));
-          // const newElem = React.createElement(PermTableHead, {
-          //   bodytr,
-          // });
-
-          // const newElem = React.createElement(
-          //   "h1",
-          //   { className: "test" },
-          //   "test",
-          // );
           const newElem = React.createElement(PermTableHead, {});
 
-          // render(newElem, node);
           const root = createRoot(node);
           root.render(newElem);
-          // createRoot(node).render(newElem);
         }
         if (bodytr) {
           bodytr.forEach(async (tr) => {
@@ -264,15 +222,6 @@ export const ArgTable: FC<Props> = ({ permutations }) => {
               );
               if (row) row.classList.add("--selected");
             });
-
-            // render(newElem, node, () => {
-            //   permutations.forEach((e) => {
-            //     const row = ref.current?.querySelector(
-            //       `[data-permutation="${e}"]`,
-            //     );
-            //     if (row) row.classList.add("--selected");
-            //   });
-            // });
           });
         }
       }
