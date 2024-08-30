@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { Icons, IconButton, icons } from "@storybook/components";
 import {
   useFloating,
   autoUpdate,
@@ -12,19 +11,16 @@ import {
   useRole,
   useInteractions,
   arrow,
-  safePolygon,
 } from "@floating-ui/react";
 
 import { BaseButton, Tooltip, Arrow } from "./BaseButton";
-import { styled } from "@storybook/theming";
 
-// default feature : copy text to clipboard on click
+//default feature :copy text to clipboard onclick
 interface Props {
   hoverTitle?: string;
   clickTitle?: string;
   copyText: string;
   label?: string;
-  icon?: keyof typeof icons;
   onClick?: (...args: any) => void;
   style?: React.CSSProperties;
 }
@@ -32,21 +28,21 @@ interface Props {
 const defaultOnClick = (
   copyText: string,
   setText: React.Dispatch<string>,
-  clickTitle: string
+  clickTitle: string,
 ) => {
   navigator.clipboard.writeText(copyText);
   setText(clickTitle);
 };
+
 export const CopyButton = ({
   hoverTitle = "",
   clickTitle = "",
-  copyText = "",
-  icon = "copy",
+  copyText,
   label,
   onClick,
   style,
 }: Props) => {
-  //floating tooltips
+  // floating tooltips
   const [isOpen, setIsOpen] = useState(false);
   const [text, setText] = useState(hoverTitle);
   const arrowRef = useRef(null);
@@ -74,7 +70,6 @@ export const CopyButton = ({
     dismiss,
     role,
   ]);
-
   // handler
   const handleClick = (e: any) =>
     onClick ? onClick(e) : defaultOnClick(copyText, setText, clickTitle);
@@ -88,7 +83,7 @@ export const CopyButton = ({
       <BaseButton
         title={hoverTitle}
         onClick={handleClick}
-        icon={icon}
+        icon={"copy"}
         label={label}
         style={style}
       />

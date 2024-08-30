@@ -1,8 +1,7 @@
 import React from "react";
 import { addons, types } from "@storybook/manager-api";
 import { ADDON_ID, PANEL_ID, PERMUT_KEY } from "./constants";
-import { Panel } from "./Panel";
-
+import { Panel } from "./components/manager/Panel";
 /**
  * Note: if you want to use JSX in this file, rename it to `manager.tsx`
  * and update the entry prop in tsup.config.ts to use "src/manager.tsx",

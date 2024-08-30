@@ -1,7 +1,5 @@
-import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
+import React, { useState, SyntheticEvent, useEffect } from "react";
 import {
-  addons,
-  useAddonState,
   useArgs,
   useArgTypes,
   useChannel,
@@ -10,83 +8,42 @@ import {
   useStorybookState,
 } from "@storybook/manager-api";
 import { AddonPanel, Placeholder } from "@storybook/components";
-import { ADDON_ID, EVENTS } from "./constants";
-import { CodeEditor } from "./components/CodeEditor";
+import { ADDON_ID, EVENTS } from "../../constants";
+import { CodeEditor } from "./panelBlocks/CodeEditor";
 import { styled } from "@storybook/theming";
-import { Permutation } from "./types";
-import { PERMUT_KEY } from "./constants";
-import { convertArgTypeToArg, sourceCodeWithArgPermutations } from "./tools";
-import { ArgTable } from "./components/ArgTable";
-import { Showcase } from "./components/Showcase";
-import { CopyButton, Tray } from "./components/actionTray";
-import { NoSource } from "./components/NoSource";
-import { isStoryReady } from "./utils/storybook";
+import { Permutation } from "../../types";
+import { PERMUT_KEY } from "../../constants";
+import { convertArgTypeToArg, sourceCodeWithArgPermutations } from "src/tools";
+import { ArgTable } from "./panelBlocks/ArgTable";
+import { Tray } from "./panelBlocks/Tray";
+import { CopyButton } from "./panelBlocks/CopyButton";
+import { Showcase } from "./panelBlocks/Showcase";
+import { isStoryReady } from "../../utils/storybook";
 import * as R from "ramda";
 
-const stopPropagation = (event: SyntheticEvent) => {
-  event.stopPropagation();
-};
-
 interface PanelProps {
-  key: string;
   active: boolean;
-  [x: string]: any;
 }
-
-const Container = styled.div`
-  padding: 10px;
-  min-width: fit-content;
-  margin: 0 auto;
-  height: 100%;
-`;
-
-const Nav = styled.div`
-  border-bottom: 1px solid white;
-  text-align: end;
-  width: 100%;
-  position: relative;
-  height: 40px;
-`;
-
-const Display = styled.div`
-  &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: transparent;
-  }
-
-  &::-webkit-scrollbar {
-    width: 7px;
-    background-color: #323232;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #555;
-  }
-  height: 200px;
-  overflow: auto;
-  background: #2d2d2d;
-`;
 
 export const Panel: React.FC<PanelProps> = (props) => {
   const api = useStorybookApi();
   const storyId = useStorybookState().storyId;
   const data = api.getData(storyId);
   const componentName = useParameter<Permutation | undefined>(
-    PERMUT_KEY
+    PERMUT_KEY,
   )?.componentName;
+
   const children =
     useParameter<Permutation | undefined>(PERMUT_KEY)?.children ??
     "{{ children }}";
   const [args, updateArgs, resetArgs] = useArgs();
   const importPath = useParameter<Permutation | undefined>(
-    PERMUT_KEY
+    PERMUT_KEY,
   )?.importPath;
 
   const [permutations, setPermutations] = useState<string[]>([]);
 
+  // parameter for stories
   const parameter = useParameter<{
     deactivate?: string[];
     autoload?: "all" | string[];
@@ -107,7 +64,7 @@ export const Panel: React.FC<PanelProps> = (props) => {
     source,
     argTypes,
     args,
-    permutations
+    permutations,
   );
 
   useChannel({
@@ -145,7 +102,7 @@ export const Panel: React.FC<PanelProps> = (props) => {
         autoload === "all" ? argKeys.map((key) => key.prop) : autoload;
       const filteredAutoPermutation = R.without(
         deactivate ?? [],
-        autoPermutation
+        autoPermutation,
       ) satisfies string[];
       setPermutations(filteredAutoPermutation);
     }
@@ -164,7 +121,7 @@ export const Panel: React.FC<PanelProps> = (props) => {
     <AddonPanel {...props} key={storyId}>
       <Container>
         <Nav>
-          <Tray>
+          <Tray style={{ justifyContent: "flex-end" }}>
             <CopyButton
               copyText={importPath}
               clickTitle="Copied on clipboard!"
@@ -174,17 +131,20 @@ export const Panel: React.FC<PanelProps> = (props) => {
         </Nav>
         <Display>
           {sourceCode.length <= 1 ? (
-            <div style={{ position: "relative" }}>
-              <CodeEditor
-                key={sourceCode[0]}
-                defaultValue={sourceCode[0]}
-                onKeyDown={stopPropagation}
-                disabled={true}
-              />
+            <div
+              style={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <CodeEditor key={sourceCode[0]} value={sourceCode[0]} />
               <Tray>
                 <CopyButton
                   hoverTitle="Click to copy"
                   clickTitle="Copied on clipboard!"
+                  label=""
                   copyText={sourceCode[0]}
                 />
               </Tray>
@@ -198,3 +158,40 @@ export const Panel: React.FC<PanelProps> = (props) => {
     </AddonPanel>
   );
 };
+
+const Container = styled.div`
+  padding: 10px;
+  min-width: fit-content;
+  margin: 0 auto;
+  height: 100%;
+`;
+
+const Nav = styled.div`
+  border-bottom: 1px solid white;
+  text-align: end;
+  width: 100%;
+  position: relative;
+  height: 40px;
+`;
+
+const Display = styled.div`
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 7px;
+    background-color: #323232;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #555;
+  }
+  height: 200px;
+  overflow: auto;
+  background: #2d2d2d;
+`;
