@@ -85,6 +85,7 @@ export const withPermutation = (
   const autoload = context.parameters["permutation"]?.autoload ?? [];
   const deactivate = context.parameters.permutation?.deactivate ?? [];
   const argKeys = convertArgTypeToArg(context.argTypes);
+  console.log("context.", context);
 
   const autoPermutation =
     autoload === "all" ? argKeys.map((e) => e.prop) : autoload;
@@ -99,6 +100,8 @@ export const withPermutation = (
   useEffect(() => {
     setPermutations(filteredAutoPermutation);
   }, []);
+
+  console.log("permuations in here", permutations);
 
   useChannel({
     [EVENTS.SET_PERMUTATIONS]: (newValue: string, command?: string) => {
@@ -163,11 +166,13 @@ export const withPermutation = (
 
     const [horizen, ...verticals] = convertedList;
 
+    console.log("storyCombination", storyCombination);
     if (convertedList.length <= 1) {
       return (
         <Wrapper>
           <div ref={ref}>
             {storyCombination.map((e, i) => {
+              console.log("storyCombination e", e);
               return (
                 <div data-target={dataTarget[i]} role="component" key={i}>
                   {StoryFn({ ...context, args: { ...e } })}

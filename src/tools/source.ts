@@ -11,7 +11,7 @@ export const sourceCodeWithArgPermutations = (
   source: string,
   args: ArgTypes<Args>,
   arg: Args,
-  permutations: string[]
+  permutations: string[],
 ) => {
   const propertys = convertArgTypeToArg(args);
   const activedPermutations = makePermutationsList(propertys, permutations);
@@ -24,10 +24,13 @@ export const sourceCodeWithArgPermutations = (
 export const storyCombinationGenerator = (
   argTypes: ArgTypes<Args>,
   args: Args,
-  permutations: string[]
+  permutations: string[],
 ) => {
   const convertedArg = convertArgTypeToArg(argTypes);
+  console.log("convertedArg", convertedArg);
   const activedPermutations = makePermutationsList(convertedArg, permutations);
+  console.log("activedPermutations", activedPermutations);
   const mergedArgs = mergeArgWithPermutions(args, activedPermutations);
+  console.log("mergedArgs", mergedArgs);
   return mergedArgs;
 };

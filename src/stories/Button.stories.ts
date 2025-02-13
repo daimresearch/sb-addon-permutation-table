@@ -7,8 +7,10 @@ const meta: Meta<typeof Button> = {
   title: "Example/Button",
   component: Button,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+
   argTypes: {
-    backgroundColor: { control: "color" },
+    // backgroundColor: { control: "color", name: "BG" },
+    primary: { control: "boolean", name: "PP" },
   },
 };
 
