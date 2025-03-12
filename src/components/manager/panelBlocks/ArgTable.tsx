@@ -94,7 +94,11 @@ const PermTableHead = () => {
 const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
   const [name, control, permutation] = elem.querySelectorAll("td"); // node list
 
-  const key = name.querySelector("span").innerHTML;
+  // const key = name.querySelector("span").innerHTML;
+  const displayKey = name.querySelector("span").innerHTML;
+  const key = Object.entries(rows).find(
+    ([_, value]) => value.name === displayKey,
+  )[0];
 
   const controlHandlerFn = (key: string, value: any) => {
     addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, key, "remove");
@@ -111,12 +115,17 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
     key: string,
     deactivate: string,
   ) => {
-    if (!rows[key]?.control) return undefined;
-    if ((deactivate && deactivate.includes(key)) || !rows[key]) return false;
-    return rows[key].control.type;
+    const test = Object.entries(rows).find(([_, value]) => value.name === key);
+    const result = test[1];
+
+    if (!result.control) return undefined;
+    // if (result?.control) return undefined;
+    if ((deactivate && deactivate.includes(key)) || !result) return false;
+    return result.control.type;
   };
 
-  const cellType = getTypeofCell(rows, key, param?.deactivate);
+  // const cellType = getTypeofCell(rows, key, param?.deactivate);
+  const cellType = getTypeofCell(rows, displayKey, param?.deactivate);
 
   switch (cellType) {
     case "radio":

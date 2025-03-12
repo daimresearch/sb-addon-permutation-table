@@ -27,7 +27,7 @@ export const getConvertedList = (permutations: string[], argTypes: any) => {
   return R.pipe(
     R.map(convert),
     R.values,
-    R.reject(R.isNil)
+    R.reject(R.isNil),
   )(argTypes) as Property[];
 };
 
@@ -35,14 +35,14 @@ export function cartesianProduct<T>(...arrs: T[][]): T[][] {
   if (arrs.length === 0) return [[]];
   const [head, ...tail] = arrs;
   const result = head.flatMap((x) =>
-    cartesianProduct(...tail).map((xs) => [x, ...xs])
+    cartesianProduct(...tail).map((xs) => [x, ...xs]),
   );
   return result;
 }
 
 export function injectArgsToCodeWithArgPermutations(
   code: string,
-  argPermutations: Combination[]
+  argPermutations: Combination[],
 ) {
   const injected = argPermutations.map((arg) => injectArgPermToCode(code, arg));
 
@@ -65,7 +65,7 @@ export function injectArgPermToCode(code: string, args: Combination) {
 
     const attReplaced = R.pipe(
       R.replace(regx, ``),
-      R.replace(/\/?>/, addTempSpace)
+      R.replace(/\/?>/, addTempSpace),
     )(pre);
 
     switch (typeof value) {
@@ -82,20 +82,24 @@ export function injectArgPermToCode(code: string, args: Combination) {
   const removeTempSpace = (match: string) => match.trim();
   return R.pipe(
     R.replace(overOneSpaceRegex, " "),
-    R.replace(/\s\/?>/, removeTempSpace)
+    R.replace(/\s\/?>/, removeTempSpace),
   )(injected);
 }
 
 export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
   const arg = Object.entries(argType).map((elem) => {
-    const [key, value] = elem;
+    // const [key, value] = elem;
+    const [k, value] = elem;
+    const key = value.name;
 
     switch (value.control?.type) {
       case "select":
       case "radio":
-        return { prop: key, values: value.options };
+        return { prop: k, values: value.options };
+      // return { prop: key, values: value.options };
       case "boolean":
-        return { prop: key, values: [true, false] };
+        return { prop: k, values: [true, false] };
+      // return { prop: key, values: [true, false] };
       case "object":
       default:
         return;
@@ -107,21 +111,21 @@ export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
 
 export const makePermutationsList = (
   data: Property[],
-  permutations: string[]
+  permutations: string[],
 ) => {
   if (!data || permutations.length < 1) return [{}];
 
   const actived = R.filter((e: Property) => permutations.includes(e.prop))(
-    data
+    data,
   );
 
   const combinationList: Combination[] = cartesianProduct(
-    ...actived.map(({ values }) => values)
+    ...actived.map(({ values }) => values),
   ).map((values) =>
     actived.reduce(
       (obj, { prop }, i) => ({ ...obj, [prop]: values[i] }),
-      {} as Combination
-    )
+      {} as Combination,
+    ),
   );
 
   return combinationList;
@@ -129,7 +133,7 @@ export const makePermutationsList = (
 
 export const mergeArgWithPermutions = (
   arg: Args,
-  permuations: Combination[]
+  permuations: Combination[],
 ) => {
   if (arg === undefined || Object.keys(arg).length === 0) return permuations;
   const argMerge = (elem: Combination) => R.mergeRight(arg, elem);

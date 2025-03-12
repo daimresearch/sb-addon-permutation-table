@@ -1,3 +1,8 @@
+## v.1.1.0
+
+- Updating to React 19
+- Added the ability to display on screen as an alias instead of the actual field name See [#44](https://github.com/daimresearch/sb-addon-permutation-table/issues/44)
+
 ## v.1.0.3
 
 - Now Support SB 8.x
