@@ -9,8 +9,10 @@ const meta: Meta<typeof Button> = {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 
   argTypes: {
-    // backgroundColor: { control: "color", name: "BG" },
-    primary: { control: "boolean", name: "PP" },
+    primary: { control: "boolean", name: "primary Alt name" },
+  },
+  parameters: {
+    layout: "centered",
   },
 };
 

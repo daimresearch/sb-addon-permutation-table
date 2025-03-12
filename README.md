@@ -217,6 +217,22 @@ export const Primary: Story = {
 };
 ```
 
+#### Using alternative prop name on display
+
+You can use a different name for the property name in the permutation table.
+
+```tsx
+export const Primary: Story = {
+  args: {
+    primary: { control: "boolean", name: "primary Alt name" }, // now primary is displayed as 'primary Alt name'
+  },
+};
+```
+
+![altnames](./static/altnames.png)
+
+This is optional. If the name field is not specified, the permutation-table will represent the component's original field names.
+
 ### Demos
 
 [Demo Page](https://daimresearch.github.io/sb-addon-permutation-table/?path=/docs/introduction--docs)
