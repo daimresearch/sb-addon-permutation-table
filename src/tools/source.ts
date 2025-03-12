@@ -27,10 +27,7 @@ export const storyCombinationGenerator = (
   permutations: string[],
 ) => {
   const convertedArg = convertArgTypeToArg(argTypes);
-  console.log("convertedArg", convertedArg);
   const activedPermutations = makePermutationsList(convertedArg, permutations);
-  console.log("activedPermutations", activedPermutations);
   const mergedArgs = mergeArgWithPermutions(args, activedPermutations);
-  console.log("mergedArgs", mergedArgs);
   return mergedArgs;
 };

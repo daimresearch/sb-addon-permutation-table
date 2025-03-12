@@ -99,17 +99,13 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
   const key = Object.entries(rows).find(
     ([_, value]) => value.name === displayKey,
   )[0];
-  console.log("key real", key);
-  console.log("display Key", displayKey);
 
   const controlHandlerFn = (key: string, value: any) => {
-    console.log(" on Handle Click key", key, value);
     addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, key, "remove");
     updateArgs({ [key]: value });
   };
 
   const permutationHandlerFn = (e: Event, key: string) => {
-    console.log("permutationHandlerFn", key, e);
     e.stopPropagation();
     addons.getChannel().emit(EVENTS.SET_PERMUTATIONS, key);
   };
@@ -120,25 +116,16 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
     deactivate: string,
   ) => {
     const test = Object.entries(rows).find(([_, value]) => value.name === key);
-    console.log("result", test);
     const result = test[1];
-
-    console.log("restul", result);
 
     if (!result.control) return undefined;
     // if (result?.control) return undefined;
     if ((deactivate && deactivate.includes(key)) || !result) return false;
     return result.control.type;
-
-    console.log("rows", rows, key);
-    if (!rows[key]?.control) return undefined;
-    if ((deactivate && deactivate.includes(key)) || !rows[key]) return false;
-    return rows[key].control.type; // 여기서 찾아야하는데....
   };
 
   // const cellType = getTypeofCell(rows, key, param?.deactivate);
   const cellType = getTypeofCell(rows, displayKey, param?.deactivate);
-  console.log("cellType", cellType, key);
 
   switch (cellType) {
     case "radio":
