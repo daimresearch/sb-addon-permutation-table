@@ -73,6 +73,9 @@
     "typescript": "^5.5.4",
     "vite": "^5.4.2"
   },
+  "peerDependencies": {
+    "storybook": "^8.5.0"
+  },
   "publishConfig": {
     "access": "public"
   },
