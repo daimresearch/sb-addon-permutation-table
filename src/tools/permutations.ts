@@ -1,4 +1,10 @@
-import { Args, ArgTypes } from "@storybook/types";
+import {
+  Args,
+  ArgTypes,
+  InputType,
+  StrictArgTypes,
+  StrictInputType,
+} from "@storybook/types";
 import * as R from "ramda";
 import { attrMatchingRegex, overOneSpaceRegex } from "../utils/regex";
 
@@ -10,21 +16,26 @@ export interface Property {
 export interface Combination {
   [key: string]: any;
 }
-export const getConvertedList = (permutations: string[], argTypes: any) => {
-  const convert = (elem: ArgTypes[0]) => {
-    if (!permutations.includes(elem.name)) return;
-    switch (elem.control.type) {
+export const getConvertedList = (
+  permutations: string[],
+  argTypes: StrictArgTypes<Args>,
+) => {
+  const convert = ([key, value]: [string, StrictInputType]) => {
+    const displayKey = key;
+    if (!permutations.includes(displayKey)) return;
+    switch (value.control.type) {
       case "select":
       case "radio":
-        return { prop: elem.name, values: elem.options };
+        return { prop: displayKey, values: value.options };
       case "boolean":
-        return { prop: elem.name, values: [true, false] };
+        return { prop: displayKey, values: [true, false] };
       default:
         return;
     }
   };
 
   return R.pipe(
+    R.toPairs,
     R.map(convert),
     R.values,
     R.reject(R.isNil),
@@ -90,16 +101,13 @@ export const convertArgTypeToArg = (argType: ArgTypes<Args>) => {
   const arg = Object.entries(argType).map((elem) => {
     // const [key, value] = elem;
     const [k, value] = elem;
-    const key = value.name;
 
     switch (value.control?.type) {
       case "select":
       case "radio":
         return { prop: k, values: value.options };
-      // return { prop: key, values: value.options };
       case "boolean":
         return { prop: k, values: [true, false] };
-      // return { prop: key, values: [true, false] };
       case "object":
       default:
         return;

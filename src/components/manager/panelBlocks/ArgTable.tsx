@@ -137,6 +137,7 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
         <PermutationCell data-permutation={key} className="body">
           <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
+            //onClick={(e: any) => permutationHandlerFn(e, displayKey)}
             className="__permtation-table-button"
           >
             <LightningIcon />
@@ -167,6 +168,7 @@ const PermTableBody = ({ rows, elem, theme, updateArgs, param }: any) => {
         <PermutationCell data-permutation={key} className="body">
           <button
             onClick={(e: any) => permutationHandlerFn(e, key)}
+            //onClick={(e: any) => permutationHandlerFn(e, displayKey)}
             className="__permtation-table-button"
           >
             <LightningIcon />

@@ -84,6 +84,7 @@ export const withPermutation = (
 
   const autoload = context.parameters["permutation"]?.autoload ?? [];
   const deactivate = context.parameters.permutation?.deactivate ?? [];
+  // 실제 component의 arg를 가지고 있는 argKeys
   const argKeys = convertArgTypeToArg(context.argTypes);
 
   const autoPermutation =
