@@ -70,6 +70,15 @@ Can you lend a helping hand? 🥺
 - `Storybook >= 8.x`
 - `node > 16.x`
 
+### For users using below React 19
+
+- try version 1.0.3
+  `yarn add sb-addon-permutation-table@1.0.3`
+
+this version supports SB8 && React 18
+
+SB 8.5 has decided to support React 19, and using the latest version of the addon will cause conflicts.
+
 #### For users under SB 7.x
 
 - try version 1.0.21

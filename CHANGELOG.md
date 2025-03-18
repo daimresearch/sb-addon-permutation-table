@@ -1,3 +1,11 @@
+## v.2.0.0
+
+BREAKING CHANGES:
+
+- Update Storybook peer dependency to ^8.5.0
+- Update React support to ^19.0.0
+- version 1.2.x || 1.1.x will be deprecated soon.
+
 ## v.1.1.0
 
 - Updating to React 19
