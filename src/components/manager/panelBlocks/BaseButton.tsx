@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import { IconButton, icons } from "@storybook/components";
+import { Button } from "storybook/internal/components";
 import { CopyIcon, EditIcon, UndoIcon } from "@storybook/icons";
 
 const BaseButton = ({ title, onClick, label, style, icon = "copy" }: Props) => {
@@ -13,12 +13,21 @@ const BaseButton = ({ title, onClick, label, style, icon = "copy" }: Props) => {
   const Icon = IconsObj[icon];
 
   return (
-    <IconButton title={title} onClick={onClick} style={style}>
-      <span style={{ marginRight: "7px", fontSize: "90%" }}>{label}</span>{" "}
+    <Button
+      ariaLabel={title || label || icon}
+      title={title}
+      onClick={onClick}
+      style={style}
+      variant="ghost"
+      size="small"
+      padding="small"
+    >
+      {label && <span style={{ marginRight: "7px", fontSize: "90%" }}>{label}</span>}
       <Icon />
-    </IconButton>
+    </Button>
   );
 };
+
 interface Props {
   title?: string;
   icon?: "copy" | "edit" | "undo";
