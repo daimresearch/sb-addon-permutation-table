@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import { IconButton, icons } from "@storybook/components";
+import { IconButton } from "storybook/internal/components";
 import { CopyIcon, EditIcon, UndoIcon } from "@storybook/icons";
 
 const BaseButton = ({ title, onClick, label, style, icon = "copy" }: Props) => {

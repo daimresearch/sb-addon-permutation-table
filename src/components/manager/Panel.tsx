@@ -6,8 +6,8 @@ import {
   useParameter,
   useStorybookApi,
   useStorybookState,
-} from "@storybook/manager-api";
-import { AddonPanel, Placeholder } from "@storybook/components";
+} from "storybook/internal/manager-api";
+import { AddonPanel, Placeholder } from "storybook/internal/components";
 import { ADDON_ID, EVENTS } from "../../constants";
 import { CodeEditor } from "./panelBlocks/CodeEditor";
 import styled from "@emotion/styled";

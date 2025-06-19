@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import * as R from "ramda";
-import { addons, useArgs } from "@storybook/manager-api";
+import { addons, useArgs } from "storybook/manager-api";
 
 import {
   useFloating,
@@ -19,7 +19,7 @@ import {
 import { BaseButton, Tooltip, Arrow } from "./BaseButton";
 import { EVENTS } from "../../../constants";
 import { extractAttributeFromTag, getQuotelessAtt } from "../../../tools";
-import { Args } from "@storybook/types";
+import { Args } from "storybook/internal/types";
 import { attrSplitRegex } from "../../../utils/regex";
 
 interface Props {

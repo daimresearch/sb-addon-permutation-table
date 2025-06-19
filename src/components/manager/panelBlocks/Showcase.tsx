@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled from "@emotion/styled";
-import { addons, useArgs } from "@storybook/manager-api";
+import { addons, useArgs } from "storybook/manager-api";
 import { getQuotelessAtt } from "../../../tools";
 import { EVENTS } from "../../../constants";
 import { CodeEditor } from "./CodeEditor";
