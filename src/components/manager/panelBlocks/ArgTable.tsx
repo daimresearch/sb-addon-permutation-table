@@ -9,13 +9,13 @@ import {
   useStorybookState,
   addons,
   useAddonState,
-} from "@storybook/manager-api";
+} from "storybook/manager-api";
 import {
   PureArgsTable as ArgsTable,
   type PresetColor,
   type SortType,
-} from "@storybook/blocks";
-import type { ArgTypes } from "@storybook/types";
+} from "@storybook/addon-docs/blocks";
+import type { ArgTypes } from "storybook/internal/types";
 import { EVENTS, PANEL_ID, PERMUT_KEY } from "../../../constants";
 import styled from "@emotion/styled";
 

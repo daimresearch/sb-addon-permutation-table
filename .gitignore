@@ -1,6 +1,8 @@
+.idea/
 dist/
 node_modules/
 storybook-static/
 build-storybook.log
+debug-storybook.log
 .DS_Store
 .env

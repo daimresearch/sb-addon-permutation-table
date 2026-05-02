@@ -1,25 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import * as R from "ramda";
-import { addons, useArgs } from "@storybook/manager-api";
+import { addons, useArgs } from "storybook/manager-api";
+import { WithTooltip, TooltipNote } from "storybook/internal/components";
 
-import {
-  useFloating,
-  autoUpdate,
-  FloatingPortal,
-  offset,
-  flip,
-  useHover,
-  useFocus,
-  useDismiss,
-  useRole,
-  useInteractions,
-  arrow,
-} from "@floating-ui/react";
-
-import { BaseButton, Tooltip, Arrow } from "./BaseButton";
+import { BaseButton } from "./BaseButton";
 import { EVENTS } from "../../../constants";
 import { extractAttributeFromTag, getQuotelessAtt } from "../../../tools";
-import { Args } from "@storybook/types";
+import { Args } from "storybook/internal/types";
 import { attrSplitRegex } from "../../../utils/regex";
 
 interface Props {
@@ -28,6 +15,7 @@ interface Props {
   onClick?: (...arg: any) => void;
   code: string;
 }
+
 const emptyandObjProps = (e: string) => R.includes("{", e) || R.isEmpty(e);
 
 const getUpdatedArgs = (code: string) => {
@@ -59,8 +47,6 @@ const defaultOnClick = (
   updateArgs(args);
 };
 
-//default feature : update Args on click and clear permutations
-
 export const EditButton = ({
   hoverTitle = "",
   clickTitle = "",
@@ -68,59 +54,20 @@ export const EditButton = ({
   onClick,
 }: Props) => {
   const [args, updateArgs, resetArgs] = useArgs();
-
-  //floating tooltips
-  const [isOpen, setIsOpen] = useState(false);
   const [text, setText] = useState(hoverTitle);
-  const arrowRef = useRef(null);
 
-  const { refs, floatingStyles, context } = useFloating({
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    placement: "left",
-    whileElementsMounted: autoUpdate,
-    middleware: [
-      offset(10),
-      flip({ fallbackAxisSideDirection: "start" }),
-      arrow({ element: arrowRef.current }),
-    ],
-  });
-
-  const hover = useHover(context);
-  const focus = useFocus(context);
-  const dismiss = useDismiss(context);
-  const role = useRole(context, { role: "tooltip" });
-
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    hover,
-    focus,
-    dismiss,
-    role,
-  ]);
-
-  // handler
   const handleClick = (e: any) =>
     onClick ? onClick(e) : defaultOnClick(code, updateArgs, args);
 
   return (
-    <div
-      ref={refs.setReference}
-      {...getReferenceProps}
-      onMouseLeave={() => setText(hoverTitle)}
+    <WithTooltip
+      trigger="hover"
+      placement="left"
+      tooltip={text ? <TooltipNote note={text} /> : null}
     >
-      <BaseButton title={hoverTitle} onClick={handleClick} icon={"edit"} />
-      <FloatingPortal>
-        {isOpen && text && (
-          <Tooltip
-            ref={refs.setFloating}
-            style={floatingStyles}
-            {...getFloatingProps()}
-          >
-            {text}
-            <Arrow ref={arrowRef} x={-4} y={10} />
-          </Tooltip>
-        )}
-      </FloatingPortal>
-    </div>
+      <div onMouseLeave={() => setText(hoverTitle)}>
+        <BaseButton title={hoverTitle} onClick={handleClick} icon="edit" />
+      </div>
+    </WithTooltip>
   );
 };

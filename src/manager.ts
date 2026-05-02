@@ -1,5 +1,5 @@
 import React from "react";
-import { addons, types } from "@storybook/manager-api";
+import { addons, types } from "storybook/manager-api";
 import { ADDON_ID, PANEL_ID, PERMUT_KEY } from "./constants";
 import { Panel } from "./components/manager/Panel";
 /**
